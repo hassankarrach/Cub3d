@@ -1,0 +1,1 @@
+// Functions for initializing the game, loading resources, etc.
