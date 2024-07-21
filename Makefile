@@ -22,8 +22,8 @@ CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 # SRCS ============>
 LIBFT_SRCS = $(addprefix ./lib/libft/, ft_strlen.c ft_strncmp.c ft_strrchr.c \
 	ft_strlcpy.c ft_substr.c ft_split.c ft_strjoin.c ft_memcpy.c ft_strdup.c ft_gnl.c \
-	ft_bzero.c ft_calloc.c )
-SRCS = $(LIBFT_SRCS) $(addprefix ./src/, cub3d.c parser.c cleanup.c)
+	ft_atoi.c ft_strtrim.c ft_memset.c ft_bzero.c ft_calloc.c )
+SRCS = $(LIBFT_SRCS) $(addprefix ./src/, cub3d.c parser.c cleanup.c utils.c)
 # ==================
 
 # OBJS ============>

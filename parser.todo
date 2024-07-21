@@ -1,11 +1,27 @@
+MAP ========================================================================
 [x] easy => check wach file kayssali b ".cub"
 [x] easy => open lfile o yt7awal l char **
 []  easy => checky wach file fih hado : 1, 0, N, S, E, W
 []  easy => skip spaces f lbadya olakher dyal l7it
 []  easy => ila kan space wast l7il lawal olakher khass darouri ykoun wrah 1
+============================================================================
+
+Settings ===================================================================
+[] => khass stoura lawlin ybdaw b ima (NO, SO, WE, EA, F, C)
+    NO : path dyal xpm north texture.
+    SO : path dyal xpm south texture.
+    WE : path dyal xpm west  texture.
+    EA : path dyal xpm east  texture.
+
+    F  : Floor   color (rgb), ex : "0, 255, 255"
+    C  : Ceiling color (rgb), ex : "0, 255, 255"
+    
+[] => ghat3amer hadou f struct dyal t_args;
+[] => *map_lines, khass ykouno fiha ghir lines dyal lmap (first setting khas ytskipaw)
+============================================================================
 
 
-[] hard => khass lmap tdour bl7it (toul dyal line machi mouhim ykoun 9ad 9ad)
+[] hard => khass lmap tdour bl7it (toul dyal lines machi mouhim ykoun 9ad 9ad)
 
 
 11111  11111     
