@@ -20,10 +20,21 @@
 
 
 // Structs =>
-typedef struct s_player{
-	int player_x;
-	int player_y;
-} t_player;
+typedef struct s_rgb{
+	int r;
+	int g;
+	int b;
+}	t_rgb;
+
+typedef	struct s_args{
+	t_rgb	Floor_color;
+	t_rgb	Ceiling_color;
+	char	*North_texture;
+	char	*South_texture;
+	char	*West_texture;
+	char	*East_texture;
+	char	**map_lines;
+}	t_args;
 // ==========
 
 
@@ -31,7 +42,9 @@ typedef struct s_player{
 int		ft_error(char *error_msg);
 
 // PARSING
-void    parser(int ac, char **av);
+void    parser(int ac, char **av, t_args *cub3d_args);
+char	*texture_path_extracter(char *line);
+void    rgb_extracter(char *line, t_args *cub3d_args, char flag);
 
 
 #endif
