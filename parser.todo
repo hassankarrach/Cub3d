@@ -1,0 +1,15 @@
+[x] easy => check wach file kayssali b ".cub"
+[x] easy => open lfile o yt7awal l char **
+[]  easy => checky wach file fih hado : 1, 0, N, S, E, W
+[]  easy => skip spaces f lbadya olakher dyal l7it
+[]  easy => ila kan space wast l7il lawal olakher khass darouri ykoun wrah 1
+
+
+[] hard => khass lmap tdour bl7it (toul dyal line machi mouhim ykoun 9ad 9ad)
+
+
+11111  11111     
+ 1111111000010011
+100000001 
+ 1000001
+111111111
