@@ -1,0 +1,1 @@
+a map in format *.cub
