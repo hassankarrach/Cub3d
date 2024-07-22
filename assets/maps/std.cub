@@ -1,14 +1,12 @@
-F 173, 22, 143
+F 111, 22, 143
 SO ./texts/wall22.xpm
 WE ./texts/wall22.xpm
 EA ./texts/wall22.xpm
-C 173, 22, 143
+NO ./texts/wall22.xpm
+C 0, 0, 0
 
 
-
-
-
-SO1111
+11111
 111111
 100101
 101001

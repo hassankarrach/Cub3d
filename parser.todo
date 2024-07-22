@@ -7,7 +7,7 @@ MAP ========================================================================
 ============================================================================
 
 Settings ===================================================================
-[] => khass stoura lawlin ybdaw b ima (NO, SO, WE, EA, F, C)
+[x] => khass stoura lawlin ybdaw b ima (NO, SO, WE, EA, F, C)
     NO : path dyal xpm north texture.
     SO : path dyal xpm south texture.
     WE : path dyal xpm west  texture.
@@ -16,11 +16,11 @@ Settings ===================================================================
     F  : Floor   color (rgb), ex : "0, 255, 255"
     C  : Ceiling color (rgb), ex : "0, 255, 255"
     
-[] => ghat3amer hadou f struct dyal t_args;
-[] => *map_lines, khass ykouno fiha ghir lines dyal lmap (first setting khas ytskipaw)
+[x] => ghat3amer hadou f struct dyal t_args;
+[x] => *map_lines, khass ykouno fiha ghir lines dyal lmap (first setting khas ytskipaw)
 ============================================================================
 
-
+[] => parse map lines.
 [] hard => khass lmap tdour bl7it (toul dyal lines machi mouhim ykoun 9ad 9ad)
 
 
