@@ -31,7 +31,7 @@ static char **file_to_arr(char *file_path)
 	return (ft_split(full_lines, '\n'));
 }
 
-static void parse_map(t_args *cub3d_args, char **file_lines)
+static void parse_file_lines(t_args *cub3d_args, char **file_lines)
 {
 	int		i;
 	char	*curr_line;
@@ -41,21 +41,23 @@ static void parse_map(t_args *cub3d_args, char **file_lines)
 	{
 		curr_line = ft_strtrim(file_lines[i], " ");
 		if (ft_strncmp(curr_line, "NO", 2) == 0)
-			cub3d_args->North_texture = texture_path_extracter(curr_line + 2);
+			texture_path_extracter(curr_line + 2, &cub3d_args->North_texture);
 		else if (ft_strncmp(curr_line, "SO", 2) == 0)
-			cub3d_args->South_texture = texture_path_extracter(curr_line + 2);
+			texture_path_extracter(curr_line + 2, &cub3d_args->South_texture);
 		else if (ft_strncmp(curr_line, "WE", 2) == 0)
-			cub3d_args->West_texture = texture_path_extracter(curr_line + 2);
+			texture_path_extracter(curr_line + 2, &cub3d_args->West_texture);
 		else if (ft_strncmp(curr_line, "EA", 2) == 0)
-			cub3d_args->East_texture = texture_path_extracter(curr_line + 2);
+			texture_path_extracter(curr_line + 2, &cub3d_args->East_texture);
 		else if (ft_strncmp(curr_line, "F", 1) == 0)
-			rgb_extracter(curr_line + 1, cub3d_args, 'F');
+			rgb_extracter(curr_line + 1, &cub3d_args->Floor_color);
 		else if (ft_strncmp(curr_line, "C", 1) == 0)
-			rgb_extracter(curr_line + 1, cub3d_args, 'C');
+			rgb_extracter(curr_line + 1, &cub3d_args->Ceiling_color);
 		else if (curr_line == NULL)
 			i++;
-		else
+		else if (curr_line[0] == '1')
 			break;
+		else
+			ft_error("Invalid Identifier.");
 		i++;
 	}
 	cub3d_args->map_lines = file_lines + i;
@@ -72,9 +74,7 @@ void parser(int ac, char **av, t_args *cub3d_args)
 	ft_memset(cub3d_args, 0, sizeof(t_args));
 	file_lines = file_to_arr(av[1]);
 
-	parse_map(cub3d_args, file_lines);
-
-	printf("%s\n", cub3d_args->map_lines[0]);
+	parse_file_lines(cub3d_args, file_lines);
 }
 
 /*

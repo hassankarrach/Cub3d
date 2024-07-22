@@ -14,10 +14,13 @@
 
 NAME = cub3d
 
-MLX_DIR = minilibx-linux
-MLX = libmlx.a
+# Mlx - includes
+MLX_DIR = ./lib/mlx
+MLX_LIB = $(MLX_DIR)/libmlx.a
+MLX_INCLUDE = -I$(MLX_DIR)
 
-CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -ffast-math -I/usr/include/X11 #-g -O3 
+LDFLAGS = -L$(MLX_DIR) -lmlx -L/usr/lib/x86_64-linux-gnu -lX11 -lXext -lm -lbsd
 
 # SRCS ============>
 LIBFT_SRCS = $(addprefix ./lib/libft/, ft_strlen.c ft_strncmp.c ft_strrchr.c \
@@ -33,10 +36,9 @@ OBJS = $(SRCS:.c=.o)
 all : $(NAME)
 
 .c.o :
-	cc -g $(CFLAGS) -c $< -o $@
+	cc $(CFLAGS) $(MLX_INCLUDE) -c $< -o $@
 $(NAME) : $(OBJS)
-	cc -g $(CFLAGS) $(CFLAGS) $(OBJS) -o $(NAME) 
-	
+	cc $(CFLAGS) $(OBJS) $(LDFLAGS) -o $(NAME)
 
 # cleaning
 clean : 
