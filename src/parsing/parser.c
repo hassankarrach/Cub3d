@@ -73,7 +73,6 @@ void parser(int ac, char **av, t_args *cub3d_args)
 		ft_error("invalid map extension.");
 	ft_memset(cub3d_args, 0, sizeof(t_args));
 	file_lines = file_to_arr(av[1]);
-
 	parse_file_lines(cub3d_args, file_lines);
 }
 
