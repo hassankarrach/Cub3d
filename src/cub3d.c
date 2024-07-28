@@ -7,4 +7,4 @@ int main(int ac, char **av)
 
     parser(ac, av, &cub3d_args);
     return (0);
-}
+}   
