@@ -1,8 +1,42 @@
-{
-    "files.associations": {
-        "cub3d.h": "c",
-        "unistd.h": "c",
-        "fcntl.h": "c",
-        "libft.h": "c"
-    }
-}
+[
+    {
+        "key": "alt+left",
+        "command": "cursorWordPartLeft",
+        "when": "editorTextFocus",
+    },
+    {
+        "key": "alt+right",
+        "command": "cursorWordPartRight",
+        "when": "editorTextFocus",
+    },
+    {
+        "key": "shift+alt+left",
+        "command": "cursorWordPartLeftSelect",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "shift+alt+right",
+        "command": "cursorWordPartRightSelect",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+left",
+        "command": "cursorWordStartLeft",
+        "when": "editorTextFocus"
+    }, 
+    {
+        "key": "ctrl+right",
+        "command": "cursorWordEndRight",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "shift+ctrl+left",
+        "command": "cursorWordStartLeftSelect",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "shift+ctrl+right",
+        "command": "cursorWordEndRightSelect",
+        "when": "editorTextFocus"
+    },
+]
