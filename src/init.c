@@ -4,9 +4,9 @@ void init_player(t_player *player, t_data *data) {
     get_x_y_player(data);
     player->fov_rd = 60 * DEG_TO_RAD;
     player->angle = 0;
-    player->dirX = -1;
-    player->dirY = 0;
-    player->planeX = 0;
+    // player->dirX = -1;
+    // player->dirY = 0;
+    // player->planeX = 0;
     player->planeY = 0.66;
     player->move_up = 0;
     player->move_down = 0;
@@ -20,11 +20,12 @@ void init_ray(t_ray *ray) {
     ray->distance = 0;
     ray->angleIncrement = 0;
 }
-void init_game(t_data *data, t_args *args) {
+void init_game(t_data *data, t_args *args)
+{
 
     data->args = args;
     data->map2d = args->map_lines;
-    data->ply= malloc(sizeof(t_player));
+    data->ply = malloc(sizeof(t_player));
     init_player(data->ply, data);
     data->ray = malloc(sizeof(t_ray));
     init_ray(data->ray);

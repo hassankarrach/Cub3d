@@ -101,7 +101,7 @@ void raycasting(t_data *data)
         {
             data->ray->distance = h_inter;
         }
-        render_mini_map(data->mlx->mlx, data->mlx->win, data->args->map_lines, data->ply);
+        // render_mini_map(data, data->args->map_lines);
         // render_wall(data);
         ray++;
         data->ray->ray_ngl += data->ray->angleIncrement;  // next angle

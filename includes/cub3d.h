@@ -12,7 +12,7 @@
 
 // libs includes ================>
 #include "../lib/libft/libft.h"
-#include "minilibx-linux/mlx.h"
+#include "../lib/mlx/mlx.h"
 #include "raycasting.h"
 // #include "../includes/parser.h"
 #include "player.h"
@@ -29,7 +29,7 @@
 # define FOV 60
 # define ROTATION_SPEED 0.045
 # define PLAYER_SPEED 4
-#define DEG_TO_RAD (M_PI / 180.0)
+#define DEG_TO_RAD (M_PI / 180)
 
 # define BLK 0x000000FF
 # define GREY 0x808080FF
@@ -104,7 +104,7 @@ void rgb_extracter(char *line, t_rgb *rgb);
 
 // GAME
 void init_game(t_data *data, t_args *args);
-void render_mini_map(void *mlx, void *win, char **map, t_player *player);
+void render_mini_map(t_data *data, char **map);
 void handle_events(t_data *data);
 int key_press(int keycode, t_data *data);
 int key_release(int keycode, t_data *data);

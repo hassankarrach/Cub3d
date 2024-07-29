@@ -15,7 +15,7 @@
 NAME = cub3d
 
 # Mlx - includes
-MLX_DIR = ./includes/minilibx-linux
+MLX_DIR = ./lib/mlx
 MLX_LIB = $(MLX_DIR)/libmlx.a
 MLX_INCLUDE = -I$(MLX_DIR)
 
