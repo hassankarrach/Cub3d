@@ -43,9 +43,9 @@
 		{
 			"id": "pointer:pointer",
 			"typeName": "pointer",
-			"x": 2594.996977386525,
-			"y": 3375.75459475386,
-			"lastActivityTimestamp": 1722245719503,
+			"x": 3201.5295781115346,
+			"y": 3381.005959262302,
+			"lastActivityTimestamp": 1722245714160,
 			"meta": {}
 		},
 		{
@@ -72,7 +72,7 @@
 			"brush": null,
 			"scribbles": [],
 			"cursor": {
-				"type": "move",
+				"type": "default",
 				"rotation": 0
 			},
 			"isFocusMode": false,
@@ -111,7 +111,7 @@
 			"typeName": "instance"
 		},
 		{
-			"editingShapeId": null,
+			"editingShapeId": "shape:07vInPfEbWbB78hVg84wl",
 			"croppingShapeId": null,
 			"selectedShapeIds": [
 				"shape:07vInPfEbWbB78hVg84wl"
@@ -16342,7 +16342,7 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 2571.3658370985377,
+			"x": 2581.8685661154213,
 			"y": 3362.184964508081,
 			"rotation": 0,
 			"isLocked": false,

@@ -18,18 +18,17 @@ void render_mini_map(void *mlx, void *win, char **map, t_player *player)
     int x;
     int i;
     int j;
-    int color;
 
     i = 0;
     j = 0;
     x = 0;
     y = 0;
-    while (y < 1000)
+    while (map[y] && y < S_H_MINI_MAP)
     {
         x = 0;
-        while  (x < 1000)
+        while  (map[y][x] && x < S_W_MINI_MAP)
         {
-            if (map[y] && map[y][x] && map[y][x] == '1')
+            if (map[y][x] == '1')
             {
                 i = 0;
                 while (i < 10)
@@ -37,8 +36,22 @@ void render_mini_map(void *mlx, void *win, char **map, t_player *player)
                     j = 0;
                     while (j < 10)
                     {
-                        color = 0x00FF00;
-                        mlx_pixel_put(mlx, win, x * 10 + j, y * 10 + i, color);
+                        mlx_pixel_put(mlx, win, x * 10 + j, y * 10 + i, BLU);
+                        j++;
+                    }
+                    mlx_pixel_put(mlx, win, x * 11 + j, y * 11 + i, WHI);
+                    i++;
+                }
+            }
+            else
+            {
+                i = 0;
+                while (i < 10)
+                {
+                    j = 0;
+                    while (j < 10)
+                    {
+                        mlx_pixel_put(mlx, win, x * 10 + j, y * 10 + i, ORNG);
                         j++;
                     }
                     i++;
