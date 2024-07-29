@@ -10,7 +10,7 @@ int main(int ac, char **av)
     init_game(&data, &cub3d_args);
     handle_events(&data);
     // raycasting(&data);
-    render_mini_map(data.mlx->mlx, data.mlx->win, data.map2d, data.ply); // test
+    render_mini_map(&data, data.map2d); // test
     mlx_loop(data.mlx->mlx);
     return (0);
 }
