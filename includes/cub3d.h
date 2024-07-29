@@ -19,8 +19,8 @@
 // ===============================
 
 // Macros  ======================>
-#define S_W 800 // screen width
-#define S_H 400 // screen height
+#define S_W 1200 // screen width
+#define S_H 600 // screen height
 #define S_W_MINI_MAP 20
 #define S_H_MINI_MAP 15
 #define S_TITLE "Cub3D"
