@@ -12,14 +12,20 @@
 
 // libs includes ================>
 #include "../lib/libft/libft.h"
-#include "../lib/mlx/mlx.h"
-#include "../lib/raycasting.h"
+#include "minilibx-linux/mlx.h"
+#include "raycasting.h"
+// #include "../includes/parser.h"
+#include "player.h"
 // ===============================
 
 // Macros  ======================>
-#define S_W 1900 // screen width
-#define S_H 1000 // screen height
+#define S_W 800 // screen width
+#define S_H 400 // screen height
+#define S_W_MINI_MAP 10
+#define S_H_MINI_MAP 10
+#define S_TITLE "Cub3D"
 # define TILE_SIZE 32
+#define M_PI 3.14159265358979323846
 # define FOV 60
 # define ROTATION_SPEED 0.045
 # define PLAYER_SPEED 4
@@ -36,6 +42,7 @@
 // ===============================
 
 // Structs ======================>
+typedef struct s_mlx t_mlx;
 typedef struct s_rgb
 {
 	int r;
@@ -43,13 +50,13 @@ typedef struct s_rgb
 	int b;
 } t_rgb;
 
-typedef struct s_tex
-{
-	mlx_texture_t	*no;
-	mlx_texture_t	*so;
-	mlx_texture_t	*we;
-	mlx_texture_t	*ea;
-}	t_tex;
+// typedef struct s_tex
+// {
+// 	mlx_texture_t	*no;
+// 	mlx_texture_t	*so;
+// 	mlx_texture_t	*we;
+// 	mlx_texture_t	*ea;
+// }	t_tex;
 
 typedef struct s_args
 {
@@ -65,14 +72,13 @@ typedef struct s_args
 typedef struct s_data
 {
 	char	**map2d;
-	int		p_x;
-	int		p_y;
 	int		w_map;
 	int		h_map;
 	t_args *args;
 	t_mlx	*mlx;
-	t_tex	*tex;
+	// t_tex	*tex;
 	t_ray	*ray;
+	t_player *ply;
 }	t_data;
 
 typedef struct s_mlx
@@ -95,5 +101,15 @@ int ft_error(char *error_msg);
 void parser(int ac, char **av, t_args *cub3d_args);
 void texture_path_extracter(char *line, char **to_be_filled);
 void rgb_extracter(char *line, t_rgb *rgb);
+
+// GAME
+void init_game(t_data *data, t_args *args);
+void render_mini_map(void *mlx, void *win, char **map, t_player *player);
+void handle_events(t_data *data);
+int key_press(int keycode, t_data *data);
+int key_release(int keycode, t_data *data);
+int close_window(t_data *data);
+void raycasting(t_data *data);
+void	get_x_y_player(t_data *m);
 
 #endif

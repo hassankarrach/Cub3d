@@ -14,8 +14,8 @@ void	get_x_y_player(t_data *m)
 			if (m->args->map_lines[i][j] == 'N' || m->args->map_lines[i][j] == 'S'
 				|| m->args->map_lines[i][j] == 'W' || m->args->map_lines[i][j] == 'E')
 			{
-				m->p_x = j;
-				m->p_y = i;
+				m->ply->posX = j;
+				m->ply->posY = i;
 				return ;
 			}
 			j++;
