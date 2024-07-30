@@ -111,5 +111,7 @@ int key_release(int keycode, t_data *data);
 int close_window(t_data *data);
 void raycasting(t_data *data);
 void	get_x_y_player(t_data *m);
+float get_h_inter(t_data *data, float angl);
+float get_v_inter(t_data *data, float angl);
 
 #endif

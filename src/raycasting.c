@@ -1,4 +1,12 @@
 // Functions implementing the raycasting algorithm 
+// ray casting algrihtm
+// 1. find cooordinate of the first intersection point
+// 2. find y and x step (the distance between the intersection points)
+// 3. convert intersection point (x, y) into map index [i][j]
+// if intersection hits a wall, stop the loop
+// else find the next intersection point
+// 4. calculate the distance between the player and the intersection point
+
 #include "../includes/cub3d.h"
 double normalize_angle(double angle) // normalize the angle
 {
@@ -6,84 +14,102 @@ double normalize_angle(double angle) // normalize the angle
     while (angle >= 2 * M_PI) angle -= 2 * M_PI; // if the angle is greater than 2 * PI subtract 2 * PI
     return angle; // return the normalized angle
 }
-int inter_check(float angle, float *inter, float *step, int is_horizon) // check if there is a wall in the intersection point and update the intersection point 
+float calculate_distance(t_data *data, float angle) // calculate the distance to the intersection point
 {
-    if (is_horizon)
-    {
-        if (angle > 0 && angle < M_PI)
-        {
-            *inter += TILE_SIZE;
-            return (-1);
-        }
-        *step *= -1;
+    float smallest_distance;
+    float h_distance;
+    float v_distance;
+
+    h_distance = get_h_inter(data, angle);
+    v_distance = get_v_inter(data, angle);
+    if (h_distance <= v_distance)
+        smallest_distance = h_distance;
+    else
+        smallest_distance = v_distance;
+    return (smallest_distance);
+}
+void start_h_y(t_data *data, float angl, float *h_y)
+{
+    if (angl > 0 && angl < M_PI)
+    {  // Ray facing downwards
+        *h_y = floor(data->ply->posY / TILE_SIZE) * TILE_SIZE + TILE_SIZE;
+    }
+    else    
+    {  // Ray facing upwards
+        *h_y = floor(data->ply->posY / TILE_SIZE) * TILE_SIZE;
+    }
+}
+void start_v_x(t_data *data, float *v_x) // get the x coordinate
+{
+    if (data->ray->ray_ngl > M_PI / 2 && data->ray->ray_ngl < 3 * M_PI / 2)
+    {  // Ray facing left
+        *v_x = floor(data->ply->posX / TILE_SIZE) * TILE_SIZE;
     }
     else
-    {
-        if (!(angle > M_PI / 2 && angle < 3 * M_PI / 2))
-        {
-            *inter += TILE_SIZE;
-            return (-1);
-        }
-        *step *= -1;
+    {  // Ray facing right
+        *v_x = floor(data->ply->posX / TILE_SIZE) * TILE_SIZE + TILE_SIZE;
     }
-    return (1);
 }
-
 float get_h_inter(t_data *data, float angl) // get the horizontal intersection
 {
     float x_step;
     float y_step;
-    int pixel;
-    float h_x;
-    float h_y;
+    int hit;
+    float xintercept;
+    float yintercept;
 
+    hit = 0;
     y_step = TILE_SIZE; // get the y step
     x_step = TILE_SIZE / tan(angl);  // get the x step
-    h_y = floor(data->ply->posY / TILE_SIZE) * TILE_SIZE; // get the y coordinate
-    pixel = inter_check(angl, &h_y, &y_step, 1); // check if there is a wall
-    h_x = data->ply->posX + (h_y - data->ply->posY) / tan(angl); // get the x coordinate
-    while (pixel == 0)
+    start_h_y(data, &yintercept);
+    xintercept = data->ply->posX + (yintercept - data->ply->posY) / tan(angl); // get the x coordinate
+    if (angl > 0 && angl < M_PI) // Ray facing downwards
+        y_step *= -1;
+    if (((angl > M_PI / 2 && angl < 3 * M_PI / 2) && x_step > 0) || ((angl >  0 && angl < M_PI) && x_step < 0)) // Ray facing left or right (x_step should be negative)
+        x_step *= -1;
+    while (hit == 0)
     {
-        if (data->map2d[(int)(h_y / TILE_SIZE)][(int)(h_x / TILE_SIZE)] == 1)
-            pixel = 1;
+        if (find_wall(data, xintercept, yintercept) == 1)
+            hit = 1;
         else
         {
-            h_y += y_step; // move to the next y coordinate
-            h_x += x_step; // move to the next x coordinate
+            yintercept += y_step; // move to the next y coordinat 
+            xintercept += x_step; // move to the next x coordinate
         }
     }
-    return (sqrt(pow(h_x - data->ply->posX, 2) + pow(h_y - data->ply->posY, 2))); // get the distance
+    return (sqrt(pow(xintercept - data->ply->posX, 2) + pow(yintercept - data->ply->posY, 2))); // get the distance
 }
 float get_v_inter(t_data *data, float angl) // get the vertical intersection
 {
     float x_step;
 	float y_step;
-    int pixel;
-    float v_x;
-    float v_y;
+    int hit;
+    float xintercept;
+    float yintercept;
 
+    hit = 0;
     x_step = TILE_SIZE; // get the x step
     y_step = TILE_SIZE * tan(angl); // get the y step
-    v_x = floor(data->ply->posX / TILE_SIZE) * TILE_SIZE; // get the x coordinate
-    // pixel = inter_check(angl, &v_x, &x_step, 0); // check if there is a wall
-    pixel = inter_check(angl, &v_x, &x_step, 0); // check if there is a wall
-    v_y = data->ply->posY + (v_x - data->ply->posX) * tan(angl); // get the y coordinate
-    while (pixel == 0)
+    start_v_x(data, &xintercept);
+    yintercept = data->ply->posY + (xintercept - data->posX) * tan(angl); // get the y coordinate
+    if (angl > M_PI / 2 && angl < 3 * M_PI / 2) // Ray facing left
+        x_step *= -1;
+    if (((angl > 0 && angl < M_PI) && y_step > 0) || ((angl > M_PI && angl < 2 * M_PI) && y_step < 0)) // Ray facing up or down (y_step should be negative)
+        y_step *= -1;
+    while (hit == 0)
     {
-        if (data->map2d[(int)(v_y / TILE_SIZE)][(int)(v_x / TILE_SIZE)] == 1)
-            pixel = 1;
+        if (find_wall(data, xintercept, yintercept) == 1)
+            hit = 1;
         else
         {
-            v_x += x_step;  // move to the next x coordinate
-            v_y += y_step;  // move to the next y coordinate
+            xintercept += x_step;  // move to the next x coordinate
+            yintercept += y_step;  // move to the next y coordinate
         }
     }
-    return (sqrt(pow(v_x - data->ply->posX, 2) + pow(v_y - data->ply->posY, 2))); // get the distance
+    return (sqrt(pow(xintercept - data->ply->posX, 2) + pow(yintercept - data->ply->posY, 2))); // get the distance
 }
 void raycasting(t_data *data)
 {
-    double h_inter;
-    double v_inter;
     double angle;
     int ray;
 
@@ -93,18 +119,12 @@ void raycasting(t_data *data)
     while (ray < S_W) 
     {
         angle = normalize_angle(data->ray->ray_ngl); // normalize (should be between 0 and 2 * PI) the angle between 0 and 2 * PI becuase the angle is in radians
-        h_inter = get_h_inter(data, angle);
-        v_inter = get_v_inter(data, angle);
-        if (v_inter <= h_inter)
-            data->ray->distance = v_inter;
-        else
-        {
-            data->ray->distance = h_inter;
-        }
+        data->ray->distance = calculate_distance(data, angle); // get the distance to the intersection point
         // render_mini_map(data, data->args->map_lines);
         // render_wall(data);
         ray++;
         data->ray->ray_ngl += data->ray->angleIncrement;  // next angle
     }
 
-}
+} 
+ 
