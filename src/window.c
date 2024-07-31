@@ -36,7 +36,7 @@ int key_release(int keycode, t_data *data)
 
 int close_window(t_data *data)
 {
-    (void)data;
-    // Implement the logic to close the window
+    mlx_destroy_window(data->mlx->mlx, data->mlx->win);
+    exit(0);
     return 0;
 }

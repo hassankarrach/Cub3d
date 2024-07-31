@@ -27,7 +27,7 @@
 # define TILE_SIZE 32
 #define M_PI 3.14159265358979323846
 # define FOV 60
-# define ROTATION_SPEED 0.045
+# define ROTATION_SPEED 0.005
 # define MOVE_SPEED 4
 # define PLAYER_SPEED 4
 #define DEG_TO_RAD (M_PI / 180)

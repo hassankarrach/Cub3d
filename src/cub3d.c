@@ -5,7 +5,6 @@ void update_player(t_player *player)
     player->posX += cos(player->angle) * player->walk_direction * MOVE_SPEED; // walk_direction is negative when walking back and positive when walking forward
     player->posY += sin(player->angle) * player->walk_direction * MOVE_SPEED;
     player->angle += player->turn_direction * ROTATION_SPEED; // turn_left is negative when turning left and positive when turning right
-    player->angle = normalize_angle(player->angle); // test 
     printf ("%f %f %f\n", player->posX, player->posY, player->angle);
 }
 int update(void *arg)
