@@ -4,7 +4,6 @@
 #include "../includes/cub3d.h"
 #include "../includes/player.h"
 
-//Ray Structure
 typedef struct s_ray {
     double ray_ngl;  // the start angle
     double distance; // the distance to the wall
