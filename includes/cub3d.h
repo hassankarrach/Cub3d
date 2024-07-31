@@ -28,6 +28,7 @@
 #define M_PI 3.14159265358979323846
 # define FOV 60
 # define ROTATION_SPEED 0.045
+# define MOVE_SPEED 4
 # define PLAYER_SPEED 4
 #define DEG_TO_RAD (M_PI / 180)
 
@@ -117,5 +118,6 @@ double normalize_angle(double angle);
 float calculate_distance(t_data *data, float angle);
 void start_h_y(t_data *data, float angl, float *h_y);
 void start_v_x(t_data *data, float angl, float *v_x);
+void get_angle(t_data *m);
 
 #endif
