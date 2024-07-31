@@ -52,7 +52,7 @@ void draw_player(t_data *data)
         }
         i++;
     }
-    draw_line(data, centerX, centerY, centerX + 10 * cos(data->ply->angle), centerY + 10 * sin(data->ply->angle));
+    draw_line(data, centerX, centerY, centerX + 10 * cos(normalize_angle(data->ply->angle)), centerY + 10 * sin(normalize_angle(data->ply->angle)));
 }
 void draw_tile(t_data *data, int x, int y, int color)
 {
