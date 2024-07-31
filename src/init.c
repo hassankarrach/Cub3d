@@ -3,17 +3,9 @@
 void init_player(t_player *player, t_data *data) {
     get_x_y_player(data);
     player->fov_rd = 60 * DEG_TO_RAD;
+    player->walk_direction = 0;
+    player->turn_direction = 0;
     player->angle = 0;
-    // player->dirX = -1;
-    // player->dirY = 0;
-    // player->planeX = 0;
-    player->planeY = 0.66;
-    player->move_up = 0;
-    player->move_down = 0;
-    player->move_left = 0;
-    player->move_right = 0;
-    player->turn_left = 0;
-    player->turn_right = 0;
 }
 void init_ray(t_ray *ray) {
     ray->ray_ngl = 0;

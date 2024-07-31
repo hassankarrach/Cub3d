@@ -11,34 +11,26 @@ void handle_events(t_data *data)
 int key_press(int keycode, t_data *data)
 {
     if (keycode == ON_KEYUP)
-        data->ply->move_up = 1;
+        data->ply->walk_direction = 1;
     if (keycode == ON_KEYDOWN)
-        data->ply->move_down = 1;
-    if (keycode == ON_MOVE_LEFT)
-        data->ply->move_left = 1;
-    if (keycode == ON_MOVE_RIGHT)
-        data->ply->move_right = 1;
+        data->ply->walk_direction = -1;
     if (keycode == ON_TURN_LEFT)
-        data->ply->turn_left = 1;
+        data->ply->turn_direction = -1;
     if (keycode == ON_TURN_RIGHT)
-        data->ply->turn_right = 1;
+        data->ply->turn_direction = 1;
     return 0;
 }
 
 int key_release(int keycode, t_data *data)
 {
     if (keycode == ON_KEYUP)
-        data->ply->move_up = 0;
+        data->ply->walk_direction = 0;
     if (keycode == ON_KEYDOWN)
-        data->ply->move_down = 0;
-    if (keycode == ON_MOVE_LEFT)
-        data->ply->move_left = 0;
-    if (keycode == ON_MOVE_RIGHT)
-        data->ply->move_right = 0;
+        data->ply->walk_direction = 0;
     if (keycode == ON_TURN_LEFT)
-        data->ply->turn_left = 0;
+        data->ply->turn_direction = 0;
     if (keycode == ON_TURN_RIGHT)
-        data->ply->turn_right = 0;
+        data->ply->turn_direction = 0;
     return 0;
 }
 

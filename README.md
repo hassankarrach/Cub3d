@@ -45,3 +45,5 @@ Gets the horizontal intersection point for a given angle. It calculates the x an
 float get_v_inter(t_data *data, float angl)
 Gets the vertical intersection point for a given angle. It calculates the x and y steps, iterates through potential intersection points, and returns the distance to the nearest wall
 ```
+
+### resorces ###
