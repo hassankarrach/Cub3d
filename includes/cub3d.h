@@ -113,5 +113,9 @@ void raycasting(t_data *data);
 void	get_x_y_player(t_data *m);
 float get_h_inter(t_data *data, float angl);
 float get_v_inter(t_data *data, float angl);
+double normalize_angle(double angle);
+float calculate_distance(t_data *data, float angle);
+void start_h_y(t_data *data, float angl, float *h_y);
+void start_v_x(t_data *data, float angl, float *v_x);
 
 #endif
