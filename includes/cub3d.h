@@ -119,5 +119,7 @@ float calculate_distance(t_data *data, float angle);
 void start_h_y(t_data *data, float angl, float *h_y);
 void start_v_x(t_data *data, float angl, float *v_x);
 void get_angle(t_data *m);
+void update_player(t_player *player);
+void draw_minimap(void *mlx, void *win, t_data *data);
 
 #endif
