@@ -1,6 +1,5 @@
 #include "../includes/cub3d.h"
 
-
 void handle_events(t_data *data)
 {
     mlx_hook(data->mlx->win, 2, 1L << 0, key_press, data);
@@ -11,9 +10,9 @@ void handle_events(t_data *data)
 int key_press(int keycode, t_data *data)
 {
     if (keycode == ON_KEYUP)
-        data->ply->walk_direction = 1;
-    if (keycode == ON_KEYDOWN)
         data->ply->walk_direction = -1;
+    if (keycode == ON_KEYDOWN)
+        data->ply->walk_direction = 1;
     if (keycode == ON_TURN_LEFT)
         data->ply->turn_direction = -1;
     if (keycode == ON_TURN_RIGHT)
