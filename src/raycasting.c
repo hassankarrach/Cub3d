@@ -10,9 +10,15 @@
 #include "../includes/cub3d.h"
 int find_wall(t_data *data, float x, float y) // find the wall
 {
-    (void)data;
-    (void)x;
-    (void)y;
+    int i;  
+    int j;
+
+    i = floor(y / TILE_SIZE);
+    j = floor(x / TILE_SIZE);
+    if (i < 0 || i >= data->h_map || j < 0 || j >= data->w_map) // if the index is out of bounds
+        return (1);
+    if (data->args->map_lines[i][j] == '1')
+        return (1);
     return (0);
 }
 float get_h_inter(t_data *data, float angl) // get the horizontal intersection
