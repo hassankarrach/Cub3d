@@ -24,7 +24,8 @@ int main(int ac, char **av)
     init_game(&data, &cub3d_args);
     handle_events(&data);
     //mlx 
-    mlx_loop_hook(data.mlx->mlx, game_loop, &data);
+    // mlx_loop_hook(data.mlx->mlx, game_loop, &data);
+        render_mini_map(&data, data.map2d);
     mlx_loop(data.mlx->mlx);
     return (0);
 }

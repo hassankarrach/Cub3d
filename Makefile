@@ -19,7 +19,7 @@ MLX_DIR = ./lib/mlx
 MLX_LIB = $(MLX_DIR)/libmlx.a
 MLX_INCLUDE = -I$(MLX_DIR)
 
-CFLAGS = -Wall -Wextra -Werror -ffast-math -I/usr/include/X11 #-g -O3 
+CFLAGS = -ffast-math -I/usr/include/X11 #-g -O3 
 LDFLAGS = -L$(MLX_DIR) -lmlx -L/usr/lib/x86_64-linux-gnu -lX11 -lXext -lm	
 
 # SRCS ============>

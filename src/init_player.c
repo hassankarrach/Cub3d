@@ -25,8 +25,8 @@ void	get_x_y_player(t_data *m)
 				|| m->args->map_lines[i][j] == 'W' || m->args->map_lines[i][j] == 'E')
 			{
 				m->ply->player_dir = m->args->map_lines[i][j];
-				m->ply->posX = j;
-				m->ply->posY = i;
+				m->index_x = j;
+				m->index_y = i;
 				return ;
 			}
 			j++;

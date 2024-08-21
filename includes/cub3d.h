@@ -73,6 +73,8 @@ typedef struct s_args
 typedef struct s_data
 {
 	char	**map2d;
+	int		index_x;
+	int		index_y;
 	int		w_map;
 	int		h_map;
 	t_args *args;

@@ -12,73 +12,83 @@ int check_out_of_bounds(t_data *data, int x, int y)
     int i;
     int j;
 
-    i = x / TILE_SIZE;
-    j = y / TILE_SIZE;
-    if (i < 0 || i >= data->w_map || j < 0 || j >= data->h_map)
+    i = floor(x / 20);
+    j = floor(y / 20);
+    if (i < 0 || i >= data->w_map || j < 0 || j >= data->h_map) // out of bounds
+        return (-2);
+    if (data->args->map_lines[j][i] == '1') // wall
         return (1);
-    if (data->args->map_lines[j][i] == '1')
-        return (1);
-    else if (data->args->map_lines[j][i] == '0')
+    else if (data->args->map_lines[j][i] == '0') // empty space
         return (-1);
-    return (0);
-}
-static void draw_player(t_data *data)
-{
-    int x;
-    int y;
-    int i;
-    int j;
-
-    x = (S_W - 250) + 125;
-    y = (S_H - 150) + 75;
-    i = 0;
-    while (i < 5)
-    {
-        j = 0;
-        while (j < 5)
-        {
-            ft_pixel_put(data, x + i, y + j, BLU);
-            j++;
-        }
-        i++;
-    }
+    return (0); // player position
 }
 
-int scaling_i_j(t_data *data, int i, int j)
-{
-    int x;
-    int y;
-
-    x = j - 950;
-    y = i - 450;
-    return (check_out_of_bounds(data, x, y));
-}
+// static void draw_player(t_data *data)
+// {
+//     (void)data;
+// }
 void render_mini_map(t_data *data, char **map)
 {
     int startX;
     int startY;
 
-    // int curr_x;
-    // int curr_y;
+    // mini_map
+    int mini_map_height = 150;
+    int mini_map_width = 250;
+    // mini_map height and width in pixels
+    int mini_map_el_size = 20;
+
+    // available space
+    float x_space = (mini_map_width - mini_map_el_size) / 2;
+    float y_space = (mini_map_height - mini_map_el_size) / 2;
+
+    // Player position
+    int player_x = (data->index_x) * mini_map_el_size;
+    int player_y = (data->index_y) * mini_map_el_size;
+    // printf("player x: %d\n", (data->index_x));
+    // printf("player y: %d\n", (data->index_y));
+
+    // map start position
+    int map_start_x = (player_x - x_space);
+    int map_start_y = (player_y - y_space);
+    // sleep (2000);
+
+    // printf("player x: %d\n", player_x);
+    // printf("player y: %d\n", player_y);
+
+    // printf("x space: %d\n", x_space);
+    // printf("y space: %d\n", y_space);
+
+    // printf("map start x: %d\n", map_start_x);
+    // printf("map start y: %d\n", map_start_y);
 
     (void)map;
-    startX = S_W - 250;
-    startY = S_H - 150;
+    startX = 0;
+    startY = 0;
 
-    while (startY < S_H)
+while (startY < mini_map_height)
+{
+    startX = 0;
+    while (startX < mini_map_width)
     {
-        startX = S_W - 250;
-        while (startX < S_W)
+        if (startX == 0 || startX == mini_map_width - 1 || startY == 0 || startY == mini_map_height - 1) // 
+            ft_pixel_put(data, startX, startY, ORNG);
+        else
         {
-            if (scaling_i_j(data, startY, startX) == 1)
-                ft_pixel_put(data, startX, startY, RED);
-            else if (scaling_i_j(data, startY, startX) == -1)
-                ft_pixel_put(data, startX, startY, WHI);
-
-            startX++;
+            int check = check_out_of_bounds(data, map_start_x, map_start_y);
+            if (check == 1)
+                ft_pixel_put(data, startX, startY, BLU);
+            else if (check == -1)
+                ft_pixel_put(data, startX, startY, BLK);
         }
-        startY++;
+        startX++;
+        map_start_x++;
     }
-    draw_player(data);
+    map_start_x = player_x - x_space;
+    map_start_y++;
+    startY++;
+}
+
+    // draw_player(data);
     mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->mlx->img, 0, 0);
 }
