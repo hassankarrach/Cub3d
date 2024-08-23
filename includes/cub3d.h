@@ -19,26 +19,27 @@
 // ===============================
 
 // Macros  ======================>
-#define S_W 1200 // screen width
-#define S_H 600 // screen height
+#define S_W 640 // screen width
+#define S_H 640 // screen height
 #define S_W_MINI_MAP 20
 #define S_H_MINI_MAP 15
 #define S_TITLE "Cub3D"
 # define TILE_SIZE 32
 #define M_PI 3.14159265358979323846
 # define FOV 60
-# define ROTATION_SPEED 0.005
+# define ROTATION_SPEED 0.05
 # define MOVE_SPEED 4
 # define PLAYER_SPEED 4
 #define DEG_TO_RAD (M_PI / 180)
 
-# define BLK 0x000000FF
-# define GREY 0x808080FF
-# define BLU 0x87CEEBFF
-# define GREN 0x008000FF
-# define ORNG 0xFF9300FF
-# define RED 0xFF0000FF
-# define WHI 0xFFFFFFFF
+#define BLK  0xFF000000 // Black
+#define GREY 0xFF808080 // Grey
+#define BLU  0xFF87CEEB // Light Blue
+#define GREN 0xFF008000 // Green
+#define ORNG 0xFFFF9300 // Orange
+#define RED  0xFFFF0000 // Red
+#define WHI  0xFFFFFFFF // White
+
 
 // ===============================
 
@@ -123,5 +124,6 @@ void start_v_x(t_data *data, float angl, float *v_x);
 void get_angle(t_data *m);
 void update_player(t_player *player);
 void draw_minimap(void *mlx, void *win, t_data *data);
+void draw_2d_game(t_data *data);
 
 #endif

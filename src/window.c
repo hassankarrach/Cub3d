@@ -9,6 +9,7 @@ void handle_events(t_data *data)
 
 int key_press(int keycode, t_data *data)
 {
+    printf ("%d\n", keycode);
     if (keycode == ON_KEYUP)
         data->ply->walk_direction = -1;
     if (keycode == ON_KEYDOWN)
@@ -17,6 +18,7 @@ int key_press(int keycode, t_data *data)
         data->ply->turn_direction = -1;
     if (keycode == ON_TURN_RIGHT)
         data->ply->turn_direction = 1;
+    update_player(data->ply);
     return 0;
 }
 
