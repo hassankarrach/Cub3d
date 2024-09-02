@@ -10,7 +10,7 @@
 #include "../includes/cub3d.h"
 int find_wall(t_data *data, float x, float y) // find the wall
 {
-    int i;  
+    int i;
     int j;
 
     i = floor(y / TILE_SIZE);
