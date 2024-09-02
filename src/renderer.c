@@ -24,24 +24,6 @@ int check_out_of_bounds(t_data *data, int x, int y)
 }
 void draw_player(t_data *data)
 {
-    int centerX = (data->ply->posX);
-    int centerY = (data->ply->posY);
-
-    int height = 8;
-    int halfWidth = 5;
-    int i;
-
-    i = 0;
-    for (int y = 0; y < height; y++)
-    {
-        for (int x = -y; x <= y; x++)
-            ft_pixel_put(data, centerX + x, centerY + y, RED);
-    }
-    while (i < 15)
-    {
-        ft_pixel_put(data, centerX + i, centerY + i, RED);
-        i++;
-    }
 }
 
 void draw_2d_game(t_data *data)
@@ -60,14 +42,11 @@ void draw_2d_game(t_data *data)
         {
             check = check_out_of_bounds(data, i, j);
             if (check == 1)
-            {
-                if (i % 32 == 0 || j % 32 == 0)
-                    ft_pixel_put(data, i, j, BLK);
-                else
                     ft_pixel_put(data, i, j, BLU);
-            }
             else if (check == -1)
                 ft_pixel_put(data, i, j, ORNG);
+            if (i % 32 == 0 || j % 32 == 0)
+                ft_pixel_put(data, i, j, BLK);
             i++;
         }
         j++;
