@@ -8,76 +8,66 @@
 // 4. calculate the distance between the player and the intersection point
 
 #include "../includes/cub3d.h"
-int find_wall(t_data *data, float x, float y) // find the wall
+int find_wall(t_data *data, double x, double y)
 {
     int i;
     int j;
 
-    i = floor(y / TILE_SIZE);
-    j = floor(x / TILE_SIZE);
-    if (i < 0 || i >= data->h_map || j < 0 || j >= data->w_map) // if the index is out of bounds
-        return (1);
-    if (data->args->map_lines[i][j] == '1')
-        return (1);
-    return (0);
+    if (x < 0 || y < 0)
+		return (1);
+    i = floor(x / 32);
+    j = floor(y / 32);
+    // printf("i = %d j = %d\n", i, j);
+    // printf ("%d\n", data->h_map);
+    if (i >= data->w_map || j >= data->h_map)
+        return 1;
+    if (data->args->map_lines[j][i] == '1')
+        return 1;
+    return 0;
 }
-float get_h_inter(t_data *data, float angl) // get the horizontal intersection
+float get_h_inter(t_data *data, float angl)
 {
     float x_step;
     float y_step;
-    int hit;
     float xintercept;
     float yintercept;
 
-    hit = 0;
-    y_step = TILE_SIZE; // get the y step
-    x_step = TILE_SIZE / tan(angl);  // get the x step
+    y_step = TILE_SIZE;
+    x_step = TILE_SIZE / tan(angl);
     start_h_y(data, angl, &yintercept);
-    xintercept = data->ply->posX + (yintercept - data->ply->posY) / tan(angl); // get the x coordinate
-    if (angl > 0 && angl < M_PI) // Ray facing downwards
+    xintercept = data->ply->posX + (yintercept - data->ply->posY) / tan(angl);
+    if (!(angl > 0 && angl < M_PI))
         y_step *= -1;
-    if (((angl > M_PI / 2 && angl < 3 * M_PI / 2) && x_step > 0) || ((angl >  0 && angl < M_PI) && x_step < 0)) // Ray facing left or right (x_step should be negative)
+    if (!(angl < 0.5 * M_PI || angl > 1.5 * M_PI) && x_step > 0 || (angl < 0.5 * M_PI || angl > 1.5 * M_PI) && x_step < 0)
         x_step *= -1;
-    while (hit == 0)
+    while (!find_wall(data, xintercept, yintercept - (float)isRayFacingUp(angl)))
     {
-        if (find_wall(data, xintercept, yintercept) == 1)
-            hit = 1;
-        else
-        {
-            yintercept += y_step; // move to the next y coordinat 
-            xintercept += x_step; // move to the next x coordinate
-        }
+        yintercept += y_step;
+        xintercept += x_step;
     }
-    return (sqrt(pow(xintercept - data->ply->posX, 2) + pow(yintercept - data->ply->posY, 2))); // get the distance
+    return (sqrt(pow(xintercept - data->ply->posX, 2) + pow(yintercept - data->ply->posY, 2)));
 }
-float get_v_inter(t_data *data, float angl) // get the vertical intersection
+float get_v_inter(t_data *data, float angl)
 {
     float x_step;
 	float y_step;
-    int hit;
     float xintercept;
     float yintercept;
 
-    hit = 0;
-    x_step = TILE_SIZE; // get the x step
-    y_step = TILE_SIZE * tan(angl); // get the y step
+    x_step = TILE_SIZE;
+    y_step = TILE_SIZE * tan(angl);
     start_v_x(data, angl, &xintercept);
-    yintercept = data->ply->posY + (xintercept - data->ply->posX) * tan(angl); // get the y coordinate
-    if (angl > M_PI / 2 && angl < 3 * M_PI / 2) // Ray facing left
+    yintercept = data->ply->posY + (xintercept - data->ply->posX) * tan(angl);
+    if (!(angl < 0.5 * M_PI || angl > 1.5 * M_PI))
         x_step *= -1;
-    if (((angl > 0 && angl < M_PI) && y_step > 0) || ((angl > M_PI && angl < 2 * M_PI) && y_step < 0)) // Ray facing up or down (y_step should be negative)
+    if (!(angl > 0 && angl < M_PI) && y_step > 0 || ((angl > 0 && angl < M_PI) && y_step < 0 ))
         y_step *= -1;
-    while (hit == 0)
+    while (!find_wall(data, xintercept - (float)isRayFacingLeft(angl), yintercept))
     {
-        if (find_wall(data, xintercept, yintercept) == 1)
-            hit = 1;
-        else
-        {
-            xintercept += x_step;  // move to the next x coordinate
-            yintercept += y_step;  // move to the next y coordinate
-        }
+        xintercept += x_step;
+        yintercept += y_step;
     }
-    return (sqrt(pow(xintercept - data->ply->posX, 2) + pow(yintercept - data->ply->posY, 2))); // get the distance
+    return (sqrt(pow(xintercept - data->ply->posX, 2) + pow(yintercept - data->ply->posY, 2)));
 }
 void raycasting(t_data *data)
 {
@@ -85,14 +75,18 @@ void raycasting(t_data *data)
     int ray;
 
     ray = 0;
-    data->ray->ray_ngl = data->ray->ray_ngl - data->ply->fov_rd / 2; // get the start angle
-    data->ray->angleIncrement = data->ply->fov_rd / S_W; // get the angle increment
-    while (ray < S_W) 
+    data->ray->ray_ngl = data->ply->angle - data->ply->fov_rd / 2;
+    data->ray->angleIncrement = data->ply->fov_rd / 80;
+    while (ray < 80)
     {
-        angle = normalize_angle(data->ray->ray_ngl); // normalize (should be between 0 and 2 * PI) the angle between 0 and 2 * PI becuase the angle is in radians
-        data->ray->distance = calculate_distance(data, angle); // get the distance to the intersection point
+        data->ray->ray_ngl = normalize_angle(data->ray->ray_ngl);
+        data->ray->distance = calculate_distance(data, data->ray->ray_ngl);
         // render_mini_map(data, data->args->map_lines);
         // render_wall(data);
+        // draw_2d_game(data);
+        int endX = data->ply->posX + cos(data->ray->ray_ngl) * data->ray->distance;
+        int endY = data->ply->posY + sin(data->ray->ray_ngl) * data->ray->distance;
+        draw_line(data, data->ply->posX, data->ply->posY, endX, endY);
         ray++;
         data->ray->ray_ngl += data->ray->angleIncrement;  // next angle
     }

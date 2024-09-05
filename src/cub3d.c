@@ -1,22 +1,12 @@
 // Entry point of the program.
 #include "../includes/cub3d.h"
-void update_player(t_player *player)
-{
-    player->angle += player->turn_direction * ROTATION_SPEED;
-    player->angle = normalize_angle(player->angle);
-    player->posX += player->walk_direction * MOVE_SPEED * cos(player->angle);
-    // player->posX += 1;
-    // printf ("%d\n", player->posX);
-    // sleep (4);
-    player->posY += player->walk_direction * MOVE_SPEED * sin(player->angle);
-    // printf ("jj\n");
-}
 static int game_loop(void *arg)
 {
     t_data *data = (t_data *)arg;
     mlx_clear_window(data->mlx->mlx, data->mlx->win);
     // update_player(data->ply);
     draw_2d_game(data);
+    // raycasting(data);
     // render_mini_map(data, data->map2d);
     return (0);
 }

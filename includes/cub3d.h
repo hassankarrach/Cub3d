@@ -19,15 +19,17 @@
 // ===============================
 
 // Macros  ======================>
+// #define S_W 640 // screen width
+// #define S_H 640 // screen height
 #define S_W 640 // screen width
-#define S_H 640 // screen height
+#define S_H 256 // screen height
 #define S_W_MINI_MAP 20
 #define S_H_MINI_MAP 15
 #define S_TITLE "Cub3D"
 # define TILE_SIZE 32
 #define M_PI 3.14159265358979323846
 # define FOV 60
-# define ROTATION_SPEED 0.05
+# define ROTATION_SPEED 0.10
 # define MOVE_SPEED 4
 # define PLAYER_SPEED 4
 #define DEG_TO_RAD (M_PI / 180)
@@ -122,8 +124,13 @@ float calculate_distance(t_data *data, float angle);
 void start_h_y(t_data *data, float angl, float *h_y);
 void start_v_x(t_data *data, float angl, float *v_x);
 void get_angle(t_data *m);
-void update_player(t_player *player);
+void update_player(t_player *player, t_data *data);
 void draw_minimap(void *mlx, void *win, t_data *data);
 void draw_2d_game(t_data *data);
-
+void draw_line(t_data *data, int x0, int y0, int x1, int y1);
+int find_wall(t_data *data, double x, double y);
+int isRayFacingDown(float rayAngle);
+int isRayFacingUp(float rayAngle);
+int isRayFacingRight(float rayAngle);
+int isRayFacingLeft(float rayAngle);
 #endif

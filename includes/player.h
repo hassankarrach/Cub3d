@@ -19,8 +19,8 @@ typedef struct s_player {
     double angle; // the player angle
     double fov_rd; // the field of view in radians
     char player_dir;
-    int posX; // the player position
-    int posY;
+    double posX; // the player position
+    double posY;
     int walk_direction; // the player walk direction
     int turn_direction; // the player turn direction
 } t_player;
