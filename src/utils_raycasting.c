@@ -1,11 +1,12 @@
 #include "../includes/cub3d.h"
-double normalize_angle(double angle) // normalize the angle
+double normalize_angle(double angle)
 {
-    while (angle < 0) angle += 2 * M_PI; // if the angle is less than 0 add 2 * PI
-    while (angle >= 2 * M_PI) angle -= 2 * M_PI; // if the angle is greater than 2 * PI subtract 2 * PI
-    return angle; // return the normalized angle
+    angle = fmod(angle, 2 * M_PI);
+    if (angle < 0)
+        angle = (2 * M_PI) + angle;
+    return angle;
 }
-float calculate_distance(t_data *data, float angle) // calculate the distance to the intersection point
+float calculate_distance(t_data *data, float angle)
 {
     float smallest_distance;
     float h_distance;
@@ -21,7 +22,7 @@ float calculate_distance(t_data *data, float angle) // calculate the distance to
 }
 void start_h_y(t_data *data, float angl, float *h_y)
 {
-    if (angl > 0 && angl < M_PI)
+    if (isRayFacingDown(angl))
     {  // Ray facing downwards
         *h_y = floor(data->ply->posY / TILE_SIZE) * TILE_SIZE + TILE_SIZE;
     }
@@ -30,9 +31,9 @@ void start_h_y(t_data *data, float angl, float *h_y)
         *h_y = floor(data->ply->posY / TILE_SIZE) * TILE_SIZE;
     }
 }
-void start_v_x(t_data *data, float angl, float *v_x) // get the x coordinate
+void start_v_x(t_data *data, float angl, float *v_x)
 {
-    if (angl > M_PI / 2 && angl < 3 * M_PI / 2)
+    if (isRayFacingLeft(angl))
     {  // Ray facing left
         *v_x = floor(data->ply->posX / TILE_SIZE) * TILE_SIZE;
     }

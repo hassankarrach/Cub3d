@@ -9,28 +9,23 @@ void handle_events(t_data *data)
 
 int key_press(int keycode, t_data *data)
 {
-    printf ("%d\n", keycode);
     if (keycode == ON_KEYUP)
-        data->ply->walk_direction = -1;
-    if (keycode == ON_KEYDOWN)
         data->ply->walk_direction = 1;
+    if (keycode == ON_KEYDOWN)
+        data->ply->walk_direction = -1;
     if (keycode == ON_TURN_LEFT)
         data->ply->turn_direction = -1;
     if (keycode == ON_TURN_RIGHT)
         data->ply->turn_direction = 1;
-    update_player(data->ply);
+    update_player(data->ply, data);
     return 0;
 }
 
 int key_release(int keycode, t_data *data)
 {
-    if (keycode == ON_KEYUP)
+    if (keycode == ON_KEYUP || keycode == ON_KEYDOWN)
         data->ply->walk_direction = 0;
-    if (keycode == ON_KEYDOWN)
-        data->ply->walk_direction = 0;
-    if (keycode == ON_TURN_LEFT)
-        data->ply->turn_direction = 0;
-    if (keycode == ON_TURN_RIGHT)
+    if (keycode == ON_TURN_LEFT || keycode == ON_TURN_RIGHT)
         data->ply->turn_direction = 0;
     return 0;
 }
@@ -40,4 +35,4 @@ int close_window(t_data *data)
     mlx_destroy_window(data->mlx->mlx, data->mlx->win);
     exit(0);
     return 0;
-}
+} 

@@ -7,7 +7,7 @@ void init_player(t_player *player, t_data *data) {
     player->fov_rd = 60 * DEG_TO_RAD;
     player->walk_direction = 0;
     player->turn_direction = 0;
-    player->angle = 0;
+    get_angle(data);
 }
 void init_ray(t_ray *ray) {
     ray->ray_ngl = 0;
@@ -19,8 +19,8 @@ void init_game(t_data *data, t_args *args)
 
     data->args = args;
     data->map2d = args->map_lines;
-    data->w_map = 8;
-    data->h_map = 7;
+    data->w_map = 20;
+    data->h_map = 8;
     data->ply = malloc(sizeof(t_player));
     init_player(data->ply, data);
     data->ray = malloc(sizeof(t_ray));
