@@ -2,8 +2,8 @@
 #include "../includes/cub3d.h"
 void init_player(t_player *player, t_data *data) {
     get_x_y_player(data);
-    player->posX = data->index_x * 32 + 16;
-    player->posY = data->index_y * 32 + 16;
+    player->posX = data->index_x * TILE_SIZE + 16;
+    player->posY = data->index_y * TILE_SIZE + 16;
     player->fov_rd = 60 * DEG_TO_RAD;
     player->walk_direction = 0;
     player->turn_direction = 0;
@@ -19,8 +19,8 @@ void init_game(t_data *data, t_args *args)
 
     data->args = args;
     data->map2d = args->map_lines;
-    data->w_map = 20;
-    data->h_map = 8;
+    data->w_map = 39;
+    data->h_map = 17;
     data->ply = malloc(sizeof(t_player));
     init_player(data->ply, data);
     data->ray = malloc(sizeof(t_ray));

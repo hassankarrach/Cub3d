@@ -26,7 +26,7 @@ LDFLAGS = -L$(MLX_DIR) -lmlx -L/usr/lib/x86_64-linux-gnu -lX11 -lXext -lm
 LIBFT_SRCS = $(addprefix ./lib/libft/, ft_strlen.c ft_strncmp.c ft_strrchr.c \
 	ft_strlcpy.c ft_substr.c ft_split.c ft_strjoin.c ft_memcpy.c ft_strdup.c ft_gnl.c \
 	ft_atoi.c ft_strtrim.c ft_memset.c ft_bzero.c ft_calloc.c )
-SRCS = $(LIBFT_SRCS) $(addprefix ./src/, cub3d.c parser.c cleanup.c utils.c raycasting.c init.c ray_facing_directions.c window.c player.c init_player.c renderer.c utils_raycasting.c events_handling.c)
+SRCS = $(LIBFT_SRCS) $(addprefix ./src/, cub3d.c parser.c cleanup.c utils.c raycasting.c init.c ray_facing_directions.c window.c player.c init_player.c renderer.c utils_raycasting.c events_handling.c draw_3d.c)
 # ==================
 
 # OBJS ============>

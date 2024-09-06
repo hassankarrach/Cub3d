@@ -1,6 +1,6 @@
 // render the scene here.
 #include "../includes/cub3d.h"
-static void	ft_pixel_put(t_data *data, int x, int y, int color)
+void	ft_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
@@ -13,8 +13,8 @@ int check_out_of_bounds(t_data *data, int x, int y)
     int i;
     int j;
 
-    i = floor(x / 32);
-    j = floor(y / 32);
+    i = floor(x / TILE_SIZE);
+    j = floor(y / TILE_SIZE);
     if (i < 0 || x >= S_W || j < 0 || y >= S_H) // out of bounds
         return (-2);
     if (data->args->map_lines[j][i] == '1') // wall
@@ -96,7 +96,7 @@ void draw_2d_game(t_data *data)
                     ft_pixel_put(data, i, j, BLU);
             else if (check == -1)
                 ft_pixel_put(data, i, j, ORNG);
-            if (i % 32 == 0 || j % 32 == 0)
+            if (i % TILE_SIZE == 0 || j % TILE_SIZE == 0)
                 ft_pixel_put(data, i, j, BLK);
             i++;
         }
