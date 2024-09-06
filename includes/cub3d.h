@@ -9,6 +9,7 @@
 #include <fcntl.h>
 #include <stdarg.h>
 #include <unistd.h>
+#include <stdbool.h>
 
 // libs includes ================>
 #include "../lib/libft/libft.h"
@@ -19,10 +20,10 @@
 // ===============================
 
 // Macros  ======================>
+#define S_W 900 // screen width
+#define S_H 900 // screen height
 // #define S_W 640 // screen width
-// #define S_H 640 // screen height
-#define S_W 640 // screen width
-#define S_H 256 // screen height
+// #define S_H 256 // screen height
 #define S_W_MINI_MAP 20
 #define S_H_MINI_MAP 15
 #define S_TITLE "Cub3D"
@@ -41,6 +42,7 @@
 #define ORNG 0xFFFF9300 // Orange
 #define RED  0xFFFF0000 // Red
 #define WHI  0xFFFFFFFF // White
+#define MOR_BLU 0xFF000033
 
 
 // ===============================
@@ -133,4 +135,8 @@ int isRayFacingDown(float rayAngle);
 int isRayFacingUp(float rayAngle);
 int isRayFacingRight(float rayAngle);
 int isRayFacingLeft(float rayAngle);
+void	ft_pixel_put(t_data *data, int x, int y, int color);
+void draw_sky_floor(t_data *data);
+void render_wall(t_data *data, double distance, int x, double ray_angl);
+void drawing_3d_game(t_data *data);
 #endif

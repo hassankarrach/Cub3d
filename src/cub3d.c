@@ -4,10 +4,10 @@ static int game_loop(void *arg)
 {
     t_data *data = (t_data *)arg;
     mlx_clear_window(data->mlx->mlx, data->mlx->win);
-    // update_player(data->ply);
-    draw_2d_game(data);
-    // raycasting(data);
-    // render_mini_map(data, data->map2d);
+    // draw_2d_game(data);
+    raycasting(data);
+    drawing_3d_game(data);
+    // draw_sky_floor(data);
     return (0);
 }
 
@@ -21,8 +21,8 @@ int main(int ac, char **av)
     handle_events(&data);
     //mlx 
     mlx_loop_hook(data.mlx->mlx, game_loop, &data);
-    // render_mini_map(&data, data.map2d);
-    // draw_2d_game(&data);
+    // draw_sky_floor(&data);
+    // ft_pixel_put(&data, 1, 1, RED);
     mlx_loop(data.mlx->mlx);
     return (0);
 }
