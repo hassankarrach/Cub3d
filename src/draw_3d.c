@@ -20,33 +20,25 @@ void draw_sky_floor(t_data *data)
         y++;
     }
 }
-// char *render_wall(t_data *data, float ray_angle, t_tex *textures)
-// {
-//     char *selected_texture;
+int selected_texture(t_data *data, float ray_angle)
+{
+    char *selected_texture;
 
-//     if (is_ray_facing_up(ray_angle))
-//         selected_texture = textures->north;
-//     else if (is_ray_facing_down(ray_angle))
-//         selected_texture = textures->south;
-//     else if (is_ray_facing_left(ray_angle))
-//         selected_texture = textures->west;
-//     else if (is_ray_facing_right(ray_angle))
-//         selected_texture = textures->east;
-//     return (selected_texture);
-// }
-// int selected_texture(float ray_angle)
-// {
-//     char *selected_texture;
-
-//     if (isRayFacingUp(ray_angle))
-//         return (RED);
-//     else if (isRayFacingDown(ray_angle))
-//         return (GREN);
-//     else if (isRayFacingLeft(ray_angle))
-//         return (BLK);
-//     else if (isRayFacingRight(ray_angle))
-//         return (WHI);
-// }
+    if (data->ray->v_or_h == 1)
+    {
+        if (isRayFacingUp(ray_angle))
+            return (RED);
+        else if (isRayFacingDown(ray_angle))
+            return (GREN);
+    }
+    else
+    {
+        if (isRayFacingLeft(ray_angle))
+            return (BLK);
+        else if (isRayFacingRight(ray_angle))
+            return (WHI);
+    }
+}
 
 
 void render_wall(t_data *data, double distance, int x, double ray_angl)
@@ -63,9 +55,10 @@ void render_wall(t_data *data, double distance, int x, double ray_angl)
     wall_height = (dis_player * TILE_SIZE) / distance; // find projection wall height
     start_y = (S_H / 2) - ((int)wall_height / 2);
     end_y = (S_H / 2) + ((int)wall_height / 2);
+    color = selected_texture(data, ray_angl);
     while(start_y <= end_y)
     {
-        ft_pixel_put(data, x, start_y, RED);
+        ft_pixel_put(data, x, start_y, color);
         start_y++;
     }
 }

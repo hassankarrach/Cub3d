@@ -15,9 +15,15 @@ float calculate_distance(t_data *data, float angle)
     h_distance = get_h_inter(data, angle);
     v_distance = get_v_inter(data, angle);
     if (h_distance <= v_distance)
+    {
         smallest_distance = h_distance;
+        data->ray->v_or_h = 1;
+    }
     else
+    {
         smallest_distance = v_distance;
+        data->ray->v_or_h = 0;
+    }
     return (smallest_distance);
 }
 void start_h_y(t_data *data, float angl, float *h_y)
