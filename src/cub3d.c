@@ -7,22 +7,25 @@ static int game_loop(void *arg)
     // draw_2d_game(data);
     raycasting(data);
     drawing_3d_game(data);
+
     // draw_sky_floor(data);
     return (0);
 }
 
 int main(int ac, char **av)
 {
-    t_args  cub3d_args;
-    t_data  data;
+    t_args cub3d_args;
+    t_data data;
+
 
     parser(ac, av, &cub3d_args);
     init_game(&data, &cub3d_args);
     handle_events(&data);
-    //mlx 
+
+    data.texture1 = texture_loader(&data, "./assets/textures/texture2.xpm");
+
     mlx_loop_hook(data.mlx->mlx, game_loop, &data);
-    // draw_sky_floor(&data);
-    // ft_pixel_put(&data, 1, 1, RED);
+
     mlx_loop(data.mlx->mlx);
     return (0);
 }
