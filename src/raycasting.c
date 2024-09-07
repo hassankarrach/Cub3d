@@ -1,4 +1,4 @@
-// Functions implementing the raycasting algorithm 
+// Functions implementing the raycasting algorithm
 // ray casting algrihtm
 // 1. find cooordinate of the first intersection point
 // 2. find y and x step (the distance between the intersection points)
@@ -14,7 +14,7 @@ int find_wall(t_data *data, double x, double y)
     int j;
 
     if (x < 0 || y < 0)
-		return (1);
+        return (1);
     i = floor(x / TILE_SIZE);
     j = floor(y / TILE_SIZE);
     // printf("i = %d j = %d\n", i, j);
@@ -50,7 +50,7 @@ float get_h_inter(t_data *data, float angl)
 float get_v_inter(t_data *data, float angl)
 {
     float x_step;
-	float y_step;
+    float y_step;
     float xintercept;
     float yintercept;
 
@@ -60,7 +60,7 @@ float get_v_inter(t_data *data, float angl)
     yintercept = data->ply->posY + (xintercept - data->ply->posX) * tan(angl);
     if (isRayFacingLeft(angl))
         x_step *= -1;
-    if (isRayFacingUp(angl) && y_step > 0 || (isRayFacingDown(angl) && y_step < 0 ))
+    if (isRayFacingUp(angl) && y_step > 0 || (isRayFacingDown(angl) && y_step < 0))
         y_step *= -1;
     while (!find_wall(data, xintercept - (float)isRayFacingLeft(angl), yintercept))
     {
@@ -69,6 +69,12 @@ float get_v_inter(t_data *data, float angl)
     }
     return (sqrt(pow(xintercept - data->ply->posX, 2) + pow(yintercept - data->ply->posY, 2)));
 }
+void set_inter_point(t_data *data)
+{
+    data->ray->h_x = data->ply->posX + data->ray->h_distance * cos(data->ray->ray_ngl);
+    data->ray->v_y = data->ply->posY + data->ray->v_distance * sin(data->ray->ray_ngl);
+}
+
 void raycasting(t_data *data)
 {
     double angle;
@@ -82,6 +88,7 @@ void raycasting(t_data *data)
     {
         data->ray->ray_ngl = normalize_angle(data->ray->ray_ngl);
         data->ray->distance = calculate_distance(data, data->ray->ray_ngl);
+        set_inter_point(data);
         // render_mini_map(data, data->args->map_lines);
         render_wall(data, data->ray->distance, ray, data->ray->ray_ngl);
         // draw_2d_game(data);
@@ -89,6 +96,6 @@ void raycasting(t_data *data)
         // int endY = data->ply->posY + sin(data->ray->ray_ngl) * data->ray->distance;
         // draw_line(data, data->ply->posX, data->ply->posY, endX, endY);
         ray++;
-        data->ray->ray_ngl += data->ray->angleIncrement;  // next angle
+        data->ray->ray_ngl += data->ray->angleIncrement; // next angle
     }
 }

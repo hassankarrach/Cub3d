@@ -20,18 +20,18 @@
 // ===============================
 
 // Macros  ======================>
-#define S_W 900 // screen width
-#define S_H 900 // screen height
+#define S_W 1000 // screen width
+#define S_H 1000 // screen height
 // #define S_W 640 // screen width
 // #define S_H 256 // screen height
 #define S_W_MINI_MAP 20
 #define S_H_MINI_MAP 15
 #define S_TITLE "Cub3D"
-# define TILE_SIZE 32
+# define TILE_SIZE 576
 #define M_PI 3.14159265358979323846
 # define FOV 60
 # define ROTATION_SPEED 0.10
-# define MOVE_SPEED 4
+# define MOVE_SPEED 80
 # define PLAYER_SPEED 4
 #define DEG_TO_RAD (M_PI / 180)
 
@@ -55,6 +55,17 @@ typedef struct s_rgb
 	int g;
 	int b;
 } t_rgb;
+
+typedef struct s_texture
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	int		width;
+	int		height;
+}	t_texture;
 
 // typedef struct s_tex
 // {
@@ -84,6 +95,7 @@ typedef struct s_data
 	int		h_map;
 	t_args *args;
 	t_mlx	*mlx;
+	t_texture *texture1;
 	// t_tex	*tex;
 	t_ray	*ray;
 	t_player *ply;
@@ -139,4 +151,6 @@ void	ft_pixel_put(t_data *data, int x, int y, int color);
 void draw_sky_floor(t_data *data);
 void render_wall(t_data *data, double distance, int x, double ray_angl);
 void drawing_3d_game(t_data *data);
+t_texture *texture_loader(t_data *data, char *texture_path);
+
 #endif

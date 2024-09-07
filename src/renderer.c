@@ -50,7 +50,6 @@ void draw_line(t_data *data, int x0, int y0, int x1, int y1)
         }
     }
 }
-
 void draw_player(t_data *data)
 {
     int x_start;

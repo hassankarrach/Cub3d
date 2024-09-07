@@ -9,19 +9,17 @@ double normalize_angle(double angle)
 float calculate_distance(t_data *data, float angle)
 {
     float smallest_distance;
-    float h_distance;
-    float v_distance;
 
-    h_distance = get_h_inter(data, angle);
-    v_distance = get_v_inter(data, angle);
-    if (h_distance <= v_distance)
+    data->ray->h_distance = get_h_inter(data, angle);
+    data->ray->v_distance = get_v_inter(data, angle);
+    if (data->ray->h_distance  <= data->ray->v_distance)
     {
-        smallest_distance = h_distance;
+        smallest_distance = data->ray->h_distance ;
         data->ray->v_or_h = 1;
     }
     else
     {
-        smallest_distance = v_distance;
+        smallest_distance = data->ray->v_distance;
         data->ray->v_or_h = 0;
     }
     return (smallest_distance);
