@@ -23,6 +23,7 @@ int main(int ac, char **av)
     handle_events(&data);
 
     data.texture1 = texture_loader(&data, "./assets/textures/texture2.xpm");
+    data.texture2 = texture_loader(&data, "./assets/textures/texture3.xpm");
 
     mlx_loop_hook(data.mlx->mlx, game_loop, &data);
 

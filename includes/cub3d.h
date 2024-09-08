@@ -96,6 +96,7 @@ typedef struct s_data
 	t_args *args;
 	t_mlx	*mlx;
 	t_texture *texture1;
+	t_texture *texture2;
 	// t_tex	*tex;
 	t_ray	*ray;
 	t_player *ply;
@@ -152,5 +153,9 @@ void draw_sky_floor(t_data *data);
 void render_wall(t_data *data, double distance, int x, double ray_angl);
 void drawing_3d_game(t_data *data);
 t_texture *texture_loader(t_data *data, char *texture_path);
+void set_floor_coords(t_data *data, int ray);
+void floor_casting(t_data *data, int x);
+int get_pixel_from_texture(t_texture *texture, int offset_x, int offset_y);
+void sky_casting(t_data *data, int x);
 
 #endif

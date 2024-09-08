@@ -13,6 +13,8 @@ typedef struct s_ray {
     int v_or_h;
     double h_x;
     double v_y;
+    float floorX;
+    float floorY;
+    double wall_height;
 } t_ray;
-
 #endif
