@@ -27,8 +27,8 @@ void draw_sky_floor(t_data *data)
                 double bright_factor = pow(normalized_distance, 3); // Cubing to brighten more rapidly
 
                 // Interpolate between dark blue and bright blue based on bright_factor
-                int r = (int)((1.0 - bright_factor) * 1 + bright_factor *  31);   // From dark blue (0) to bright blue (135)
-                int g = (int)((1.0 - bright_factor) * 32 + bright_factor * 67);   // From dark blue (0) to bright blue (206)
+                int r = (int)((1.0 - bright_factor) * 1 + bright_factor * 31);   // From dark blue (0) to bright blue (135)
+                int g = (int)((1.0 - bright_factor) * 32 + bright_factor * 67);  // From dark blue (0) to bright blue (206)
                 int b = (int)((1.0 - bright_factor) * 71 + bright_factor * 149); // From dark blue (139) to bright blue (250)
 
                 // Combine RGB values into a single integer (assuming 0xRRGGBB format)
@@ -65,7 +65,6 @@ void draw_sky_floor(t_data *data)
     }
 }
 
-
 int selected_texture(t_data *data, float ray_angle)
 {
     char *selected_texture;
@@ -101,16 +100,16 @@ t_texture *texture_loader(t_data *data, char *texture_path)
 int get_pixel_from_texture(t_texture *texture, int offset_x, int offset_y)
 {
     int pixel_offset;
-    int color;
 
     if (offset_x < 0 || offset_x >= texture->width || offset_y < 0 || offset_y >= texture->height)
-        return 0;
+        return 0; // Return a default color (like black) if out of bounds
 
     pixel_offset = (offset_y * texture->line_length) + (offset_x * (texture->bits_per_pixel / 8));
-    color = *(int *)(texture->addr + pixel_offset);
+
+    int color = *(int *)(texture->addr + pixel_offset);
     return color;
 }
-int get_texture_offset(t_data *data, float ray_angle)
+int get_start_drawing_texture_x(t_data *data, float ray_angle)
 {
     int offset;
 
@@ -128,26 +127,28 @@ int get_texture_offset(t_data *data, float ray_angle)
 void render_wall(t_data *data, double distance, int x, double ray_angl)
 {
     double dis_player;
+    double wall_height;
     int start_y;
     int end_y;
     int save_y;
     int texture_x, texture_y;
     double brightness_factor;
 
-    dis_player = (S_W / 2) / tan((FOV * DEG_TO_RAD) / 2); // distance fropm player to pr plane 
+    dis_player = (S_W / 2) / tan((FOV * DEG_TO_RAD) / 2);   // distance fropm player to pr plane
     distance = distance * cos(ray_angl - data->ply->angle); // corrected distance
-    data->ray->wall_height = (dis_player * TILE_SIZE) / distance;      // projected wall height
-    start_y = (S_H / 2) - ((int)data->ray->wall_height / 2);
-    end_y = (S_H / 2) + ((int)data->ray->wall_height / 2);
+    wall_height = (dis_player * TILE_SIZE) / distance;      // projected wall height
+    start_y = (S_H / 2) - ((int)wall_height / 2);
+    end_y = (S_H / 2) + ((int)wall_height / 2);
     save_y = start_y;
-    texture_x = (get_texture_offset(data, ray_angl) * 576) / TILE_SIZE;
+
+    texture_x = get_start_drawing_texture_x(data, ray_angl);
 
     brightness_factor = fmax(1.0 - (distance / (TILE_SIZE * 15)), 0.2);
 
     while (start_y <= end_y)
     {
         // Calculate texture Y
-        texture_y = ((start_y - save_y) * 576) / data->ray->wall_height;
+        texture_y = ((start_y - save_y) * 576) / wall_height;
         int color = get_pixel_from_texture(data->texture1, texture_x, texture_y);
         int r = ((color >> 16) & 0xFF) * brightness_factor;
         int g = ((color >> 8) & 0xFF) * brightness_factor;
@@ -159,5 +160,36 @@ void render_wall(t_data *data, double distance, int x, double ray_angl)
 }
 void drawing_3d_game(t_data *data)
 {
+    int x;
+    int y;
+    int color;
+    static int frame = 0;
+    static int frame_delay = 0;
+
+    x = 0;
+    y = 0;
+    while (y < 600)
+    {
+        x = 0;
+        while (x < 600)
+        {
+            color = get_pixel_from_texture(data->player[frame], x, y);
+            if (color != BLK)
+                ft_pixel_put(data, x + 400, y+ 400, color);
+            x++;
+        }
+        y++;
+    }
     mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->mlx->img, 0, 0);
+
+    frame_delay++;
+    if (frame_delay >= 2) // Adjust '5' to slow down or speed up the frame rate
+    {
+        frame++;         // Only increment frame every few calls
+        frame_delay = 0; // Reset the delay counter
+    }
+
+    // Reset frame back to 1 after reaching 13
+    if (frame == 13)
+        frame = 1;
 }
