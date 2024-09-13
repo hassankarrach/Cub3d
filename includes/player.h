@@ -21,6 +21,7 @@ typedef struct s_player {
     char player_dir;
     double posX; // the player position
     double posY;
+    int look_offset;
     int walk_direction; // the player walk direction
     int turn_direction; // the player turn direction
 } t_player;

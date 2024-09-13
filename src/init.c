@@ -2,8 +2,8 @@
 #include "../includes/cub3d.h"
 void init_player(t_player *player, t_data *data) {
     get_x_y_player(data);
-    player->posX = data->index_x * TILE_SIZE + 16;
-    player->posY = data->index_y * TILE_SIZE + 16;
+    player->posX = data->index_x * TILE_SIZE + 288;
+    player->posY = data->index_y * TILE_SIZE + 288;
     player->fov_rd = 60 * DEG_TO_RAD;
     player->walk_direction = 0;
     player->turn_direction = 0;

@@ -158,5 +158,7 @@ void set_floor_coords(t_data *data, int ray);
 void floor_casting(t_data *data, int x);
 int get_pixel_from_texture(t_texture *texture, int offset_x, int offset_y);
 t_texture *png_texture_loader(t_data *data, char *texture_path);
+int mouse_move(int x, int y, t_data *data);
+int mouse_release(int button, int x, int y, t_data *data);
 
 #endif

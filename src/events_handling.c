@@ -10,9 +10,9 @@ void update_player(t_player *player, t_data *data)
     player->angle = normalize_angle(player->angle);
     new_x += player->walk_direction * MOVE_SPEED * cos(player->angle);
     new_y += player->walk_direction * MOVE_SPEED * sin(player->angle);
-    if (!find_wall(data, new_x, new_y))
-    {
+    if (!find_wall(data, new_x, player->posY))  // Check X-axis
         player->posX = new_x;
+    if (!find_wall(data, player->posX, new_y))  // Check Y-axis
         player->posY = new_y;
-    }
-}
+} 
+ 
