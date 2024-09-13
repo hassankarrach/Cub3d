@@ -22,7 +22,7 @@ int main(int ac, char **av)
     init_game(&data, &cub3d_args);
     handle_events(&data);
 
-    data.texture1 = texture_loader(&data, "./assets/textures/texture2.xpm");
+    data.texture1 = texture_loader(&data, "./assets/textures/texture5.xpm");
     data.texture2 = texture_loader(&data, "./assets/textures/texture3.xpm");
     data.player[0] = texture_loader(&data, "./assets/foreground/1.xpm");
     data.player[1] = texture_loader(&data, "./assets/foreground/2.xpm");

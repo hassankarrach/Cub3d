@@ -16,5 +16,12 @@ typedef struct s_ray {
     float floorX;
     float floorY;
     double wall_height;
+    int hit_door;
+    float xintercept_h;
+    float yintercept_h;
+    float xintercept_v;
+    float yintercept_v;
+    int front_x;
+    int front_y;
 } t_ray;
 #endif
