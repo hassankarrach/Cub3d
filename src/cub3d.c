@@ -34,5 +34,6 @@ int main(int ac, char **av)
     // render_mini_map(&data, data.map2d);
     // draw_2d_game(&data);
     mlx_loop(data.mlx->mlx);
+    mlx_loop_hook(data.mlx->mlx, game_loop, &data);
     return (0);
 }
