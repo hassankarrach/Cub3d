@@ -49,3 +49,4 @@ Gets the vertical intersection point for a given angle. It calculates the x and 
 ### resources ###
 1.  **Basic Trigonometry ==> https://www.youtube.com/watch?v=eqde2Ez276k**
 2. **Thales's theorem ==> 
+4. 
