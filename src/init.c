@@ -7,11 +7,11 @@ void init_player(t_player *player, t_data *data) {
     player->fov_rd = 60 * DEG_TO_RAD;
     player->walk_direction = 0;
     player->turn_direction = 0;
+    data->ply->move_speed = 1;
     get_angle(data);
 }
 void init_ray(t_ray *ray) {
     ray->ray_ngl = 0;
-    ray->distance = 0;
     ray->angleIncrement = 0;
 }
 void init_game(t_data *data, t_args *args)
