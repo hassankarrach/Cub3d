@@ -3,9 +3,15 @@
 static int game_loop(void *arg)
 {
     static int i = 0;
+    static double bobbing_time = 0;
     t_data *data = (t_data *)arg;
     // draw_2d_game(data);
     mlx_clear_window(data->mlx->mlx, data->mlx->win);
+    if (!data->ply->walk_direction)
+    {
+        bobbing_time += 0.1;
+        data->ply->look_offset += sin(bobbing_time) * 2;
+    }
     raycasting(data);
     drawing_3d_game(data);
     // draw_sky_floor(data);

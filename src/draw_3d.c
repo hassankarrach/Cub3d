@@ -27,7 +27,7 @@ void draw_sky_floor(t_data *data)
                 int gradient_color = (r << 16) | (g << 8) | b;
                 ft_pixel_put(data, x, y, gradient_color);
             }
-            else // Adjust floor rendering based on look_offset
+            else if (y > S_H / 2 + data->ply->look_offset) // Adjust floor rendering based on look_offset
             {
                 double distance = sqrt((x - center_x) * (x - center_x) + (y - center_y_floor) * (y - center_y_floor));
                 double normalized_distance = distance / max_distance;
@@ -35,9 +35,9 @@ void draw_sky_floor(t_data *data)
                     normalized_distance = 1.0;
 
                 double dark_factor = pow(normalized_distance, 0.7);
-                int r = (int)((1.0 - dark_factor) * 0 + dark_factor * 59);
-                int g = (int)((1.0 - dark_factor) * 0 + dark_factor * 8);
-                int b = (int)((1.0 - dark_factor) * 0 + dark_factor * 4);
+                int r = (int)(dark_factor * 59);
+                int g = (int)(dark_factor * 8);
+                int b = (int)(dark_factor * 4);
                 int gradient_color = (r << 16) | (g << 8) | b;
                 ft_pixel_put(data, x, y, gradient_color);
             }

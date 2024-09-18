@@ -24,6 +24,7 @@ typedef struct s_player {
     int look_offset;
     int walk_direction; // the player walk direction
     int turn_direction; // the player turn direction
+    int move_speed; // the player move speed
 } t_player;
 
 #endif

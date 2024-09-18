@@ -11,7 +11,7 @@ void handle_events(t_data *data)
 
 int key_press(int keycode, t_data *data)
 {
-    if (keycode == ON_KEYUP)
+    if (keycode == ON_KEYUP || keycode == 102)
         data->ply->walk_direction = 1;
     if (keycode == ON_KEYDOWN)
         data->ply->walk_direction = -1;
@@ -19,6 +19,8 @@ int key_press(int keycode, t_data *data)
         data->ply->turn_direction = -1;
     if (keycode == ON_TURN_RIGHT)
         data->ply->turn_direction = 1;
+    if (keycode == 102)
+        data->ply->move_speed = 2;
     update_player(data->ply, data);
     return 0;
 }
@@ -44,10 +46,12 @@ int mouse_release(int button, int x, int y, t_data *data)
 }
 int key_release(int keycode, t_data *data)
 {
-    if (keycode == ON_KEYUP || keycode == ON_KEYDOWN)
+    if (keycode == ON_KEYUP || keycode == ON_KEYDOWN || keycode == 102)
         data->ply->walk_direction = 0;
     if (keycode == ON_TURN_LEFT || keycode == ON_TURN_RIGHT)
         data->ply->turn_direction = 0;
+    if (keycode == 102)
+        data->ply->move_speed = 1;
     return 0;
 }
 

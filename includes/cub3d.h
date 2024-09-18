@@ -31,8 +31,9 @@
 #define M_PI 3.14159265358979323846
 # define FOV 60
 # define ROTATION_SPEED 0.10
-# define MOVE_SPEED 80
-# define PLAYER_SPEED 4
+# define MOVE_SPEED 6
+#define BOBBING_SPEED 0.4
+#define BOBBING_AMPLITUDE 4
 #define DEG_TO_RAD (M_PI / 180)
 
 #define BLK  0xFF000000 // Black
@@ -98,6 +99,7 @@ typedef struct s_data
 	t_texture *texture1;
 	t_texture *texture2;
 	t_texture *player[14];
+	double cosTable[360];
 	// t_tex	*tex;
 	t_ray	*ray;
 	t_player *ply;

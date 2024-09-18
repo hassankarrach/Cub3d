@@ -101,6 +101,7 @@ int find_wall(t_data *data, double x, double y)
         data->ray->ray_ngl = data->ply->angle - data->ply->fov_rd / 2;
         data->ray->angleIncrement = data->ply->fov_rd / S_W;
         draw_sky_floor(data);
+        floor_casting(data, ray);
         while (ray < S_W)
         {
             data->ray->hit_door = 0;
