@@ -1,6 +1,7 @@
 // Functions for initializing the game, loading resources, etc.
 #include "../includes/cub3d.h"
-void init_player(t_player *player, t_data *data) {
+void init_player(t_player *player, t_data *data)
+{
     get_x_y_player(data);
     player->posX = data->index_x * TILE_SIZE + 288;
     player->posY = data->index_y * TILE_SIZE + 288;
@@ -10,9 +11,25 @@ void init_player(t_player *player, t_data *data) {
     data->ply->move_speed = 1;
     get_angle(data);
 }
-void init_ray(t_ray *ray) {
+void init_ray(t_ray *ray)
+{
     ray->ray_ngl = 0;
     ray->angleIncrement = 0;
+}
+static void init_sounds(t_data *data)
+{
+    int i = 0;
+    data->sounds[0].file_path = LOBBY_SOUND_PATH;
+    data->sounds[1].file_path = AMBIENCE_SOUND_PATH;
+    data->sounds[2].file_path = PSST_SOUND_PATH;
+    data->sounds[3].file_path = WALKING_SOUND_PATH;
+    data->sounds[4].file_path = YOU_DEAD_SOUND_PATH;
+
+    while (i < 5)
+        data->sounds[i++].is_playing = 0;
+    i = 0;
+    while (i < 5)
+        data->sounds[i++].pid = 0; // should be?
 }
 void init_game(t_data *data, t_args *args)
 {
@@ -32,4 +49,6 @@ void init_game(t_data *data, t_args *args)
     data->mlx->addr = mlx_get_data_addr(data->mlx->img, &data->mlx->bits_per_pixel, &data->mlx->line_length, &data->mlx->endian);
     // data->tex = malloc(sizeof(t_tex));
     // init_textures(data->tex);
+    data->state = LOBBY;
+    init_sounds(data);
 }

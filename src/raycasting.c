@@ -24,7 +24,7 @@ int find_wall(t_data *data, double x, double y)
         return 1;
     if (data->map2d[j][i] == 'D')
     {
-        if (dist_door < 1000.0) 
+        if (dist_door < 1000.0)
         {
             data->map2d[j][i] = 'O';
         }
@@ -42,81 +42,80 @@ int find_wall(t_data *data, double x, double y)
     }
     return 0;
 }
- 
-    float get_h_inter(t_data *data, float angl)
-    {
-        float x_step;
-        float y_step;
-        float xintercept_h;
-        float yintercept_h;
 
-        y_step = TILE_SIZE;
-        x_step = TILE_SIZE / tan(angl);
-        start_h_y(data, angl, &yintercept_h);
-        xintercept_h = data->ply->posX + (yintercept_h - data->ply->posY) / tan(angl);
-        if (isRayFacingUp(angl))
-            y_step *= -1;
-        if (isRayFacingLeft(angl) && x_step > 0 || isRayFacingRight(angl) && x_step < 0)
-            x_step *= -1;
-        while (!find_wall(data, xintercept_h, yintercept_h - (float)isRayFacingUp(angl)))
-        {
-            yintercept_h += y_step;
-            xintercept_h += x_step;
-        }
-        return (sqrt(pow(xintercept_h - data->ply->posX, 2) + pow(yintercept_h - data->ply->posY, 2)));
-    }
-    float get_v_inter(t_data *data, float angl)
-    {
-        float x_step;
-        float y_step;
-        float xintercept_h;
-        float yintercept_h;
+float get_h_inter(t_data *data, float angl)
+{
+    float x_step;
+    float y_step;
+    float xintercept_h;
+    float yintercept_h;
 
-        x_step = TILE_SIZE;
-        y_step = TILE_SIZE * tan(angl);
-        start_v_x(data, angl, &xintercept_h);
-        yintercept_h = data->ply->posY + (xintercept_h - data->ply->posX) * tan(angl);
-        if (isRayFacingLeft(angl))
-            x_step *= -1;
-        if (isRayFacingUp(angl) && y_step > 0 || (isRayFacingDown(angl) && y_step < 0))
-            y_step *= -1;
-        while (!find_wall(data, xintercept_h - (float)isRayFacingLeft(angl), yintercept_h))
-        {
-            xintercept_h += x_step;
-            yintercept_h += y_step;
-        }
-        return (sqrt(pow(xintercept_h - data->ply->posX, 2) + pow(yintercept_h - data->ply->posY, 2)));
-    }
-    void set_inter_point(t_data *data)
+    y_step = TILE_SIZE;
+    x_step = TILE_SIZE / tan(angl);
+    start_h_y(data, angl, &yintercept_h);
+    xintercept_h = data->ply->posX + (yintercept_h - data->ply->posY) / tan(angl);
+    if (isRayFacingUp(angl))
+        y_step *= -1;
+    if (isRayFacingLeft(angl) && x_step > 0 || isRayFacingRight(angl) && x_step < 0)
+        x_step *= -1;
+    while (!find_wall(data, xintercept_h, yintercept_h - (float)isRayFacingUp(angl)))
     {
-        data->ray->h_x = data->ply->posX + data->ray->h_distance * cos(data->ray->ray_ngl);
-        data->ray->v_y = data->ply->posY + data->ray->v_distance * sin(data->ray->ray_ngl);
+        yintercept_h += y_step;
+        xintercept_h += x_step;
     }
-    void raycasting(t_data *data)
-    {
-        double angle;
-        int ray;
+    return (sqrt(pow(xintercept_h - data->ply->posX, 2) + pow(yintercept_h - data->ply->posY, 2)));
+}
+float get_v_inter(t_data *data, float angl)
+{
+    float x_step;
+    float y_step;
+    float xintercept_h;
+    float yintercept_h;
 
-        ray = 0;
-        data->ray->ray_ngl = data->ply->angle - data->ply->fov_rd / 2;
-        data->ray->angleIncrement = data->ply->fov_rd / S_W;
-        draw_sky_floor(data);
-        floor_casting(data, ray);
-        while (ray < S_W)
-        {
-            data->ray->hit_door = 0;
-            data->ray->ray_ngl = normalize_angle(data->ray->ray_ngl);
-            data->ray->distance = calculate_distance(data, data->ray->ray_ngl);
-            // set_floor_coords(data, ray);
-            set_inter_point(data);
-            // render_mini_map(data, data->args->map_lines);
-            render_wall(data, data->ray->distance, ray, data->ray->ray_ngl);
-            // draw_2d_game(data);
-            // int endX = data->ply->posX + cos(data->ray->ray_ngl) * data->ray->distance;
-            // int endY = data->ply->posY + sin(data->ray->ray_ngl) * data->ray->distance;
-            // draw_line(data, data->ply->posX, data->ply->posY, endX, endY);
-            ray++;
-            data->ray->ray_ngl += data->ray->angleIncrement; // next angle
-        }
-    } 
-    
+    x_step = TILE_SIZE;
+    y_step = TILE_SIZE * tan(angl);
+    start_v_x(data, angl, &xintercept_h);
+    yintercept_h = data->ply->posY + (xintercept_h - data->ply->posX) * tan(angl);
+    if (isRayFacingLeft(angl))
+        x_step *= -1;
+    if (isRayFacingUp(angl) && y_step > 0 || (isRayFacingDown(angl) && y_step < 0))
+        y_step *= -1;
+    while (!find_wall(data, xintercept_h - (float)isRayFacingLeft(angl), yintercept_h))
+    {
+        xintercept_h += x_step;
+        yintercept_h += y_step;
+    }
+    return (sqrt(pow(xintercept_h - data->ply->posX, 2) + pow(yintercept_h - data->ply->posY, 2)));
+}
+void set_inter_point(t_data *data)
+{
+    data->ray->h_x = data->ply->posX + data->ray->h_distance * cos(data->ray->ray_ngl);
+    data->ray->v_y = data->ply->posY + data->ray->v_distance * sin(data->ray->ray_ngl);
+}
+void raycasting(t_data *data)
+{
+    double angle;
+    int ray;
+
+    ray = 0;
+    data->ray->ray_ngl = data->ply->angle - data->ply->fov_rd / 2;
+    data->ray->angleIncrement = data->ply->fov_rd / S_W;
+    draw_sky_floor(data);
+    floor_casting(data, ray);
+    while (ray < S_W)
+    {
+        data->ray->hit_door = 0;
+        data->ray->ray_ngl = normalize_angle(data->ray->ray_ngl);
+        data->ray->distance = calculate_distance(data, data->ray->ray_ngl);
+        // set_floor_coords(data, ray);
+        set_inter_point(data);
+        // render_mini_map(data, data->args->map_lines);
+        render_wall(data, data->ray->distance, ray, data->ray->ray_ngl);
+        // draw_2d_game(data);
+        // int endX = data->ply->posX + cos(data->ray->ray_ngl) * data->ray->distance;
+        // int endY = data->ply->posY + sin(data->ray->ray_ngl) * data->ray->distance;
+        // draw_line(data, data->ply->posX, data->ply->posY, endX, endY);
+        ray++;
+        data->ray->ray_ngl += data->ray->angleIncrement; // next angle
+    }
+}

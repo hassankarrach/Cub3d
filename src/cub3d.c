@@ -1,20 +1,37 @@
 // Entry point of the program.
 #include "../includes/cub3d.h"
+
 static int game_loop(void *arg)
 {
     static int i = 0;
     static double bobbing_time = 0;
     t_data *data = (t_data *)arg;
     // draw_2d_game(data);
-    mlx_clear_window(data->mlx->mlx, data->mlx->win);
-    if (!data->ply->walk_direction)
+    if (data->state == LOBBY)
+        lobby(data);
+    else if (data->state == DEAD)
+        you_died(data);
+    else if (data->state == PAUSED)
+        game_pause(data);
+    else
     {
-        bobbing_time += 0.1;
-        data->ply->look_offset += sin(bobbing_time) * 2;
+        if (!data->sounds[1].is_playing)
+        {
+            stop_all_sounds(data);
+            play_sound(&data->sounds[1]);
+        }
+        mlx_clear_window(data->mlx->mlx, data->mlx->win);
+        if (!data->ply->walk_direction)
+        {
+            bobbing_time += 0.1;
+            data->ply->look_offset += sin(bobbing_time) * 2;
+        }
+        raycasting(data);
+        drawing_3d_game(data);
+        render_mini_map(data);
     }
-    raycasting(data);
-    drawing_3d_game(data);
     // draw_sky_floor(data);
+
     return (0);
 }
 
@@ -22,7 +39,6 @@ int main(int ac, char **av)
 {
     t_args cub3d_args;
     t_data data;
-
 
     parser(ac, av, &cub3d_args);
     init_game(&data, &cub3d_args);
@@ -44,8 +60,13 @@ int main(int ac, char **av)
     data.player[11] = texture_loader(&data, "./assets/foreground/12.xpm");
     data.player[12] = texture_loader(&data, "./assets/foreground/13.xpm");
     data.player[13] = texture_loader(&data, "./assets/foreground/14.xpm");
+    data.logo = texture_loader(&data, "./assets/logo.xpm");
+    data.press_to_start = texture_loader(&data, "./assets/press_space.xpm");
+    data.you_died = texture_loader(&data, "./assets/you_died.xpm");
 
     mlx_loop_hook(data.mlx->mlx, game_loop, &data);
+
+    // test
 
     mlx_loop(data.mlx->mlx);
     return (0);
