@@ -21,6 +21,8 @@ int key_press(int keycode, t_data *data)
         data->ply->turn_direction = 1;
     if (keycode == 102)
         data->ply->move_speed = 2;
+    if (keycode == 32)
+        data->state = PLAYING;
     update_player(data->ply, data);
     return 0;
 }
@@ -58,6 +60,7 @@ int key_release(int keycode, t_data *data)
 int close_window(t_data *data)
 {
     mlx_destroy_window(data->mlx->mlx, data->mlx->win);
+    stop_all_sounds(data);
     exit(0);
     return 0;
 } 
