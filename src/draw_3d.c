@@ -157,8 +157,8 @@ void drawing_3d_game(t_data *data)
     //     y++;
     // }
     // draw_sprites(data);
-    printf ("x = %f, y = %f\n", data->ply->posX, data->ply->posY);
-    printf ("x sprite = %f, y sprite = %f\n", data->sprites->x, data->sprites->y);
+    // printf ("x = %f, y = %f\n", data->ply->posX, data->ply->posY);
+    // printf ("x sprite = %f, y sprite = %f\n", data->sprites->x, data->sprites->y);
     mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->mlx->img, 0, 0);
 
     // frame_delay++;
