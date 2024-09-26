@@ -44,6 +44,7 @@ int main(int ac, char **av)
     parser(ac, av, &cub3d_args);
     init_game(&data, &cub3d_args);
     handle_events(&data);
+    // mlx_mouse_hide(data.mlx->mlx, data.mlx->win);
     mlx_mouse_move(data.mlx->mlx, data.mlx->win, S_W / 2, S_H / 2);
     sprite.x = TILE_SIZE * 8 + TILE_SIZE / 2;
     sprite.y = TILE_SIZE * 10 + TILE_SIZE / 2;

@@ -38,9 +38,9 @@ int mouse_move(int x, int y, t_data *data)
     int mouse_delta_y = y - last_y;
     last_x = x;
     last_y = y;
-    data->ply->angle += mouse_delta_x * (ROTATION_SPEED * 0.06);
+    data->ply->angle += mouse_delta_x * (ROTATION_SPEED * 0.03);
     data->ply->angle = normalize_angle(data->ply->angle);
-    data->ply->look_offset -= mouse_delta_y * 2;
+    data->ply->look_offset -= mouse_delta_y * 1.5;
     return 0;
 }
 
