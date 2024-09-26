@@ -119,3 +119,4 @@ void raycasting(t_data *data)
         data->ray->ray_ngl += data->ray->angleIncrement; // next angle
     }
 }
+    

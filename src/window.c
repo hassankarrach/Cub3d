@@ -20,7 +20,11 @@ int key_press(int keycode, t_data *data)
     if (keycode == ON_TURN_RIGHT)
         data->ply->turn_direction = 1;
     if (keycode == 102)
-        data->ply->move_speed = 2;
+    {
+        data->ply->move_speed = 4;
+        data->ply->bobbing_speed = 2;
+        data->ply->bobbing_amplitude = 1.4;
+    }
     if (keycode == 32)
         data->state = PLAYING;
     update_player(data->ply, data);
@@ -53,7 +57,11 @@ int key_release(int keycode, t_data *data)
     if (keycode == ON_TURN_LEFT || keycode == ON_TURN_RIGHT)
         data->ply->turn_direction = 0;
     if (keycode == 102)
+    {
         data->ply->move_speed = 1;
+        data->ply->bobbing_speed = 1;
+        data->ply->bobbing_amplitude = 1;
+    }
     return 0;
 }
 

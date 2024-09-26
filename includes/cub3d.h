@@ -50,6 +50,11 @@
 
 // Structs ======================>
 typedef struct s_mlx t_mlx;
+typedef struct	s_vec t_vec;
+typedef struct	s_vec {
+	double		x;
+	double		y;
+}				t_vec;
 typedef struct s_rgb
 {
 	int r;
@@ -99,6 +104,21 @@ typedef struct s_args
 	char *East_texture;
 	char **map_lines;
 } t_args;
+typedef struct s_sprite
+{
+    double x, y;  // Sprite position in the game world
+	double		transform_x;
+	double		transform_y;
+	int			screen_x;
+	int			height;
+	int			draw_start_y;
+	int			draw_end_y;
+	int			width;
+	int			draw_start_x;
+	int			draw_end_x;
+    t_texture *texture;  // Pointer to the sprite texture
+    double distance;  // Distance from the player (for sorting)
+} t_sprite;
 
 typedef struct s_data
 {
@@ -111,6 +131,8 @@ typedef struct s_data
 	t_mlx *mlx;
 	t_texture *texture1;
 	t_texture *texture2;
+	t_texture *texture3;
+	t_texture *texture4;
 	t_texture *player[14];
 	t_texture *logo;
 	t_texture *press_to_start;
@@ -118,7 +140,7 @@ typedef struct s_data
 	// t_tex	*tex;
 	t_ray *ray;
 	t_player *ply;
-
+	t_sprite *sprites;
 	t_sound sounds[5];
 
 	game_state state;
@@ -135,6 +157,7 @@ typedef struct s_mlx
 	int endian;
 	t_data *data;
 } t_mlx;
+
 // ===============================
 
 // ERRORs - CLEANUPs
@@ -181,5 +204,5 @@ int get_pixel_from_texture(t_texture *texture, int offset_x, int offset_y);
 t_texture *png_texture_loader(t_data *data, char *texture_path);
 int mouse_move(int x, int y, t_data *data);
 int mouse_release(int button, int x, int y, t_data *data);
-
+void		draw_sprites(t_data *data);
 #endif

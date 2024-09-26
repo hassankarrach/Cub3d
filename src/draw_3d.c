@@ -45,26 +45,19 @@ void draw_sky_floor(t_data *data)
     }
 }
 
-int selected_texture(t_data *data, float ray_angle)
-{
-    char *selected_texture;
-
-    if (data->ray->hit_door == 1)
-        return ORNG;
-    if (data->ray->v_or_h == 1)
-    {
+t_texture *selected_texture(t_data *data, float ray_angle) {
+    if (data->ray->v_or_h == 1) {
         if (isRayFacingUp(ray_angle))
-            return (RED);
+            return data->texture1;  // NO texture
         else if (isRayFacingDown(ray_angle))
-            return (GREN);
-    }
-    else
-    {
+            return data->texture2;  // SO texture
+    } else {
         if (isRayFacingLeft(ray_angle))
-            return (BLK);
+            return data->texture3;  // WE texture
         else if (isRayFacingRight(ray_angle))
-            return (WHI);
+            return data->texture4;  // EA texture
     }
+    return NULL;
 }
 
 t_texture *texture_loader(t_data *data, char *texture_path)
@@ -131,7 +124,7 @@ void render_wall(t_data *data, double distance, int x, double ray_angl)
     while (start_y <= end_y)
     {
         texture_y = ((start_y - save_y) * 576) / wall_height;
-        int color = get_pixel_from_texture(data->texture1, texture_x, texture_y);
+        int color = get_pixel_from_texture(selected_texture(data, ray_angl), texture_x, texture_y);
         // int color = selected_texture(data, ray_angl);
         int r = ((color >> 16) & 0xFF) * brightness_factor;
         int g = ((color >> 8) & 0xFF) * brightness_factor;
@@ -163,6 +156,9 @@ void drawing_3d_game(t_data *data)
     //     }
     //     y++;
     // }
+    // draw_sprites(data);
+    printf ("x = %f, y = %f\n", data->ply->posX, data->ply->posY);
+    printf ("x sprite = %f, y sprite = %f\n", data->sprites->x, data->sprites->y);
     mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->mlx->img, 0, 0);
 
     // frame_delay++;
