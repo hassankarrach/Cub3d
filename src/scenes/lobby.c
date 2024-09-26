@@ -8,6 +8,6 @@ void lobby(t_data *data)
 	// printf("%s\n", data->sounds[0].file_path);
 
 	// stop_all_sounds(data);
-	if (!data->sounds[0].is_playing)
-		play_sound(&data->sounds[0]);
+	// if (!data->sounds[0].is_playing)
+	// 	play_sound(&data->sounds[0]);
 }

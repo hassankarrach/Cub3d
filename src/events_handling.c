@@ -5,8 +5,8 @@ void Head_Bobbing(t_data *data)
     
     if (data->ply->walk_direction)
     {
-        bobbing_time += BOBBING_SPEED; 
-        data->ply->look_offset += sin(bobbing_time) * BOBBING_AMPLITUDE; // sin(bobbing_time) gives a value between -1 and 1
+        bobbing_time += BOBBING_SPEED * data->ply->bobbing_speed; 
+        data->ply->look_offset += sin(bobbing_time) * BOBBING_AMPLITUDE * data->ply->bobbing_amplitude; // sin(bobbing_time) gives a value between -1 and 1
     }
 }
 void update_player(t_player *player, t_data *data)

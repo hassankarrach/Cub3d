@@ -2,7 +2,6 @@
 #define PLAYER_H
 
 #include "../includes/cub3d.h"
-
 enum {
     ON_KEYDOWN = 65364,
 	ON_KEYUP = 65362,
@@ -25,6 +24,12 @@ typedef struct s_player {
     int walk_direction; // the player walk direction
     int turn_direction; // the player turn direction
     int move_speed; // the player move speed
+    int bobbing_speed; // the player bobbing speed
+    double bobbing_amplitude; // the player bobbing amplitude
+    double plane_x;
+    double plane_y;
+    double dir_x;
+    double dir_y;
 } t_player;
 
 #endif
