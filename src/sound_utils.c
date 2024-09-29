@@ -1,5 +1,5 @@
 #include "../includes/game.h"
-#include <sys/wait.h>
+
 
 void wait_for_child(pid_t pid)
 {

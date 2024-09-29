@@ -38,8 +38,8 @@ void init_game(t_data *data, t_args *args)
 
     data->args = args;
     data->map2d = args->map_lines;
-    data->w_map = 39;
-    data->h_map = 17;
+    data->w_map = 37;
+    data->h_map = 16;
     data->ply = malloc(sizeof(t_player));
     init_player(data->ply, data);
     data->ray = malloc(sizeof(t_ray));

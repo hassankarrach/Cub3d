@@ -25,8 +25,8 @@
 #define S_H 1000 // screen height
 // #define S_W 640 // screen width
 // #define S_H 256 // screen height
-#define S_W_MINI_MAP 20
-#define S_H_MINI_MAP 15
+#define S_W_MINI_MAP 330
+#define S_H_MINI_MAP 249
 #define S_TITLE "Cub3D"
 #define TILE_SIZE 576
 #define M_PI 3.14159265358979323846
@@ -116,6 +116,7 @@ typedef struct s_sprite
 	int			width;
 	int			draw_start_x;
 	int			draw_end_x;
+	double scale;
     t_texture *texture;  // Pointer to the sprite texture
     double distance;  // Distance from the player (for sorting)
 } t_sprite;
@@ -129,6 +130,7 @@ typedef struct s_data
 	int h_map;
 	t_args *args;
 	t_mlx *mlx;
+	t_mlx *mlx_map;
 	t_texture *texture1;
 	t_texture *texture2;
 	t_texture *texture3;
@@ -137,6 +139,8 @@ typedef struct s_data
 	t_texture *logo;
 	t_texture *press_to_start;
 	t_texture *you_died;
+	t_texture *mini_map;
+	t_texture *mini_map2;
 	// t_tex	*tex;
 	t_ray *ray;
 	t_player *ply;
@@ -151,6 +155,7 @@ typedef struct s_mlx
 	void *mlx;
 	void *win;
 	void *img;
+	void *img_map;
 	char *addr;
 	int bits_per_pixel;
 	int line_length;
@@ -204,5 +209,5 @@ int get_pixel_from_texture(t_texture *texture, int offset_x, int offset_y);
 t_texture *png_texture_loader(t_data *data, char *texture_path);
 int mouse_move(int x, int y, t_data *data);
 int mouse_release(int button, int x, int y, t_data *data);
-void		draw_sprites(t_data *data);
+void render_sprites(t_data *data);
 #endif

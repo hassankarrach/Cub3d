@@ -1,77 +1,117 @@
 #include "../includes/cub3d.h"
+#include <math.h> // For sqrt, cos, sin, acos
 
-void calculate_sprite_distances(t_data *data, t_sprite *sprite)
+void calculate_sprite_distance(t_sprite *sprite, t_player *player)
 {
-    sprite->distance = ((data->ply->posX - sprite->x) * (data->ply->posX - sprite->x)) +
-                       ((data->ply->posY - sprite->y) * (data->ply->posY - sprite->y));
-}
-void calculate_transform(t_data *data, t_sprite sprite, double *transform_x, double *transform_y)
-{
-    double	inv_det;
-	t_sprite	normalized_sprite;
-
-	normalized_sprite.x = sprite.x - data->ply->posX;
-	normalized_sprite.y = sprite.y - data->ply->posY;
-	inv_det = 1.0 / (data->ply->plane_x * data->ply->dir_y - data->ply->dir_x * data->ply->plane_y);
-	*transform_x = inv_det * (data->ply->dir_y * normalized_sprite.x - data->ply->dir_x * normalized_sprite.y);
-	*transform_y = inv_det * (-data->ply->plane_y * normalized_sprite.x + data->ply->plane_x * normalized_sprite.y);
-}
- void	calc_sprite_vis(t_data *data, t_sprite *sprite)
-{
-	calculate_transform(data, *sprite, &sprite->transform_x, &sprite->transform_y);
-	sprite->screen_x = (int)((S_W / 2) *
-		(1.0 + sprite->transform_x / sprite->transform_y));
-	sprite->height = abs((int)(100.0 / sprite->transform_y));
-	sprite->draw_start_y = -sprite->height / 2 + S_H / 2;
-	if (sprite->draw_start_y < 0)
-		sprite->draw_start_y = 0;
-	sprite->draw_end_y = sprite->height / 2 + S_H / 2;
-	sprite->draw_end_y = (sprite->draw_end_y >= S_H) ? S_H - 1 : sprite->draw_end_y;
-	sprite->width = abs((int)(100.0 / sprite->transform_y));
-	sprite->draw_start_x = -sprite->width / 2 + sprite->screen_x;
-	if (sprite->draw_start_x < 0)
-		sprite->draw_start_x = 0;
-	sprite->draw_end_x = sprite->width / 2 + sprite->screen_x;
-	if (sprite->draw_end_x >= S_W)
-		sprite->draw_end_x = S_W - 1;
-}
-static int	calc_tex_x(t_data *data, t_sprite  sprite_vis, int x)
-{
-	return ((int)((x - (-sprite_vis.width / 2 + sprite_vis.screen_x)) *
-			576 / sprite_vis.width));
+    sprite->distance = sqrt(pow(sprite->x - player->posX, 2) + 
+                            pow(sprite->y - player->posY, 2));
 }
 
-static int	calc_tex_y(t_data *data, t_sprite  sprite_vis, int y)
+void scale_sprite(t_sprite *sprite)
 {
-	return ((int)((y - (-sprite_vis.height / 2 + S_W / 2)) *
-					576 / sprite_vis.height));
+    float scalingFactor = 100.0f;  // You can tweak this to adjust overall sprite size
+    if (sprite->distance > 0)
+        sprite->scale = scalingFactor / sprite->distance;
+    else
+        sprite->scale = 0; // Prevent division by zero
 }
 
-void		draw_sprite_stripe(t_data *data, t_sprite  sprite_vis)
+void get_direction_vector(t_player *player, double *dir_x, double *dir_y)
 {
-	int			x;
-	int			y;
-	int			tex_x;
-	int			tex_y;
-
-	x = sprite_vis.draw_start_x;
-	while (x < sprite_vis.draw_end_x)
-	{
-		tex_x = calc_tex_x(data, sprite_vis, x);
-			y = sprite_vis.draw_start_y;
-			while (y < sprite_vis.draw_end_y)
-			{
-				tex_y = calc_tex_y(data, sprite_vis, y);
-				if (!(get_pixel_from_texture(data->texture1, tex_x, tex_y) & 0xff000000))
-					mlx_pixel_put(data->mlx->mlx, data->mlx->win, x, y, get_pixel_from_texture(data->texture1, tex_x, tex_y));
-				y++;
-			}
-		x++;
-	}
-}
-void		draw_sprites(t_data *data)
-{
-	calc_sprite_vis(data, data->sprites);
-	draw_sprite_stripe(data, *data->sprites);
+    *dir_x = cos(player->angle);  // Assuming angle is in radians
+    *dir_y = sin(player->angle);
 }
 
+void calculate_vector_to_sprite(t_sprite *sprite, t_player *player, double *vec_to_sprite_x, double *vec_to_sprite_y)
+{
+    *vec_to_sprite_x = sprite->x - player->posX;
+    *vec_to_sprite_y = sprite->y - player->posY;
+}
+
+double dot_product(double dir_x, double dir_y, double vec_to_sprite_x, double vec_to_sprite_y)
+{
+    return (dir_x * vec_to_sprite_x) + (dir_y * vec_to_sprite_y);
+}
+
+bool is_player_facing_sprite(t_player *player, t_sprite *sprite, double threshold_angle)
+{
+    double dir_x, dir_y;
+    double vec_to_sprite_x, vec_to_sprite_y;
+
+    get_direction_vector(player, &dir_x, &dir_y);
+    calculate_vector_to_sprite(sprite, player, &vec_to_sprite_x, &vec_to_sprite_y);
+
+    double dot = dot_product(dir_x, dir_y, vec_to_sprite_x, vec_to_sprite_y);
+    double magnitude_player = sqrt(dir_x * dir_x + dir_y * dir_y);
+    double magnitude_sprite = sqrt(vec_to_sprite_x * vec_to_sprite_x + vec_to_sprite_y * vec_to_sprite_y);
+
+    double cosine_angle = dot / (magnitude_player * magnitude_sprite);
+
+    // Ensure cosine_angle is within the range of acos function
+    if (cosine_angle < -1.0) cosine_angle = -1.0;
+    if (cosine_angle > 1.0) cosine_angle = 1.0;
+
+    // Calculate the angle in radians
+    double angle = acos(cosine_angle);
+
+    // Check if the angle is within the threshold
+    return angle < threshold_angle;
+}
+
+void draw_sprite(t_data *data, t_sprite *sprite, int screenX, int screenY)
+{
+    int sprite_width = 225 * sprite->scale;
+    int sprite_height = 225 * sprite->scale;
+
+    // Draw the sprite on the screen using your existing texture drawing logic
+    for (int y = 0; y < sprite_height; y++) {
+        for (int x = 0; x < sprite_width; x++) {
+            int texture_x = (int)(x / sprite->scale);
+            int texture_y = (int)(y / sprite->scale);
+            int color = get_pixel_from_texture(sprite->texture, texture_x, texture_y);
+            if (color != BLK) { // Ensure to define TRANSPARENT_COLOR
+                ft_pixel_put(data, screenX + x, screenY + y, color);
+            }
+        }
+    }
+}
+
+void render_sprites(t_data *data)
+{
+    t_sprite *sprite = data->sprites;
+
+    // Define a threshold angle for facing check (e.g., 45 degrees)
+    double threshold_angle = M_PI / 4; // 45 degrees in radians
+
+    // Calculate distance and scale for the sprite
+    calculate_sprite_distance(sprite, data->ply);
+    scale_sprite(sprite);
+
+    // Check if the player is facing the sprite before drawing
+    if (is_player_facing_sprite(data->ply, sprite, threshold_angle))
+    {
+        // Calculate the relative position of the sprite in the player's coordinate space
+        double relative_x = sprite->x - data->ply->posX;
+        double relative_y = sprite->y - data->ply->posY;
+
+        // Calculate the angle of the sprite relative to the player
+        double angle_to_sprite = atan2(relative_y, relative_x) - data->ply->angle;
+
+        // Get the distance to the sprite
+        double distance = sqrt(relative_x * relative_x + relative_y * relative_y);
+
+        // Assuming a fixed FOV and screen size
+        double fov = M_PI / 3; // Example: 60 degrees
+        double screen_center = S_W / 2;
+
+        // Project the sprite onto the screen using the angle and distance
+        int screenX = (int)(screen_center + (distance * cos(angle_to_sprite)) * (screen_center / tan(fov / 2)));
+        int screenY = (int)(S_H / 2 + (distance * sin(angle_to_sprite)) * (screen_center / tan(fov / 2)));
+
+        // Adjust for sprite scale
+        screenX -= (sprite->width * sprite->scale) / 2; // Centering sprite width
+        screenY -= (sprite->height * sprite->scale) / 2; // Centering sprite height
+
+        draw_sprite(data, sprite, screenX, screenY);
+    }
+}

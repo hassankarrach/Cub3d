@@ -7,6 +7,9 @@
 #include <fcntl.h>
 #include <signal.h>
 #include "cub3d.h"
+//Sound
+// #include <mpg123.h>
+// #include <ao/ao.h>
 
 typedef struct s_data t_data;
 typedef struct s_sound t_sound;
@@ -18,9 +21,7 @@ typedef struct s_sound t_sound;
 #define YOU_DEAD_SOUND_PATH "assets/sounds/you_dead.wav"
 
 // sounds_utils
-void play_sound(t_sound *sound);
-void stop_sound(t_sound *sound);
-void stop_all_sounds(t_data *data);
+
 
 // game
 void lobby(t_data *data);

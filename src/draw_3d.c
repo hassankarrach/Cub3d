@@ -159,8 +159,8 @@ void drawing_3d_game(t_data *data)
     // draw_sprites(data);
     // printf ("x = %f, y = %f\n", data->ply->posX, data->ply->posY);
     // printf ("x sprite = %f, y sprite = %f\n", data->sprites->x, data->sprites->y);
+    render_mini_map(data);
     mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->mlx->img, 0, 0);
-
     // frame_delay++;
     // if (frame_delay >= 2) // Adjust '5' to slow down or speed up the frame rate
     // {
