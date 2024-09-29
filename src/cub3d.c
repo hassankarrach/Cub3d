@@ -6,19 +6,18 @@ static int game_loop(void *arg)
     static int i = 0;
     static double bobbing_time = 0;
     t_data *data = (t_data *)arg;
-    // draw_2d_game(data);
-    // if (data->state == LOBBY)
-    //     lobby(data);
-    // else if (data->state == DEAD)
-    //     you_died(data);
-    // else if (data->state == PAUSED)
-    //     game_pause(data);
-    // else
-    // {
+    if (data->state == LOBBY)
+        lobby(data);
+    else if (data->state == DEAD)
+        you_died(data);
+    else if (data->state == PAUSED)
+        game_pause(data);
+    else
+    {
         if (!data->sounds[1].is_playing)
         {
-            stop_all_sounds(data);
-            play_sound(&data->sounds[1]);
+            // stop_all_sounds(data);
+            // play_sound(&data->sounds[1]);
         }
         mlx_clear_window(data->mlx->mlx, data->mlx->win);
         if (!data->ply->walk_direction)
@@ -28,8 +27,7 @@ static int game_loop(void *arg)
         }
         raycasting(data);
         drawing_3d_game(data);
-        render_mini_map(data);
-    // }
+    }
     // draw_sky_floor(data);
 
     return (0);
@@ -46,9 +44,10 @@ int main(int ac, char **av)
     handle_events(&data);
     // mlx_mouse_hide(data.mlx->mlx, data.mlx->win);
     mlx_mouse_move(data.mlx->mlx, data.mlx->win, S_W / 2, S_H / 2);
-    sprite.x = TILE_SIZE * 8 + TILE_SIZE / 2;
-    sprite.y = TILE_SIZE * 10 + TILE_SIZE / 2;
+    sprite.x = TILE_SIZE * 11 + TILE_SIZE / 2;
+    sprite.y = TILE_SIZE * 8 + TILE_SIZE / 2;
     data.sprites = &sprite;
+    sprite.texture = texture_loader(&data, "./assets/textures/texture.xpm");
     data.texture1 = texture_loader(&data, "./assets/textures/texture1.xpm");
     data.texture2 = texture_loader(&data, "./assets/textures/texture2.xpm");
     data.texture3 = texture_loader(&data, "./assets/textures/texture3.xpm");
@@ -67,6 +66,8 @@ int main(int ac, char **av)
     data.player[11] = texture_loader(&data, "./assets/foreground/12.xpm");
     data.player[12] = texture_loader(&data, "./assets/foreground/13.xpm");
     data.player[13] = texture_loader(&data, "./assets/foreground/14.xpm");
+    data.mini_map = texture_loader(&data, "./assets/mini_map.xpm");
+    data.mini_map2 = texture_loader(&data, "./assets/mini_map2.xpm");
     data.logo = texture_loader(&data, "./assets/logo.xpm");
     data.press_to_start = texture_loader(&data, "./assets/press_space.xpm");
     data.you_died = texture_loader(&data, "./assets/you_died.xpm");

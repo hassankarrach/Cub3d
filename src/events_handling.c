@@ -21,8 +21,14 @@ void update_player(t_player *player, t_data *data)
     new_x += player->walk_direction * MOVE_SPEED * data->ply->move_speed * cos(player->angle);
     new_y += player->walk_direction * MOVE_SPEED * data->ply->move_speed * sin(player->angle);
     if (!find_wall(data, new_x, player->posY))  // Check X-axis
+    {
         player->posX = new_x;
+        data->index_x = new_x / TILE_SIZE;
+    }
     if (!find_wall(data, player->posX, new_y))  // Check Y-axis
+    {
         player->posY = new_y;
+        data->index_y = new_y / TILE_SIZE;
+    }
     Head_Bobbing(data);
 }
