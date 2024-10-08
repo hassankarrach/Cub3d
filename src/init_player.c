@@ -30,6 +30,8 @@ void get_angle(t_data *m)
 		m->ply->dir_x = 1;
 		m->ply->dir_y = 0;
 		m->ply->angle = 0;
+		// printf ("jj\n");
+		// printf ("%f\n", m->ply->angle);
 		m->ply->plane_x = -tan(FOV / 2 * DEG_TO_RAD);
 		m->ply->plane_y = 0;
 	}

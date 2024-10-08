@@ -10,113 +10,170 @@
 #include "../includes/cub3d.h"
 int find_wall(t_data *data, double x, double y)
 {
-    int i = floor(x / TILE_SIZE);
-    int j = floor(y / TILE_SIZE);
-
-    // Correct distance from door (use center of tile)
-    float door_x_center = (i * TILE_SIZE) + TILE_SIZE / 2;
-    float door_y_center = (j * TILE_SIZE) + TILE_SIZE / 2;
-    float dist_door = sqrt(pow(door_x_center - data->ply->posX, 2) + pow(door_y_center - data->ply->posY, 2));
+    int i = (int)floor(x / TILE_SIZE);
+    int j = (int)floor(y / TILE_SIZE);
 
     if (i >= data->w_map || j >= data->h_map || i < 0 || j < 0)
         return 1;
     if (data->map2d[j][i] == '1')
         return 1;
-    if (data->map2d[j][i] == 'D')
+    if (data->map2d[j][i] == 'D' || (data->map2d[j][i] == 'O'))
     {
-        if (dist_door < 1000.0)
-        {
-            data->map2d[j][i] = 'O';
-        }
-        data->ray->hit_door = 1;
-        return 1;
-    }
-    if (data->map2d[j][i] == 'O')
-    {
-        if (dist_door > 1000.0)
-        {
-            data->map2d[j][i] = 'D';
-        }
-        data->ray->hit_door = 0;
-        return 0;
+        if (data->ray->skip_door)
+            return (0);
+        else
+            return 1;
     }
     return 0;
 }
-
-float get_h_inter(t_data *data, float angl)
+bool is_door(double x, double y, t_data *data)
 {
-    float x_step;
-    float y_step;
-    float xintercept_h;
-    float yintercept_h;
+    int i;
+    int j;
+    float dist_door;
 
+    i = (int)floor(x / TILE_SIZE);
+    j = (int)floor(y / TILE_SIZE);
+    dist_door = ft_distance(data, x, y);
+    if (i < 0 || i >= data->w_map || j < 0 || j >= data->h_map)
+        return false;
+    if (data->map2d[j][i] == 'D')
+    {
+        if (dist_door < 600.0 && !data->door->is_open)
+        {
+            data->door->is_open = 1;
+            data->map2d[j][i] = 'O';
+        }
+        return true;
+    }
+    else if (data->map2d[j][i] == 'O')
+    {
+        if (dist_door > 600.0)
+        {
+            data->door->is_open = 0;
+            data->map2d[j][i] = 'D';
+        }
+        return true;
+    }
+    return false;
+}
+bool player_in_grid(t_data *data)
+{
+    int player_tile_x;  
+    int player_tile_y;
+
+    player_tile_x = (int)(data->ply->posX / TILE_SIZE);
+    player_tile_y = (int)(data->ply->posY / TILE_SIZE);
+    if (data->map2d[player_tile_y][player_tile_x] == 'D' || data->map2d[player_tile_y][player_tile_x] == 'O')
+        return true;
+    else
+        return (false);
+}
+
+bool check_door_in_grid(t_data *data, t_inter *inter_h, double x_step, double y_step)
+{
+    double save_inter_x;
+    double save_inter_y;
+
+    save_inter_x = inter_h->xintercept;
+    save_inter_y =inter_h->yintercept;
+    if (player_in_grid(data))
+    {
+        start_h_y_door(data, data->ray->ray_ngl, &inter_h->yintercept);
+        inter_h->xintercept = data->ply->posX + (inter_h->yintercept - data->ply->posY) / tan(data->ray->ray_ngl);
+        if (fmod(data->ply->posY, TILE_SIZE) < TILE_SIZE / 2 && isRayFacingUp(data->ray->ray_ngl))
+        {
+            inter_h->xintercept = save_inter_x;
+            inter_h->yintercept = save_inter_y;
+            return false;
+        }
+        return (true);
+    }
+    inter_h->xintercept += x_step / 2;
+    inter_h->yintercept += y_step / 2;
+    return false;
+}
+
+t_inter get_h_inter(t_data *data, float angl)
+{
+    t_inter inter_h;
+    double x_step;
+    double y_step;
+
+    inter_h.is_door = false;
     y_step = TILE_SIZE;
-    x_step = TILE_SIZE / tan(angl);
-    start_h_y(data, angl, &yintercept_h);
-    xintercept_h = data->ply->posX + (yintercept_h - data->ply->posY) / tan(angl);
+    start_h_y(data, angl, &inter_h.yintercept);
+    inter_h.xintercept = data->ply->posX + (inter_h.yintercept - data->ply->posY) / tan(angl);
     if (isRayFacingUp(angl))
         y_step *= -1;
+    x_step = y_step / tan(angl);
     if (isRayFacingLeft(angl) && x_step > 0 || isRayFacingRight(angl) && x_step < 0)
         x_step *= -1;
-    while (!find_wall(data, xintercept_h, yintercept_h - (float)isRayFacingUp(angl)))
+    if (isRayFacingUp(angl))
+        inter_h.yintercept -= 0.0001;
+    while (!find_wall(data, inter_h.xintercept, inter_h.yintercept))
     {
-        yintercept_h += y_step;
-        xintercept_h += x_step;
+        inter_h.yintercept += y_step;
+        inter_h.xintercept += x_step;
     }
-    return (sqrt(pow(xintercept_h - data->ply->posX, 2) + pow(yintercept_h - data->ply->posY, 2)));
+    if (!data->ray->skip_door && check_door_in_grid(data, &inter_h, x_step, y_step))
+            return (inter_h);
+    return (inter_h);
 }
-float get_v_inter(t_data *data, float angl)
-{
-    float x_step;
-    float y_step;
-    float xintercept_h;
-    float yintercept_h;
 
+t_inter get_v_inter(t_data *data, float angl)
+{
+    t_inter inter_v;
+    double x_step;
+    double y_step;
+
+    inter_v.is_door = false;
     x_step = TILE_SIZE;
-    y_step = TILE_SIZE * tan(angl);
-    start_v_x(data, angl, &xintercept_h);
-    yintercept_h = data->ply->posY + (xintercept_h - data->ply->posX) * tan(angl);
+    start_v_x(data, angl, &inter_v.xintercept);
+    inter_v.yintercept = data->ply->posY + (inter_v.xintercept - data->ply->posX) * tan(angl);
     if (isRayFacingLeft(angl))
         x_step *= -1;
+    y_step = x_step * tan(angl);
     if (isRayFacingUp(angl) && y_step > 0 || (isRayFacingDown(angl) && y_step < 0))
         y_step *= -1;
-    while (!find_wall(data, xintercept_h - (float)isRayFacingLeft(angl), yintercept_h))
+    if (isRayFacingLeft(angl))
+        inter_v.xintercept -= 0.0001;
+    while (!find_wall(data, inter_v.xintercept, inter_v.yintercept))
     {
-        xintercept_h += x_step;
-        yintercept_h += y_step;
+        inter_v.xintercept += x_step;
+        inter_v.yintercept += y_step;
     }
-    return (sqrt(pow(xintercept_h - data->ply->posX, 2) + pow(yintercept_h - data->ply->posY, 2)));
+    return (inter_v);
 }
-void set_inter_point(t_data *data)
+void cast_rays_door(t_data *data, int ray)
 {
-    data->ray->h_x = data->ply->posX + data->ray->h_distance * cos(data->ray->ray_ngl);
-    data->ray->v_y = data->ply->posY + data->ray->v_distance * sin(data->ray->ray_ngl);
+    data->ray->skip_door = 0;
+    data->door->distance = calculate_distance(data, data->ray->ray_ngl);
+    data->door->x_intercept = data->ray->min_inter.xintercept;
+    data->door->y_intercept = data->ray->min_inter.yintercept;
+    data->door->is_ver_ray = data->ray->v_or_h;
+    if (is_door(data->door->x_intercept, data->door->y_intercept, data) &&  data->ray->v_or_h == 1)
+        rendring_door(data, *data->door, ray);
 }
 void raycasting(t_data *data)
 {
     double angle;
     int ray;
+    double angleIncrement;
 
     ray = 0;
     data->ray->ray_ngl = data->ply->angle - data->ply->fov_rd / 2;
-    data->ray->angleIncrement = data->ply->fov_rd / S_W;
+    angleIncrement = data->ply->fov_rd / S_W;
     draw_sky_floor(data);
     floor_casting(data, ray);
     while (ray < S_W)
     {
-        data->ray->hit_door = 0;
+        data->ray->skip_door = 1;
         data->ray->ray_ngl = normalize_angle(data->ray->ray_ngl);
         data->ray->distance = calculate_distance(data, data->ray->ray_ngl);
-        // set_floor_coords(data, ray);
-        set_inter_point(data);
-        // render_mini_map(data, data->args->map_lines);
-        render_wall(data, data->ray->distance, ray, data->ray->ray_ngl);
-        // draw_2d_game(data);
-        // int endX = data->ply->posX + cos(data->ray->ray_ngl) * data->ray->distance;
-        // int endY = data->ply->posY + sin(data->ray->ray_ngl) * data->ray->distance;
-        // draw_line(data, data->ply->posX, data->ply->posY, endX, endY);
+        render_wall(data, ray);
+        cast_rays_door(data, ray);
         ray++;
-        data->ray->ray_ngl += data->ray->angleIncrement; // next angle
+        data->ray->ray_ngl += angleIncrement; // next angle
     }
 }
-    

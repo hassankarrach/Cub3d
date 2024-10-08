@@ -3,8 +3,8 @@
 
 void wait_for_child(pid_t pid)
 {
-    int status;
-    waitpid(pid, &status, 0);
+    // int status;
+    // waitpid(pid, &status, 0);
 }
 
 void play_sound(t_sound *sound)
@@ -42,7 +42,7 @@ void stop_sound(t_sound *sound)
 
 void stop_all_sounds(t_data *data)
 {
-    int i = 0;
-    while (i < 5)
-        stop_sound(&data->sounds[i++]);
+    // int i = 0;
+    // while (i < 5)
+    //     stop_sound(&data->sounds[i++]);
 }
