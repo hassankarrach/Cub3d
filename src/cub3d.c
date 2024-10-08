@@ -1,11 +1,20 @@
 // Entry point of the program.
 #include "../includes/cub3d.h"
+double get_time_in_seconds(void)
+{
+    struct timeval time;
+    gettimeofday(&time, NULL);
+    return (time.tv_sec + (time.tv_usec / 1000000.0));
+}
 
 static int game_loop(void *arg)
 {
     static int i = 0;
     static double bobbing_time = 0;
     t_data *data = (t_data *)arg;
+
+    double current_time = get_time_in_seconds();
+
     if (data->state == LOBBY)
         lobby(data);
     else if (data->state == DEAD)
@@ -25,8 +34,11 @@ static int game_loop(void *arg)
             bobbing_time += 0.1;
             data->ply->look_offset += sin(bobbing_time) * 2;
         }
+        update_player(data->ply, data);
         raycasting(data);
+        render_mini_map(data);
         drawing_3d_game(data);
+        update_door_animation(data, data->door, current_time);
     }
     // draw_sky_floor(data);
 
@@ -52,26 +64,13 @@ int main(int ac, char **av)
     data.texture2 = texture_loader(&data, "./assets/textures/texture2.xpm");
     data.texture3 = texture_loader(&data, "./assets/textures/texture3.xpm");
     data.texture4 = texture_loader(&data, "./assets/textures/texture4.xpm");
-    data.player[0] = texture_loader(&data, "./assets/foreground/1.xpm");
-    data.player[1] = texture_loader(&data, "./assets/foreground/2.xpm");
-    data.player[2] = texture_loader(&data, "./assets/foreground/3.xpm");
-    data.player[3] = texture_loader(&data, "./assets/foreground/4.xpm");
-    data.player[4] = texture_loader(&data, "./assets/foreground/5.xpm");
-    data.player[5] = texture_loader(&data, "./assets/foreground/6.xpm");
-    data.player[6] = texture_loader(&data, "./assets/foreground/7.xpm");
-    data.player[7] = texture_loader(&data, "./assets/foreground/8.xpm");
-    data.player[8] = texture_loader(&data, "./assets/foreground/9.xpm");
-    data.player[9] = texture_loader(&data, "./assets/foreground/10.xpm");
-    data.player[10] = texture_loader(&data, "./assets/foreground/11.xpm");
-    data.player[11] = texture_loader(&data, "./assets/foreground/12.xpm");
-    data.player[12] = texture_loader(&data, "./assets/foreground/13.xpm");
-    data.player[13] = texture_loader(&data, "./assets/foreground/14.xpm");
+    data.texture_art1 = texture_loader(&data, "./assets/textures/wall_with_frame.xpm");
+    data.texture_art2 = texture_loader(&data, "./assets/textures/wall_with_frame2.xpm");
     data.mini_map = texture_loader(&data, "./assets/mini_map.xpm");
-    data.mini_map2 = texture_loader(&data, "./assets/mini_map2.xpm");
+    data.icon_player = texture_loader(&data, "./assets/player_icon.xpm");
     data.logo = texture_loader(&data, "./assets/logo.xpm");
     data.press_to_start = texture_loader(&data, "./assets/press_space.xpm");
     data.you_died = texture_loader(&data, "./assets/you_died.xpm");
-
     mlx_loop_hook(data.mlx->mlx, game_loop, &data);
 
     // test

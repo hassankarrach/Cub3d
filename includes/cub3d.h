@@ -10,6 +10,7 @@
 #include <stdarg.h>
 #include <unistd.h>
 #include <stdbool.h>
+# include <sys/time.h>
 
 // libs includes ================>
 #include "../lib/libft/libft.h"
@@ -25,14 +26,14 @@
 #define S_H 1000 // screen height
 // #define S_W 640 // screen width
 // #define S_H 256 // screen height
-#define S_W_MINI_MAP 330
-#define S_H_MINI_MAP 249
+#define S_W_MINI_MAP 286
+#define S_H_MINI_MAP 215
 #define S_TITLE "Cub3D"
 #define TILE_SIZE 576
 #define M_PI 3.14159265358979323846
 # define FOV 60
-# define ROTATION_SPEED 0.10
-# define MOVE_SPEED 6
+# define ROTATION_SPEED 0.10 //  2 * (PI / 180) 
+# define MOVE_SPEED 7
 #define BOBBING_SPEED 0.4
 #define BOBBING_AMPLITUDE 4
 #define DEG_TO_RAD (M_PI / 180)
@@ -45,16 +46,13 @@
 #define RED 0xFFFF0000	// Red
 #define WHI 0xFFFFFFFF	// White
 #define MOR_BLU 0xFF000033
+#define MAP_CLR 0xBA7728
 
 // ===============================
 
 // Structs ======================>
 typedef struct s_mlx t_mlx;
 typedef struct	s_vec t_vec;
-typedef struct	s_vec {
-	double		x;
-	double		y;
-}				t_vec;
 typedef struct s_rgb
 {
 	int r;
@@ -120,7 +118,22 @@ typedef struct s_sprite
     t_texture *texture;  // Pointer to the sprite texture
     double distance;  // Distance from the player (for sorting)
 } t_sprite;
-
+typedef struct s_door
+{
+	double distance;
+	bool is_ver_ray;
+    bool is_open;         // Flag to indicate if the door is open (1: open, 0: closed)
+	bool is_close;
+	bool is_near;
+    int         current_frame;   // Current frame for the door animation
+    int         total_frames;    // Total frames for the door animation (e.g., 8)
+    double      x_intercept;     // X intersection for the door
+    double      y_intercept;     // Y intersection for the door
+	t_inter     *inter_v;
+	t_inter		*inter_h;
+    double      last_update_time; // Last time the frame was updated
+    t_texture   *textures[8];    // Textures for each animation frame (8 in this case)
+}               t_door;
 typedef struct s_data
 {
 	char **map2d;
@@ -135,20 +148,36 @@ typedef struct s_data
 	t_texture *texture2;
 	t_texture *texture3;
 	t_texture *texture4;
+	t_texture *texture_art1;
+	t_texture *texture_art2;
 	t_texture *player[14];
+	t_texture *doors[8];
+	t_texture *current_door_texture;
 	t_texture *logo;
 	t_texture *press_to_start;
 	t_texture *you_died;
 	t_texture *mini_map;
-	t_texture *mini_map2;
+	t_texture *icon_player;
 	// t_tex	*tex;
+	t_door *door;
 	t_ray *ray;
 	t_player *ply;
 	t_sprite *sprites;
 	t_sound sounds[5];
-
 	game_state state;
+	int frame;
+	int flag;
 } t_data;
+
+typedef struct s_wall_params {
+    int start_y;
+    int end_y;
+    int save_y;
+    int texture_x;
+    int texture_y;
+	double wall_height;
+    double brightness_factor;
+} t_wall_params;
 
 typedef struct s_mlx
 {
@@ -182,12 +211,12 @@ int key_release(int keycode, t_data *data);
 int close_window(t_data *data);
 void raycasting(t_data *data);
 void get_x_y_player(t_data *m);
-float get_h_inter(t_data *data, float angl);
-float get_v_inter(t_data *data, float angl);
+t_inter get_h_inter(t_data *data, float angl);
+t_inter get_v_inter(t_data *data, float angl);
 double normalize_angle(double angle);
-float calculate_distance(t_data *data, float angle);
-void start_h_y(t_data *data, float angl, float *h_y);
-void start_v_x(t_data *data, float angl, float *v_x);
+double calculate_distance(t_data *data, float angle);
+void start_h_y(t_data *data, double angl, double *h_y);
+void start_v_x(t_data *data, double angl, double *v_x);
 void get_angle(t_data *m);
 void update_player(t_player *player, t_data *data);
 void draw_minimap(void *mlx, void *win, t_data *data);
@@ -200,7 +229,7 @@ int isRayFacingRight(float rayAngle);
 int isRayFacingLeft(float rayAngle);
 void ft_pixel_put(t_data *data, int x, int y, int color);
 void draw_sky_floor(t_data *data);
-void render_wall(t_data *data, double distance, int x, double ray_angl);
+void render_wall(t_data *data, int x);
 void drawing_3d_game(t_data *data);
 t_texture *texture_loader(t_data *data, char *texture_path);
 void set_floor_coords(t_data *data, int ray);
@@ -210,4 +239,13 @@ t_texture *png_texture_loader(t_data *data, char *texture_path);
 int mouse_move(int x, int y, t_data *data);
 int mouse_release(int button, int x, int y, t_data *data);
 void render_sprites(t_data *data);
+double ft_distance(t_data *data, double x, double y);
+t_wall_params calculate_wall_params(t_data *data);
+void load_door_textures(t_data *data);
+void rendring_door(t_data *data, t_door door, int x);
+void update_door_animation(t_data *data, t_door *door, double current_time);
+int get_start_drawing_texture_x(t_ray ray);
+bool player_in_grid(t_data *data);
+void start_h_y_door(t_data *data, double angl, double *h_y);
+void Head_Bobbing(t_data *data);
 #endif
