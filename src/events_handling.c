@@ -39,7 +39,7 @@ void update_player(t_player *player, t_data *data)
 
     new_x = player->posX;
     new_y = player->posY;
-    player->angle += player->turn_direction * ROTATION_SPEED * 1.1;
+    player->angle += player->turn_direction * ROTATION_SPEED;
     player->angle = normalize_angle(player->angle);
     new_x += player->walk_direction * MOVE_SPEED * data->ply->move_speed * cos(player->angle);
     new_y += player->walk_direction * MOVE_SPEED * data->ply->move_speed * sin(player->angle);

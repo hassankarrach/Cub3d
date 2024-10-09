@@ -34,6 +34,8 @@ static int game_loop(void *arg)
             bobbing_time += 0.1;
             data->ply->look_offset += sin(bobbing_time) * 2;
         }
+        draw_sky_floor(data);
+        floor_casting(data, 0);
         update_player(data->ply, data);
         raycasting(data);
         render_mini_map(data);

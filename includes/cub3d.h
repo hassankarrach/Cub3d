@@ -32,7 +32,7 @@
 #define TILE_SIZE 576
 #define M_PI 3.14159265358979323846
 # define FOV 60
-# define ROTATION_SPEED 0.10 //  2 * (PI / 180) 
+# define ROTATION_SPEED 4 * DEG_TO_RAD //  2 * (PI / 180) 
 # define MOVE_SPEED 7
 #define BOBBING_SPEED 0.4
 #define BOBBING_AMPLITUDE 4

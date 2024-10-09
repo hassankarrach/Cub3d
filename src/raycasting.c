@@ -164,8 +164,6 @@ void raycasting(t_data *data)
     ray = 0;
     data->ray->ray_ngl = data->ply->angle - data->ply->fov_rd / 2;
     angleIncrement = data->ply->fov_rd / S_W;
-    draw_sky_floor(data);
-    floor_casting(data, ray);
     while (ray < S_W)
     {
         data->ray->skip_door = 1;
