@@ -1,5 +1,5 @@
-// Functions for initializing the game, loading resources, etc.
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
+
 void init_player(t_player *player, t_data *data)
 {
     get_x_y_player(data);
@@ -11,9 +11,7 @@ void init_player(t_player *player, t_data *data)
     data->ply->move_speed = 1;
     data->ply->bobbing_speed = 1;
     data->ply->bobbing_amplitude = 1;
-    data->door->is_close = 1;
     data->door->is_open = 0;
-    data->door->is_near = 0;
     get_angle(data);
 }
 void init_ray(t_ray *ray)
@@ -38,14 +36,37 @@ static void init_sounds(t_data *data)
 }
 void load_door_textures(t_data *data)
 {
-    data->doors[0] = texture_loader(data, "./assets/textures/door1.xpm");
-    data->doors[1] = texture_loader(data, "./assets/textures/door2.xpm");
-    data->doors[2] = texture_loader(data, "./assets/textures/door3.xpm");
-    data->doors[3] = texture_loader(data, "./assets/textures/door4.xpm");
-    data->doors[4] = texture_loader(data, "./assets/textures/door5.xpm");
-    data->doors[5] = texture_loader(data, "./assets/textures/door6.xpm");
-    data->doors[6] = texture_loader(data, "./assets/textures/door7.xpm");
-    data->doors[7] = texture_loader(data, "./assets/textures/door8.xpm");
+    data->textures.door[0] = texture_loader(data, "./assets/textures/door1.xpm");
+    data->textures.door[1] = texture_loader(data, "./assets/textures/door2.xpm");
+    data->textures.door[2] = texture_loader(data, "./assets/textures/door3.xpm");
+    data->textures.door[3] = texture_loader(data, "./assets/textures/door4.xpm");
+    data->textures.door[4] = texture_loader(data, "./assets/textures/door5.xpm");
+    data->textures.door[5] = texture_loader(data, "./assets/textures/door6.xpm");
+    data->textures.door[6] = texture_loader(data, "./assets/textures/door7.xpm");
+    data->textures.door[7] = texture_loader(data, "./assets/textures/door8.xpm");
+}
+void load_wall_textures(t_data *data)
+{
+    data->textures.wall_EA = texture_loader(data, data->args->East_texture);
+    data->textures.wall_NO = texture_loader(data, data->args->North_texture);
+    data->textures.wall_SO = texture_loader(data, data->args->South_texture);
+    data->textures.wall_WE = texture_loader(data, data->args->West_texture);
+}
+
+void load_all_textures(t_data *data)
+{
+    // Frames
+    data->textures.wall_frame1 = texture_loader(data, "./assets/textures/wall_with_frame.xpm");
+    data->textures.wall_frame2 = texture_loader(data, "./assets/textures/wall_with_frame2.xpm");
+    // Assets
+    data->textures.mini_map = texture_loader(data, "./assets/mini_map.xpm");
+    data->textures.icon_player = texture_loader(data, "./assets/player_icon.xpm");
+    data->textures.logo = texture_loader(data, "./assets/logo.xpm");
+    data->textures.press_to_start = texture_loader(data, "./assets/press_space.xpm");
+    data->textures.you_died = texture_loader(data, "./assets/you_died.xpm");
+
+    load_wall_textures(data);
+    load_door_textures(data);
 }
 void init_doors(t_data *data, t_door *door, t_texture **door_textures)
 {
@@ -66,8 +87,7 @@ void init_game(t_data *data, t_args *args)
     data->map2d = args->map_lines;
     data->w_map = 37;
     data->h_map = 16;
-    data->frame = 0;
-    data->door = malloc (sizeof(t_door));
+    data->door = malloc(sizeof(t_door));
     data->ply = malloc(sizeof(t_player));
     init_player(data->ply, data);
     data->ray = malloc(sizeof(t_ray));
@@ -82,5 +102,6 @@ void init_game(t_data *data, t_args *args)
     data->state = LOBBY;
     init_sounds(data);
     load_door_textures(data);
-    init_doors(data, data->door, data->doors);
+    init_doors(data, data->door, data->textures.door);
+    load_all_textures(data);
 }

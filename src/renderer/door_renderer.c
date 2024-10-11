@@ -1,4 +1,5 @@
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
+
 void update_door_animation(t_data *data, t_door *door, double current_time)
 {
     double time_between_frames = 0.1; // 100 ms between frames
@@ -31,7 +32,7 @@ int get_start_drawing_texture_x_door(t_door door_ray)
 
 t_texture *selected_texture_door(t_data *data, t_ray ray)
 {
-    return (data->doors[data->door->current_frame]);
+    return (data->textures.door[data->door->current_frame]);
 }
 
 double get_door_height(t_door *door, t_ray *ray, t_player ply)

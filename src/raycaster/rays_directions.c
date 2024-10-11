@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "../../includes/raycaster.h"
 
 int isRayFacingDown(float rayAngle)
 {

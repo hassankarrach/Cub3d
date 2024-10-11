@@ -1,4 +1,5 @@
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
+
 void get_angle(t_data *m)
 {
 	if (m->ply->player_dir == 'N')

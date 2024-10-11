@@ -1,5 +1,6 @@
-#include "../includes/cub3d.h"
-int valid_move(t_data *data, double x, double y)
+#include "../../includes/utils.h"
+
+static int valid_move(t_data *data, double x, double y)
 {
     int i = (int)(x / TILE_SIZE);
     int j = (int)(y / TILE_SIZE);
@@ -21,7 +22,6 @@ int valid_move(t_data *data, double x, double y)
     }
     return 0;
 }
-
 void Head_Bobbing(t_data *data)
 {
     static double bobbing_time = 0;

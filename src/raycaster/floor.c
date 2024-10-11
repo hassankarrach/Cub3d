@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "../../includes/raycaster.h"
 
 void floor_casting(t_data *data, int x)
 {
@@ -40,33 +40,3 @@ void floor_casting(t_data *data, int x)
         }
     }
 }
-
-
-// void sky_casting(t_data *data, int x)
-// {
-//     int y;
-//     float dis_player;
-
-//     // Distance from the player to the projection plane
-//     dis_player = (S_W / 2) / tan(FOV / 2 * DEG_TO_RAD);
-//     y = 0;
-//     while (y < S_H)
-//     {
-//         // Calculate distance from the player to this pixel row
-//         float rowDistance = dis_player / (y - S_H / 2.0f);
-
-//         // Calculate world coordinates for the floor (floorX, floorY)
-//         float floorX = data->ply->posX + rowDistance * cos(data->ray->ray_ngl);
-//         float floorY = data->ply->posY + rowDistance * sin(data->ray->ray_ngl);
-
-//         // Get texture coordinates
-//         int texX = (int)(floorX * 1000) % 1000;
-//         int texY = (int)(floorY * 1000) % 1000;
-
-//         // Get the color from the texture and apply to the pixel
-//         int color = get_pixel_from_texture(data->texture2, texX, texY);
-//         ft_pixel_put(data, x, y, color);
-
-//         y++;
-//     }
-// }

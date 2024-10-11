@@ -1,4 +1,5 @@
-#include "../includes/cub3d.h"
+#include "../../includes/raycaster.h"
+
 double normalize_angle(double angle)
 {
     angle = fmod(angle, 2 * M_PI);
@@ -6,7 +7,6 @@ double normalize_angle(double angle)
         angle = (2 * M_PI) + angle;
     return angle;
 }
-
 double ft_distance(t_data *data, double x, double y)
 {
     double dx;
@@ -16,9 +16,7 @@ double ft_distance(t_data *data, double x, double y)
     dy = y - data->ply->posY;
     return sqrt((dx * dx) + (dy * dy));
 }
-
-
-t_inter min_distance(t_inter inter_h, t_inter inter_v, t_data *data)
+static t_inter min_distance(t_inter inter_h, t_inter inter_v, t_data *data)
 {
     double h_dist = ft_distance(data, inter_h.xintercept, inter_h.yintercept);
     double v_dist = ft_distance(data, inter_v.xintercept, inter_v.yintercept);
@@ -34,7 +32,6 @@ t_inter min_distance(t_inter inter_h, t_inter inter_v, t_data *data)
         return inter_v;
     }
 }
-
 double calculate_distance(t_data *data, float angle)
 {
     t_inter result_inter;
@@ -48,8 +45,6 @@ double calculate_distance(t_data *data, float angle)
     data->ray->min_inter.yintercept = result_inter.yintercept;
     return ft_distance(data, result_inter.xintercept, result_inter.yintercept);
 }
-
-
 void start_h_y(t_data *data, double angl, double *h_y)
 {
     if (isRayFacingDown(angl))

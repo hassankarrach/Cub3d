@@ -1,4 +1,4 @@
-#include "../../includes/cub3d.h"
+#include "../../includes/scenes.h"
 
 void game_pause(t_data *data)
 {

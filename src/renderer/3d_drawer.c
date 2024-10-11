@@ -1,5 +1,4 @@
-#include "../includes/cub3d.h"
-#include <stdlib.h> // For rand()
+#include "../../includes/cub3d.h"
 
 void draw_sky_floor(t_data *data)
 {
@@ -29,21 +28,22 @@ void draw_sky_floor(t_data *data)
         }
     }
 }
-t_texture *selected_texture(t_data *data, t_ray ray, float ray_angle)
+
+static t_texture *selected_texture(t_data *data, t_ray ray, float ray_angle)
 {
     if (ray.v_or_h == 1)
     {
         if (isRayFacingUp(ray_angle))
-            return data->texture1;  // NO texture
+            return data->textures.wall_NO;  // NO texture
         else if (isRayFacingDown(ray_angle))
-            return data->texture2;  // SO texture
+            return data->textures.wall_SO;  // SO texture
     }
     else
     {
         if (isRayFacingLeft(ray_angle))
-            return data->texture3;  // WE texture
+            return data->textures.wall_WE;  // WE texture
         else if (isRayFacingRight(ray_angle))
-            return data->texture4;  // EA texture
+            return data->textures.wall_EA;  // EA texture
     }
     return NULL;
 }
@@ -58,7 +58,6 @@ t_texture *texture_loader(t_data *data, char *texture_path)
     texture->addr = mlx_get_data_addr(texture->img, &texture->bits_per_pixel, &texture->line_length, &texture->endian);
     return (texture);
 }
-
 int get_pixel_from_texture(t_texture *texture, int offset_x, int offset_y)
 {
     int pixel_offset;   
@@ -87,7 +86,7 @@ int get_start_drawing_texture_x(t_ray ray)
     }
     return offset;
 }
-double get_wall_height(t_ray *ray, t_player ply)
+static double get_wall_height(t_ray *ray, t_player ply)
 {
     double dis_player;
     double wall_height;
@@ -98,7 +97,6 @@ double get_wall_height(t_ray *ray, t_player ply)
     wall_height = (dis_player * TILE_SIZE) / distance;
     return wall_height;
 }
-
 t_wall_params calculate_wall_params(t_data *data)
 {
     t_wall_params params;
@@ -115,7 +113,6 @@ t_wall_params calculate_wall_params(t_data *data)
         params.end_y = S_H - 1;
     return params;
 }
-
 void render_wall(t_data *data, int x)
 {
     int texture_x, texture_y;
@@ -144,6 +141,5 @@ void render_wall(t_data *data, int x)
 }
 void drawing_3d_game(t_data *data)
 {
-    render_sprites(data);
     mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->mlx->img, 0, 0);
 }

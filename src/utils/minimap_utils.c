@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "../../includes/utils.h"
 
 static int pos_to_color(t_data *data, int x, int y)
 {
@@ -25,8 +25,7 @@ static int pos_to_color(t_data *data, int x, int y)
     else
         return -1;  // Empty space
 }
-
-void draw_player_icon(t_data *data)
+static void draw_player_icon(t_data *data)
 {
     int x;
     int y;
@@ -38,12 +37,12 @@ void draw_player_icon(t_data *data)
     start_y = ((S_H_MINI_MAP + 14) / 2) - (32 / 2);
     x = 0;
     y = 0;
-    while (y < data->icon_player->height)
+    while (y < data->textures.icon_player->height)
     {
         x = 0;
-        while (x < data->icon_player->width)
+        while (x < data->textures.icon_player->width)
         {
-                color = get_pixel_from_texture(data->icon_player, x, y);
+                color = get_pixel_from_texture(data->textures.icon_player, x, y);
                 if (color != BLK)
                     ft_pixel_put(data, x + start_x, y + start_y, color);
             x++;
@@ -51,7 +50,7 @@ void draw_player_icon(t_data *data)
         y++;
     }
 }
-void set_pixels_img(t_data *data)
+static void set_pixels_img(t_data *data)
 {
     int x;
     int y;
@@ -64,7 +63,7 @@ void set_pixels_img(t_data *data)
         y = 0;
         while (y < S_H_MINI_MAP + 14)
         {
-            color = get_pixel_from_texture(data->mini_map, x, y);
+            color = get_pixel_from_texture(data->textures.mini_map, x, y);
             if (color != BLK)
                 ft_pixel_put(data, x, y, color);
             y++;
