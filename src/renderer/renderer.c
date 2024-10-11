@@ -1,5 +1,5 @@
-// render the scene here.
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
+
 void	ft_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
@@ -8,6 +8,7 @@ void	ft_pixel_put(t_data *data, int x, int y, int color)
     if (x >= 0 && x < S_W && y >= 0 && y < S_H)
 	    *(int *)dst = color;
 }
+
 int check_out_of_bounds(t_data *data, int x, int y)
 {
     int i;
@@ -23,6 +24,7 @@ int check_out_of_bounds(t_data *data, int x, int y)
         return (-1);
     return (0); // player positionft/ft_strlen.o ./lib/libft/ft_strncmp.o ./lib/libft/ft_strrchr.o ./lib/libft/ft_strlcpy.o ./lib/libft/ft_substr
 }
+
 void draw_line(t_data *data, int x0, int y0, int x1, int y1)
 {
     int dx = abs(x1 - x0);

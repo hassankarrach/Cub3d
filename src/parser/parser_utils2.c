@@ -1,26 +1,33 @@
-#include "../includes/cub3d.h"
+#include "../../includes/parser.h"
 
 // Parser utils.
-void texture_path_extracter(char *line, char **to_be_filled)
+void texture_path_extracter(char *line, t_args *cub3d_args)
 {
 	char *value;
 	char *texture_extension;
 
-	value = ft_strtrim(line, " ");
+	value = ft_strtrim(line + 2, " ");
 	texture_extension = ft_strrchr(value, '.');
-	if (*to_be_filled)
-		ft_error("a duplicated Identifier (SO, WE, EA, NO)");
 	if (value[0] != '.' ||
 		!(ft_strlen(texture_extension) == 4 && ft_strncmp(texture_extension, ".xpm", 4) == 0))
 		ft_error("invalid texture file path.");
 
-	*to_be_filled = value;
+	if (ft_strncmp(line, "NO", 2) == 0 && !cub3d_args->North_texture)
+		cub3d_args->North_texture = value;
+	else if (ft_strncmp(line, "SO", 2) == 0 && !cub3d_args->South_texture)
+		cub3d_args->South_texture = value;
+	else if (ft_strncmp(line, "WE", 2) == 0 && !cub3d_args->West_texture)
+		cub3d_args->West_texture = value;
+	else if (ft_strncmp(line, "EA", 2) == 0 && !cub3d_args->East_texture)
+		cub3d_args->East_texture = value;
+	else
+		ft_error("a duplicated Identifier (SO, WE, EA, NO)");
 }
-static void	is_valid_rgb(char **rgb)
+static void is_valid_rgb(char **rgb)
 {
-	int		i;
-	int		j;
-	char	*trimmed_prop;
+	int i;
+	int j;
+	char *trimmed_prop;
 
 	i = 0;
 	while (rgb[i])

@@ -1,11 +1,4 @@
-// Entry point of the program.
 #include "../includes/cub3d.h"
-double get_time_in_seconds(void)
-{
-    struct timeval time;
-    gettimeofday(&time, NULL);
-    return (time.tv_sec + (time.tv_usec / 1000000.0));
-}
 
 static int game_loop(void *arg)
 {
@@ -38,7 +31,7 @@ static int game_loop(void *arg)
         floor_casting(data, 0);
         update_player(data->ply, data);
         raycasting(data);
-        render_mini_map(data);
+        // render_mini_map(data);
         drawing_3d_game(data);
         update_door_animation(data, data->door, current_time);
     }
@@ -51,31 +44,14 @@ int main(int ac, char **av)
 {
     t_args cub3d_args;
     t_data data;
-    t_sprite sprite;
 
     parser(ac, av, &cub3d_args);
-    init_game(&data, &cub3d_args);
-    handle_events(&data);
-    // mlx_mouse_hide(data.mlx->mlx, data.mlx->win);
-    mlx_mouse_move(data.mlx->mlx, data.mlx->win, S_W / 2, S_H / 2);
-    sprite.x = TILE_SIZE * 11 + TILE_SIZE / 2;
-    sprite.y = TILE_SIZE * 8 + TILE_SIZE / 2;
-    data.sprites = &sprite;
-    sprite.texture = texture_loader(&data, "./assets/textures/texture.xpm");
-    data.texture1 = texture_loader(&data, "./assets/textures/texture1.xpm");
-    data.texture2 = texture_loader(&data, "./assets/textures/texture2.xpm");
-    data.texture3 = texture_loader(&data, "./assets/textures/texture3.xpm");
-    data.texture4 = texture_loader(&data, "./assets/textures/texture4.xpm");
-    data.texture_art1 = texture_loader(&data, "./assets/textures/wall_with_frame.xpm");
-    data.texture_art2 = texture_loader(&data, "./assets/textures/wall_with_frame2.xpm");
-    data.mini_map = texture_loader(&data, "./assets/mini_map.xpm");
-    data.icon_player = texture_loader(&data, "./assets/player_icon.xpm");
-    data.logo = texture_loader(&data, "./assets/logo.xpm");
-    data.press_to_start = texture_loader(&data, "./assets/press_space.xpm");
-    data.you_died = texture_loader(&data, "./assets/you_died.xpm");
-    mlx_loop_hook(data.mlx->mlx, game_loop, &data);
 
-    // test
+    init_game(&data, &cub3d_args);
+    
+    handle_events(&data);
+
+    mlx_loop_hook(data.mlx->mlx, game_loop, &data);
 
     mlx_loop(data.mlx->mlx);
     return (0);

@@ -1,5 +1,4 @@
-//  Functions for freeing resources and cleaning up.
-#include "../includes/cub3d.h"
+#include "../../includes/utils.h"
 
 int    ft_error(char *error_msg)
 {

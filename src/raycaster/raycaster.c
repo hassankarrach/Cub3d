@@ -1,13 +1,5 @@
-// Functions implementing the raycasting algorithm
-// ray casting algrihtm
-// 1. find cooordinate of the first intersection point
-// 2. find y and x step (the distance between the intersection points)
-// 3. convert intersection point (x, y) into map index [i][j]
-// if intersection hits a wall, stop the loop
-// else find the next intersection point
-// 4. calculate the distance between the player and the intersection point
+#include "../../includes/raycaster.h"
 
-#include "../includes/cub3d.h"
 int find_wall(t_data *data, double x, double y)
 {
     int i = (int)floor(x / TILE_SIZE);
