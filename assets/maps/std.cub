@@ -1,4 +1,4 @@
-F 111, 22, 143
+F 2, 7, 60
 SO ./texts/wall22.xpm
 WE ./texts/wall22.xpm
 EA ./texts/wall22.xpm
@@ -6,5 +6,5 @@ NO ./texts/wall22.xpm
 C 0, 0, 0
 
 11111
-10001
+10W01
 11111

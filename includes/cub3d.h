@@ -102,6 +102,8 @@ typedef struct s_args
 	char *West_texture;
 	char *East_texture;
 	char **map_lines;
+	int map_rows;
+	int map_columns;
 } t_args;
 
 typedef struct s_door

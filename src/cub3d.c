@@ -31,7 +31,7 @@ static int game_loop(void *arg)
         floor_casting(data, 0);
         update_player(data->ply, data);
         raycasting(data);
-        // render_mini_map(data);
+        render_mini_map(data);
         drawing_3d_game(data);
         update_door_animation(data, data->door, current_time);
     }

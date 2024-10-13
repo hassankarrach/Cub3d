@@ -76,7 +76,7 @@ static void parse_file_lines(t_args *cub3d_args, char **file_lines)
     }
     cub3d_args->map_lines = file_lines + i;
 }
-static int get_taller_line(char **map_lines)
+int get_taller_line(char **map_lines)
 {
     int i;
     int max_len;
@@ -146,4 +146,5 @@ void parser(int ac, char **av, t_args *cub3d_args)
     parse_file_lines(cub3d_args, file_lines);
     parse_map_lines(cub3d_args->map_lines);
     remove_empty(cub3d_args->map_lines);
+    set_map_metadata(cub3d_args);
 }

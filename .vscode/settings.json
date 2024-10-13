@@ -5,6 +5,7 @@
         "libft.h": "c",
         "player.h": "c",
         "parser.h": "c",
-        "utils.h": "c"
+        "utils.h": "c",
+        "raycaster.h": "c"
     }
 }
