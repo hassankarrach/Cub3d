@@ -16,7 +16,7 @@ static int pos_to_color(t_data *data, int x, int y)
     map_y = (int)(rotated_y / 32);
     if (map_x < 0 || map_x > data->w_map || map_y < 0 || map_y > data->h_map || rotated_x < 0 || rotated_y < 0)
         return -1;
-    if (data->map2d[map_y][map_x] == '1')
+    if (data->map2d[map_y][map_x] == '1' || data->map2d[map_y][map_x] == 'F')
         return MAP_CLR;  // Wall
     if (data->map2d[map_y][map_x] == 'D')
         return ORNG;  // Wall

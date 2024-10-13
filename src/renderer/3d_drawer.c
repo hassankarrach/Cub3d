@@ -1,4 +1,4 @@
-#include "../../includes/cub3d.h"
+#include "../../includes/renderer.h"
 
 void draw_sky_floor(t_data *data)
 {
@@ -28,22 +28,54 @@ void draw_sky_floor(t_data *data)
         }
     }
 }
+t_texture *get_wall_frame(t_data data)
+{
+    return (data.textures.wall_frame1);
+}
+int check_wall_frame(t_data data)
+{
+    int i;
+    int j;
 
+    i = data.ray->min_inter.xintercept / TILE_SIZE;
+    j = data.ray->min_inter.yintercept / TILE_SIZE;
+    if (i >= data.w_map || j >= data.h_map || i < 0 || j < 0)
+        return 0;
+    if (data.map2d[j][i] == 'F')
+        return 1;
+    return (0);
+}
 static t_texture *selected_texture(t_data *data, t_ray ray, float ray_angle)
 {
     if (ray.v_or_h == 1)
     {
         if (isRayFacingUp(ray_angle))
+        {
+            if (check_wall_frame(*data))
+                return (get_wall_frame(*data));
             return data->textures.wall_NO;  // NO texture
+        }
         else if (isRayFacingDown(ray_angle))
+        {
+            if (check_wall_frame(*data))
+                return (get_wall_frame(*data));
             return data->textures.wall_SO;  // SO texture
+        }
     }
     else
     {
         if (isRayFacingLeft(ray_angle))
+        {
+            if (check_wall_frame(*data))
+                return (get_wall_frame(*data));
             return data->textures.wall_WE;  // WE texture
+        }
         else if (isRayFacingRight(ray_angle))
+        {
+            if (check_wall_frame(*data))
+                return (get_wall_frame(*data));
             return data->textures.wall_EA;  // EA texture
+        }
     }
     return NULL;
 }

@@ -1,5 +1,119 @@
 #include "../../includes/parser.h"
 
+static void add_doors(t_args *cub_args)
+{
+    int i;
+    int j;
+    int doors_count;
+
+    i = 0;
+    doors_count = 3;
+    while (cub_args->map_lines[i] && doors_count)
+    {
+        j = 0;
+        // don't add 2 doors beside each other
+        while (cub_args->map_lines[i][j] && doors_count)
+        {
+            if (cub_args->map_lines[i][j] == '0')
+            {
+                if (cub_args->map_lines[i - 1][j] == '1' && cub_args->map_lines[i + 1][j] == '1' && cub_args->map_lines[i][j - 1] != 'D' && cub_args->map_lines[i][j + 1] != 'D')
+                {
+                    cub_args->map_lines[i][j] = 'D';
+                    doors_count--;
+                }
+                else if (cub_args->map_lines[i][j - 1] == '1' && cub_args->map_lines[i][j + 1] == '1' && cub_args->map_lines[i - 1][j] != 'D' && cub_args->map_lines[i + 1][j] != 'D')
+                {
+                    cub_args->map_lines[i][j] = 'D';
+                    doors_count--;
+                }
+            }
+            j++;
+        }
+        i++;
+    }
+}
+
+static void fill_frame_struct(t_wallFrame *frame, char **map_lines, int x, int y) //use this to fill later.
+{
+    frame->x = x;
+    frame->y = y;
+    frame->Frame = rand() % 2 + 1;
+
+    int available_directions[4];
+    int count = 0;
+
+    // if (map_lines[y][x + 1] == '0')
+    //     available_directions[count++] = RIGHT;
+    // if (map_lines[y][x - 1] == '0')
+    //     available_directions[count++] = LEFT;
+    // if (map_lines[y - 1][x] == '0')
+    //     available_directions[count++] = TOP;
+    // if (map_lines[y + 1][x] == '0')
+    //     available_directions[count++] = BOTTOM;
+
+    available_directions[count++] = RIGHT;
+
+    if (count > 0)
+    {
+        int random_index = rand() % count;
+        frame->direction = available_directions[random_index];
+    }
+}
+const char *directionToString(e_Direction direction)
+{
+    const char *directionStrings[] = {
+        "TOP",
+        "BOTTOM",
+        "LEFT",
+        "RIGHT"};
+    return directionStrings[direction];
+}
+static void init_wallFrames_struct(t_args *cub_args)
+{
+    t_wallFrame **frames;
+    int number_of_rows;
+    int frames_per_row;
+    int frame_number;
+
+    frame_number = 0;
+    number_of_rows = 0;
+    frames_per_row = 2;
+    while (cub_args->map_lines[number_of_rows++])
+        ;
+    frames = malloc(sizeof(t_wallFrame *) * (number_of_rows * frames_per_row + 1));
+    frames[number_of_rows * frames_per_row] = NULL;
+    if (!frames)
+        return;
+    frames[0]->x = 0;
+    frames[0]->y = 0;
+    frames[0]->direction = 0;
+    cub_args->frames = frames;
+}
+static void add_wall_frames(t_args *cub_args)
+{
+    int frames_per_row;
+    int i;
+    int j;
+
+    i = 0;
+    frames_per_row = 2;
+    while (cub_args->map_lines[i])
+    {
+        j = 0;
+        frames_per_row = 2;
+        while (cub_args->map_lines[i][j])
+        {
+            if (cub_args->map_lines[i][j] == '1' && frames_per_row)
+            {
+                cub_args->map_lines[i][j] = 'F';
+                // fill_frame_struct(frames[frame_number++], cub_args->map_lines, j, i);
+                frames_per_row--;
+            }
+            j++;
+        }
+        i++;
+    }
+}
 static void parse_top_bottom_lines(char *line)
 {
     int i;
@@ -147,4 +261,10 @@ void parser(int ac, char **av, t_args *cub3d_args)
     parse_map_lines(cub3d_args->map_lines);
     remove_empty(cub3d_args->map_lines);
     set_map_metadata(cub3d_args);
+    add_doors(cub3d_args);
+    add_wall_frames(cub3d_args);
+
+    // init_wallFrames_struct(cub3d_args);
+
+    // printf("%s\n", directionToString(cub3d_args->frames[0]->direction));
 }

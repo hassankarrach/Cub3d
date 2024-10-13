@@ -16,5 +16,6 @@ int key_release(int keycode, t_data *data);
 int close_window(t_data *data);
 double get_time_in_seconds(void);
 int	clamp(int value, int min, int max);
+void	ft_pixel_put(t_data *data, int x, int y, int color);
 
 #endif

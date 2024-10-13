@@ -45,6 +45,26 @@ void load_door_textures(t_data *data)
     data->textures.door[6] = texture_loader(data, "./assets/textures/door7.xpm");
     data->textures.door[7] = texture_loader(data, "./assets/textures/door8.xpm");
 }
+
+static void load_player_textures(t_data *data)
+{
+    int i;
+    char *full_path;
+    char *tmp;
+
+    i = 1;
+    while (i <= 26)
+    {
+        full_path = ft_strjoin("./assets/player/player_", ft_itoa(i));
+        tmp = full_path;
+        full_path = ft_strjoin(full_path, ".xpm");
+        data->textures.player[i - 1] = texture_loader(data, full_path);
+        free(tmp);
+        free(full_path);
+        i++;
+    }
+}
+
 void load_wall_textures(t_data *data)
 {
     data->textures.wall_EA = texture_loader(data, data->args->East_texture);
@@ -67,6 +87,7 @@ void load_all_textures(t_data *data)
 
     load_wall_textures(data);
     load_door_textures(data);
+    load_player_textures(data);
 }
 void init_doors(t_data *data, t_door *door, t_texture **door_textures)
 {

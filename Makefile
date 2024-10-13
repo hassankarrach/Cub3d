@@ -25,14 +25,14 @@ LDFLAGS = -L$(MLX_DIR) -lmlx -L/usr/lib/x86_64-linux-gnu -lX11 -lXext -lm
 # SRCS ============>
 LIBFT_SRCS = $(addprefix ./lib/libft/, ft_strlen.c ft_strncmp.c ft_strrchr.c \
 	ft_strlcpy.c ft_substr.c ft_split.c ft_strjoin.c ft_memcpy.c ft_strdup.c ft_gnl.c \
-	ft_atoi.c ft_strtrim.c ft_memset.c ft_bzero.c ft_calloc.c )
+	ft_atoi.c ft_strtrim.c ft_memset.c ft_bzero.c ft_calloc.c ft_itoa.c)
 
 SCENES_SRC = $(addprefix ./src/scenes/, lobby.c you_died.c pause.c)
 PARSER_SRC = $(addprefix ./src/parser/, parser.c parser_utils.c parser_utils2.c)
 UTILS_SRC = $(addprefix ./src/utils/, cleanup.c player_utils.c minimap_utils.c window_utils.c time_utils.c)
 INITIALIZER_SRC = $(addprefix ./src/init/, init.c init_player.c)
 RAYCASTER_SRC = $(addprefix ./src/raycaster/, raycaster.c raycaster_utils.c rays_directions.c floor.c)
-RENDERER_SRC = $(addprefix ./src/renderer/, renderer.c door_renderer.c 3d_drawer.c)
+RENDERER_SRC = $(addprefix ./src/renderer/, door_renderer.c 3d_drawer.c draw_player.c)
 
 SRCS = $(LIBFT_SRCS) $(SCENES_SRC) $(PARSER_SRC) $(UTILS_SRC) $(INITIALIZER_SRC) $(RAYCASTER_SRC) $(RENDERER_SRC) ./src/cub3d.c
 # ==================

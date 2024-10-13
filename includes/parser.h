@@ -16,4 +16,20 @@ void parser(int ac, char **av, t_args *cub3d_args);
 int get_taller_line(char **map_lines);
 void set_map_metadata(t_args *args);
 
+typedef enum Direction
+{
+    TOP,
+    BOTTOM,
+    LEFT,
+    RIGHT
+}   e_Direction;
+
+typedef struct s_wallFrame
+{
+    int x;
+    int y;
+    e_Direction direction;
+    int Frame;
+} t_wallFrame;
+
 #endif

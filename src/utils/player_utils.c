@@ -11,7 +11,7 @@ static int valid_move(t_data *data, double x, double y)
     end_door = 376.0;
     if (i >= data->w_map || j >= data->h_map || i < 0 || j < 0)
         return 1;
-    if (data->map2d[j][i] == '1')
+    if (data->map2d[j][i] == '1' || data->map2d[j][i] == 'F')
         return 1;
     if (data->map2d[j][i] == 'D' || data->map2d[j][i] == 'O')
     {
@@ -54,4 +54,13 @@ void update_player(t_player *player, t_data *data)
         data->index_y = new_y / TILE_SIZE;
     }
     Head_Bobbing(data);
+}
+
+void	ft_pixel_put(t_data *data, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = data->mlx->addr + (y * data->mlx->line_length + x * (data->mlx->bits_per_pixel / 8));
+    if (x >= 0 && x < S_W && y >= 0 && y < S_H)
+	    *(int *)dst = color;
 }

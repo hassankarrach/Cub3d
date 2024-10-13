@@ -1,9 +1,8 @@
-#include "../../includes/cub3d.h"
+#include "../../includes/renderer.h"
 
 void update_door_animation(t_data *data, t_door *door, double current_time)
 {
     double time_between_frames = 0.1; // 100 ms between frames
-    double animation_duration = 0.5;  // Total time to animate
 
     if (current_time - door->last_update_time >= time_between_frames)
     {
