@@ -85,8 +85,8 @@ void init_game(t_data *data, t_args *args)
 
     data->args = args;
     data->map2d = args->map_lines;
-    data->w_map = 37;
-    data->h_map = 16;
+    data->w_map = --args->map_columns;
+    data->h_map = --args->map_rows;
     data->door = malloc(sizeof(t_door));
     data->ply = malloc(sizeof(t_player));
     init_player(data->ply, data);

@@ -1,6 +1,17 @@
 #include "../../includes/parser.h"
 
 // Parser utils.
+void set_map_metadata(t_args *args)
+{
+	int rows;
+
+	rows = 0;
+	while (args->map_lines[rows])
+		rows++;
+	args->map_rows = rows;
+	args->map_columns = get_taller_line(args->map_lines);
+}
+
 void texture_path_extracter(char *line, t_args *cub3d_args)
 {
 	char *value;

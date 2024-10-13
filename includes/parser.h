@@ -13,5 +13,7 @@ void texture_path_extracter(char *line, t_args *cub3d_args);
 void rgb_extracter(char *line, t_rgb *rgb);
 
 void parser(int ac, char **av, t_args *cub3d_args);
+int get_taller_line(char **map_lines);
+void set_map_metadata(t_args *args);
 
 #endif

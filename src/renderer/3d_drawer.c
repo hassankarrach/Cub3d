@@ -19,9 +19,9 @@ void draw_sky_floor(t_data *data)
                     normalized_distance = 1.0;
 
                 double bright_factor = pow(normalized_distance, 3);
-                int r = (int)((1.0 - bright_factor) * 0 + bright_factor * 1);
-                int g = (int)((1.0 - bright_factor) * 0 + bright_factor * 32);
-                int b = (int)((1.0 - bright_factor) * 0 + bright_factor * 71);
+                int r = (int)((1.0 - bright_factor) * 0 + bright_factor * data->args->Ceiling_color.r);
+                int g = (int)((1.0 - bright_factor) * 0 + bright_factor * data->args->Ceiling_color.g);
+                int b = (int)((1.0 - bright_factor) * 0 + bright_factor * data->args->Ceiling_color.b);
                 int gradient_color = (r << 16) | (g << 8) | b;
                 ft_pixel_put(data, x, y, gradient_color);
             }
@@ -113,6 +113,14 @@ t_wall_params calculate_wall_params(t_data *data)
         params.end_y = S_H - 1;
     return params;
 }
+int	clamp(int value, int min, int max)
+{
+	if (value < min)
+		return (min);
+	if (value > max)
+		return (max);
+	return (value);
+}
 void render_wall(t_data *data, int x)
 {
     int texture_x, texture_y;
@@ -121,7 +129,7 @@ void render_wall(t_data *data, int x)
 
     wall_params = calculate_wall_params(data);
     texture_x = get_start_drawing_texture_x(*data->ray);
-    brightness_factor = fmax(1.0 - (data->ray->distance / (TILE_SIZE * 5.5)), 0.2);
+    brightness_factor = 1.0 - (data->ray->distance / (TILE_SIZE * 12));
     while (wall_params.start_y <= wall_params.end_y)
     {
         texture_y = ((wall_params.start_y - wall_params.save_y) * 576) / wall_params.wall_height;
@@ -132,8 +140,11 @@ void render_wall(t_data *data, int x)
             continue;   
         }
         int r = ((color >> 16) & 0xFF) * brightness_factor;
+        r = clamp(r, 0, 255);
         int g = ((color >> 8) & 0xFF) * brightness_factor;
+        g = clamp(g, 0, 255);
         int b = (color & 0xFF) * brightness_factor;
+        b = clamp(b, 0, 255);
         color = (r << 16) | (g << 8) | b;
         ft_pixel_put(data, x, wall_params.start_y, color);
         wall_params.start_y++;
