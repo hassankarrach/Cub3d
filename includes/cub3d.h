@@ -61,6 +61,9 @@ typedef struct s_mlx t_mlx;
 typedef struct s_vec t_vec;
 typedef struct s_inter t_inter;
 
+typedef enum FrameType e_FrameType;
+typedef enum Direction e_Direction;
+typedef struct s_wallFrame t_wallFrame;
 
 typedef struct s_rgb
 {
@@ -104,6 +107,7 @@ typedef struct s_args
 	char **map_lines;
 	int map_rows;
 	int map_columns;
+	t_wallFrame **frames;
 } t_args;
 
 typedef struct s_door
@@ -129,7 +133,7 @@ typedef struct s_textures
 	t_texture *wall_frame1;
 	t_texture *wall_frame2;
 
-	t_texture *player[14];
+	t_texture *player[26];
 	t_texture *door[8];
 
 	t_texture *logo;
@@ -160,6 +164,7 @@ typedef struct s_data
 	t_sound sounds[5];
 	game_state state;
 	int flag;
+	int selected_wall;
 } t_data;
 
 typedef struct s_wall_params
@@ -194,14 +199,11 @@ void get_x_y_player(t_data *m);
 t_inter get_h_inter(t_data *data, float angl);
 t_inter get_v_inter(t_data *data, float angl);
 void get_angle(t_data *m);
-void draw_2d_game(t_data *data);
-void draw_line(t_data *data, int x0, int y0, int x1, int y1);
 int find_wall(t_data *data, double x, double y);
 int isRayFacingDown(float rayAngle);
 int isRayFacingUp(float rayAngle);
 int isRayFacingRight(float rayAngle);
 int isRayFacingLeft(float rayAngle);
-void ft_pixel_put(t_data *data, int x, int y, int color);
 void load_door_textures(t_data *data);
 void rendring_door(t_data *data, t_door door, int x);
 void update_door_animation(t_data *data, t_door *door, double current_time);

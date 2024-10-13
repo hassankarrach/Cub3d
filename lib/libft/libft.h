@@ -19,6 +19,7 @@ char	**ft_split(char const *s, char c);
 void	*ft_memset(void *ptr, int value, size_t len);
 char	*ft_strtrim(char const *s1, char const *set);
 int     ft_atoi(const char *str);
+char	*ft_itoa(int n);
 //gnl
 char	*get_next_line(int fd);
 

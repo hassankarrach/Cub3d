@@ -15,6 +15,7 @@ int get_start_drawing_texture_x(t_ray ray);
 t_wall_params calculate_wall_params(t_data *data);
 void render_wall(t_data *data, int x);
 void drawing_3d_game(t_data *data);
+void draw_player(t_data *data, double current_time);
 
 
 #endif

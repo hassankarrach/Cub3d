@@ -7,7 +7,7 @@ int find_wall(t_data *data, double x, double y)
 
     if (i >= data->w_map || j >= data->h_map || i < 0 || j < 0)
         return 1;
-    if (data->map2d[j][i] == '1')
+    if (data->map2d[j][i] == '1' || data->map2d[j][i] == 'F')
         return 1;
     if (data->map2d[j][i] == 'D' || (data->map2d[j][i] == 'O'))
     {

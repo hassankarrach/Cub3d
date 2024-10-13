@@ -6,6 +6,8 @@
         "player.h": "c",
         "parser.h": "c",
         "utils.h": "c",
-        "raycaster.h": "c"
+        "raycaster.h": "c",
+        "renderer.h": "c",
+        "stdlib.h": "c"
     }
 }

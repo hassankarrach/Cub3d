@@ -31,9 +31,10 @@ static int game_loop(void *arg)
         floor_casting(data, 0);
         update_player(data->ply, data);
         raycasting(data);
-        render_mini_map(data);
-        drawing_3d_game(data);
         update_door_animation(data, data->door, current_time);
+        render_mini_map(data);
+        draw_player(data, current_time);
+        drawing_3d_game(data);
     }
     // draw_sky_floor(data);
 
@@ -47,12 +48,12 @@ int main(int ac, char **av)
 
     parser(ac, av, &cub3d_args);
 
-    init_game(&data, &cub3d_args);
+    // init_game(&data, &cub3d_args);
     
-    handle_events(&data);
+    // handle_events(&data);
 
-    mlx_loop_hook(data.mlx->mlx, game_loop, &data);
+    // mlx_loop_hook(data.mlx->mlx, game_loop, &data);
 
-    mlx_loop(data.mlx->mlx);
+    // mlx_loop(data.mlx->mlx);
     return (0);
 }
