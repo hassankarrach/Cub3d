@@ -21,8 +21,8 @@ int key_press(int keycode, t_data *data)
     // Speed boost
     if (keycode == 102)
     {
-        data->ply->move_speed = 4;
-        data->ply->bobbing_speed = 2;
+        data->ply->move_speed = 3;
+        data->ply->bobbing_speed = 1.5;
         data->ply->bobbing_amplitude = 1.4;
     }
     if (keycode == 32)

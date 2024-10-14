@@ -54,8 +54,8 @@ bool player_in_grid(t_data *data)
     int player_tile_x;  
     int player_tile_y;
 
-    player_tile_x = (int)(data->ply->posX / TILE_SIZE);
-    player_tile_y = (int)(data->ply->posY / TILE_SIZE);
+    player_tile_x = (int)floor(data->ply->posX / TILE_SIZE);
+    player_tile_y = (int)floor(data->ply->posY / TILE_SIZE);
     if (data->map2d[player_tile_y][player_tile_x] == 'D' || data->map2d[player_tile_y][player_tile_x] == 'O')
         return true;
     else
