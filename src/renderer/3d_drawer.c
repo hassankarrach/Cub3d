@@ -75,96 +75,6 @@ void draw_sky_floor(t_data *data)
         }
     }
 }
-t_texture *get_wall_frame(t_data data)
-{
-    return (data.textures.wall_frame1);
-}
-int check_wall_frame(t_data data)
-{
-    int i;
-    int j;
-
-    i = data.ray->min_inter.xintercept / TILE_SIZE;
-    j = data.ray->min_inter.yintercept / TILE_SIZE;
-    if (i >= data.w_map || j >= data.h_map || i < 0 || j < 0)
-        return 0;
-    if (data.map2d[j][i] == 'F')
-        return 1;
-    return (0);
-}
-static t_texture *selected_texture(t_data *data, t_ray ray, float ray_angle)
-{
-    if (ray.v_or_h == 1)
-    {
-        if (isRayFacingUp(ray_angle))
-        {
-            if (check_wall_frame(*data))
-                return (get_wall_frame(*data));
-            return data->textures.wall_NO;  // NO texture
-        }
-        else if (isRayFacingDown(ray_angle))
-        {
-            if (check_wall_frame(*data))
-                return (get_wall_frame(*data));
-            return data->textures.wall_SO;  // SO texture
-        }
-    }
-    else
-    {
-        if (isRayFacingLeft(ray_angle))
-        {
-            if (check_wall_frame(*data))
-                return (get_wall_frame(*data));
-            return data->textures.wall_WE;  // WE texture
-        }
-        else if (isRayFacingRight(ray_angle))
-        {
-            if (check_wall_frame(*data))
-                return (get_wall_frame(*data));
-            return data->textures.wall_EA;  // EA texture
-        }
-    }
-    return NULL;
-}
-t_texture *texture_loader(t_data *data, char *texture_path)
-{
-    t_texture *texture = malloc(sizeof(t_texture));
-    if (!texture)
-        ft_error("Memory allocation failed");
-    texture->img = mlx_xpm_file_to_image(data->mlx->mlx, texture_path, &texture->width, &texture->height);
-    if (!texture->img)
-        ft_error("Texture loading failed");
-    texture->addr = mlx_get_data_addr(texture->img, &texture->bits_per_pixel, &texture->line_length, &texture->endian);
-    return (texture);
-}
-int get_pixel_from_texture(t_texture *texture, int offset_x, int offset_y)
-{
-    int pixel_offset;   
-
-    if (texture == NULL)
-        return (0);
-    if (offset_x < 0 || offset_x >= texture->width || offset_y < 0 || offset_y >= texture->height)
-        return 0; // Return a default color (like black) if out of bounds
-
-    pixel_offset = (offset_y * texture->line_length) + (offset_x * (texture->bits_per_pixel / 8));
-
-    int color = *(int *)(texture->addr + pixel_offset);
-    return color;
-}
-int get_start_drawing_texture_x(t_ray ray)
-{
-    int offset;
-
-    if (ray.v_or_h == 1) // Horizontal hit
-    {
-        offset = (int)ray.min_inter.xintercept % TILE_SIZE;
-    }
-    else // Vertical hit
-    {
-        offset = (int)ray.min_inter.yintercept % TILE_SIZE;
-    }
-    return offset;
-}
 static double get_wall_height(t_ray *ray, t_player ply)
 {
     double dis_player;
@@ -202,7 +112,7 @@ int	clamp(int value, int min, int max)
 		return (max);
 	return (value);
 }
-void render_wall(t_data *data, int x)
+void render_wall(t_data *data, int x, double ray_angle)
 {
     int texture_x, texture_y;
     double brightness_factor;
@@ -211,7 +121,7 @@ void render_wall(t_data *data, int x)
     wall_params = calculate_wall_params(data);
     texture_x = get_start_drawing_texture_x(*data->ray);
     brightness_factor = 1.0 - (data->ray->distance / (TILE_SIZE * 12));
-    t_texture *texture = selected_texture(data, *data->ray, data->ray->ray_ngl);
+    t_texture *texture = selected_texture(data, *data->ray, ray_angle);
     while (wall_params.start_y <= wall_params.end_y)
     {
         texture_y = ((wall_params.start_y - wall_params.save_y) * 576) / wall_params.wall_height;

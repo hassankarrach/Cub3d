@@ -98,16 +98,17 @@ typedef enum e_game_state
 
 typedef struct s_args
 {
-	t_rgb Floor_color;
-	t_rgb Ceiling_color;
-	char *North_texture;
-	char *South_texture;
-	char *West_texture;
-	char *East_texture;
-	char **map_lines;
-	int map_rows;
-	int map_columns;
-	t_wallFrame **frames;
+    t_rgb Floor_color;
+    t_rgb Ceiling_color;
+    char *North_texture;
+    char *South_texture;
+    char *West_texture;
+    char *East_texture;
+    char **map_lines;
+    int map_rows;
+    int map_columns;
+    int number_of_frames;
+    t_wallFrame **frames;
 } t_args;
 
 typedef struct s_door

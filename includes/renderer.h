@@ -13,9 +13,12 @@ t_texture *texture_loader(t_data *data, char *texture_path);
 int get_pixel_from_texture(t_texture *texture, int offset_x, int offset_y);
 int get_start_drawing_texture_x(t_ray ray);
 t_wall_params calculate_wall_params(t_data *data);
-void render_wall(t_data *data, int x);
+void render_wall(t_data *data, int x, double angle);
 void drawing_3d_game(t_data *data);
 void draw_player(t_data *data, double current_time);
+t_texture *selected_texture(t_data *data, t_ray ray, float ray_angle);
+int get_pixel_from_texture(t_texture *texture, int offset_x, int offset_y);
+int get_start_drawing_texture_x(t_ray ray);
 
 
 #endif

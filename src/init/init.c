@@ -31,6 +31,7 @@ void init_player(t_player *player, t_data *data)
 void init_ray(t_ray *ray)
 {
     ray->ray_ngl = 0;
+    ray->hit_door = 0;
     // ray->angleIncrement = 0;
 }
 static void init_sounds(t_data *data)
