@@ -24,15 +24,16 @@ static int game_loop(void *arg)
         mlx_clear_window(data->mlx->mlx, data->mlx->win);
         if (!data->ply->walk_direction)
         {
-            bobbing_time += 0.1;
+            bobbing_time += 0.08;
             data->ply->look_offset += sin(bobbing_time) * 2;
         }
         draw_sky_floor(data);
         floor_casting(data, 0);
-        update_player(data->ply, data);
         raycasting(data);
-        update_door_animation(data, data->door, current_time);
         render_mini_map(data);
+        update_door_animation(data, data->door, current_time);
+        update_ply_animation(data, data->ply, current_time);
+        update_player(data->ply, data);
         draw_player(data, current_time);
         drawing_3d_game(data);
     }
@@ -48,12 +49,12 @@ int main(int ac, char **av)
 
     parser(ac, av, &cub3d_args);
 
-    // init_game(&data, &cub3d_args);
+    init_game(&data, &cub3d_args);
     
-    // handle_events(&data);
+    handle_events(&data);
 
-    // mlx_loop_hook(data.mlx->mlx, game_loop, &data);
+    mlx_loop_hook(data.mlx->mlx, game_loop, &data);
 
-    // mlx_loop(data.mlx->mlx);
+    mlx_loop(data.mlx->mlx);
     return (0);
 }

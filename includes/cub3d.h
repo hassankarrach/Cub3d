@@ -40,8 +40,8 @@
 #define FOV 60
 #define ROTATION_SPEED 4 * DEG_TO_RAD //  2 * (PI / 180)
 #define MOVE_SPEED 7
-#define BOBBING_SPEED 0.4
-#define BOBBING_AMPLITUDE 4
+#define BOBBING_SPEED 0.3
+#define BOBBING_AMPLITUDE 3
 #define DEG_TO_RAD (M_PI / 180)
 
 #define BLK 0xFF000000	// Black
@@ -207,6 +207,7 @@ int isRayFacingLeft(float rayAngle);
 void load_door_textures(t_data *data);
 void rendring_door(t_data *data, t_door door, int x);
 void update_door_animation(t_data *data, t_door *door, double current_time);
+void update_ply_animation(t_data *data, t_player *ply, double current_time);
 bool player_in_grid(t_data *data);
 
 #endif

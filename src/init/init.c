@@ -1,18 +1,32 @@
 #include "../../includes/cub3d.h"
+void init_player_texture(t_data *data, t_player *ply, t_texture **ply_textures)
+{
+    int i;
+
+    i = 0;
+    ply->current_frame = 0;
+    ply->total_frames = 24;
+    ply->last_update_time = 0;
+    while (i < ply->total_frames)
+    {
+        ply->textures[i] = ply_textures[i];
+        i++;
+    }
+}
 
 void init_player(t_player *player, t_data *data)
 {
     get_x_y_player(data);
-    player->posX = data->index_x * TILE_SIZE + 288;
-    player->posY = data->index_y * TILE_SIZE + 288;
+    player->posX = data->index_x * TILE_SIZE + TILE_SIZE / 2;
+    player->posY = data->index_y * TILE_SIZE + TILE_SIZE / 2;
     player->fov_rd = 60 * DEG_TO_RAD;
     player->walk_direction = 0;
     player->turn_direction = 0;
     data->ply->move_speed = 1;
     data->ply->bobbing_speed = 1;
     data->ply->bobbing_amplitude = 1;
-    data->door->is_open = 0;
     get_angle(data);
+    init_player_texture(data, data->ply, data->textures.player);
 }
 void init_ray(t_ray *ray)
 {
@@ -53,7 +67,7 @@ static void load_player_textures(t_data *data)
     char *tmp;
 
     i = 1;
-    while (i <= 26)
+    while (i <= 24)
     {
         full_path = ft_strjoin("./assets/player/player_", ft_itoa(i));
         tmp = full_path;
@@ -110,9 +124,7 @@ void init_game(t_data *data, t_args *args)
     data->h_map = --args->map_rows;
     data->door = malloc(sizeof(t_door));
     data->ply = malloc(sizeof(t_player));
-    init_player(data->ply, data);
     data->ray = malloc(sizeof(t_ray));
-    init_ray(data->ray);
     data->mlx = malloc(sizeof(t_mlx));
     data->mlx->mlx = mlx_init();
     data->mlx->win = mlx_new_window(data->mlx->mlx, S_W, S_H, "Cub3D");
@@ -121,8 +133,10 @@ void init_game(t_data *data, t_args *args)
     // data->tex = malloc(sizeof(t_tex));
     // init_textures(data->tex);
     data->state = LOBBY;
-    init_sounds(data);
     load_door_textures(data);
+    init_ray(data->ray);
+    init_player(data->ply, data);
+    init_sounds(data);
     init_doors(data, data->door, data->textures.door);
     load_all_textures(data);
 }

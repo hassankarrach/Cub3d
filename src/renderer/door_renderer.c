@@ -69,20 +69,23 @@ void rendring_door(t_data *data, t_door door, int x)
 
     wall_params = calculate_door_params(data);
     texture_x = get_start_drawing_texture_x_door(*data->door);
-        brightness_factor = fmax(1.0 - (data->door->distance / (TILE_SIZE * 4)), 0.2);
+    brightness_factor = 1.0 - (data->ray->distance / (TILE_SIZE * 12));
+    t_texture *texture = selected_texture_door(data, *data->ray);
     while (wall_params.start_y <= wall_params.end_y)
     {
         texture_y = ((wall_params.start_y - wall_params.save_y) * 576) / wall_params.wall_height;
-        int color = get_pixel_from_texture(selected_texture_door(data, *data->ray), texture_x, texture_y);
+        int color = get_pixel_from_texture(texture, texture_x, texture_y);
         if (color == 0)
         {
             wall_params.start_y++;
             continue;   
         }
         int r = ((color >> 16) & 0xFF) * brightness_factor;
+        r = clamp(r, 0, 255);
         int g = ((color >> 8) & 0xFF) * brightness_factor;
+        g = clamp(g, 0, 255);
         int b = (color & 0xFF) * brightness_factor;
-        color = (r << 16) | (g << 8) | b;
+        b = clamp(b, 0, 255);
         ft_pixel_put(data, x, wall_params.start_y, color);
         wall_params.start_y++;
     }
