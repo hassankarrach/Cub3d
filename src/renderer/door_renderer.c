@@ -3,7 +3,15 @@
 void update_door_animation(t_data *data, t_door *door, double current_time)
 {
     double time_between_frames = 0.1; // 100 ms between frames
+    int i;
+    int j;
 
+    i = door->x_intercept / TILE_SIZE;
+    j = door->y_intercept / TILE_SIZE;
+    if (data->map2d[j][i] == 'D')
+        door->is_open = 0;
+    else if (data->map2d[j][i] == 'O')
+        door->is_open = 1;
     if (current_time - door->last_update_time >= time_between_frames)
     {
         if (door->is_open && door->current_frame < door->total_frames - 1)

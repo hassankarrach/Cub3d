@@ -11,6 +11,7 @@ int find_wall(t_data *data, double x, double y)
         return 1;
     if (data->map2d[j][i] == 'D' || (data->map2d[j][i] == 'O'))
     {
+        data->ray->hit_door = 1;
         if (data->ray->skip_door)
             return (0);
         else
@@ -139,31 +140,42 @@ t_inter get_v_inter(t_data *data, float angl)
 }
 void cast_rays_door(t_data *data, int ray)
 {
+    t_door *door;
+
+    door = data->door;
     data->ray->skip_door = 0;
-    data->door->distance = calculate_distance(data, data->ray->ray_ngl);
-    data->door->x_intercept = data->ray->min_inter.xintercept;
-    data->door->y_intercept = data->ray->min_inter.yintercept;
-    data->door->is_ver_ray = data->ray->v_or_h;
-    if (is_door(data->door->x_intercept, data->door->y_intercept, data) &&  data->ray->v_or_h == 1)
+    door->distance = calculate_distance(data, data->ray->ray_ngl);
+    door->x_intercept = data->ray->min_inter.xintercept;
+    door->y_intercept = data->ray->min_inter.yintercept;
+    door->is_ver_ray = data->ray->v_or_h;
+    if (is_door(door->x_intercept, door->y_intercept, data) &&  data->ray->v_or_h == 1)
         rendring_door(data, *data->door, ray);
+    data->ray->hit_door = false;
 }
 void raycasting(t_data *data)
 {
+    t_ray *ray;
     double angle;
-    int ray;
+    int ray_x;
     double angleIncrement;
 
-    ray = 0;
-    data->ray->ray_ngl = data->ply->angle - data->ply->fov_rd / 2;
+    ray_x = 0;
+    ray = data->ray;
+    angle = data->ply->angle - data->ply->fov_rd / 2;
     angleIncrement = data->ply->fov_rd / S_W;
-    while (ray < S_W)
+    while (ray_x < S_W)
     {
         data->ray->skip_door = 1;
-        data->ray->ray_ngl = normalize_angle(data->ray->ray_ngl);
-        data->ray->distance = calculate_distance(data, data->ray->ray_ngl);
-        render_wall(data, ray);
-        cast_rays_door(data, ray);
-        ray++;
-        data->ray->ray_ngl += angleIncrement; // next angle
+        angle = normalize_angle(angle);
+        ray->ray_ngl = angle;
+        ray->distance = calculate_distance(data, angle);
+        render_wall(data, ray_x, ray->ray_ngl);
+        if (data->ray->hit_door || player_in_grid(data))
+        {
+            printf ("jj\n");
+            cast_rays_door(data, ray_x);
+        }
+        ray_x++;
+        angle += angleIncrement; // next angle
     }
 }

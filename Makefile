@@ -32,7 +32,7 @@ PARSER_SRC = $(addprefix ./src/parser/, parser.c parser_utils.c parser_utils2.c)
 UTILS_SRC = $(addprefix ./src/utils/, cleanup.c player_utils.c minimap_utils.c window_utils.c time_utils.c)
 INITIALIZER_SRC = $(addprefix ./src/init/, init.c init_player.c)
 RAYCASTER_SRC = $(addprefix ./src/raycaster/, raycaster.c raycaster_utils.c rays_directions.c floor.c)
-RENDERER_SRC = $(addprefix ./src/renderer/, door_renderer.c 3d_drawer.c draw_player.c)
+RENDERER_SRC = $(addprefix ./src/renderer/, door_renderer.c 3d_drawer.c draw_player.c currect_texture.c texture_utils.c)
 
 SRCS = $(LIBFT_SRCS) $(SCENES_SRC) $(PARSER_SRC) $(UTILS_SRC) $(INITIALIZER_SRC) $(RAYCASTER_SRC) $(RENDERER_SRC) ./src/cub3d.c
 # ==================

@@ -33,32 +33,43 @@ static void add_doors(t_args *cub_args)
     }
 }
 
-static void fill_frame_struct(t_wallFrame *frame, char **map_lines, int x, int y) //use this to fill later.
+static t_wallFrame *fill_frame_struct(char **map_lines, int x, int y) // use this to fill later.
 {
+    t_wallFrame *frame;
+
+    frame = malloc(sizeof(t_wallFrame));
     frame->x = x;
     frame->y = y;
     frame->Frame = rand() % 2 + 1;
 
     int available_directions[4];
+    int max_rows = 0;
     int count = 0;
 
-    // if (map_lines[y][x + 1] == '0')
-    //     available_directions[count++] = RIGHT;
-    // if (map_lines[y][x - 1] == '0')
-    //     available_directions[count++] = LEFT;
-    // if (map_lines[y - 1][x] == '0')
-    //     available_directions[count++] = TOP;
-    // if (map_lines[y + 1][x] == '0')
-    //     available_directions[count++] = BOTTOM;
+    while (map_lines[max_rows++])
+        ;
+    max_rows--;
 
-    available_directions[count++] = RIGHT;
+    if ((x + 1) < (ft_strlen(map_lines[0] - 1)) && map_lines[y][x + 1] == '0')
+        available_directions[count++] = RIGHT;
+
+    if ((x - 1 >= 0) && map_lines[y][x - 1] == '0')
+        available_directions[count++] = LEFT;
+
+    if ((y - 1) >= 0 && map_lines[y - 1][x] == '0')
+        available_directions[count++] = TOP;
+
+    if ((y + 1) < max_rows && map_lines[y + 1][x] == '0')
+        available_directions[count++] = BOTTOM;
 
     if (count > 0)
     {
         int random_index = rand() % count;
         frame->direction = available_directions[random_index];
     }
+    return (frame);
 }
+
 const char *directionToString(e_Direction direction)
 {
     const char *directionStrings[] = {
@@ -68,32 +79,87 @@ const char *directionToString(e_Direction direction)
         "RIGHT"};
     return directionStrings[direction];
 }
+
 static void init_wallFrames_struct(t_args *cub_args)
 {
     t_wallFrame **frames;
     int number_of_rows;
-    int frames_per_row;
     int frame_number;
+    int x;
+    int y;
 
     frame_number = 0;
     number_of_rows = 0;
-    frames_per_row = 2;
+    y = 0;
     while (cub_args->map_lines[number_of_rows++])
         ;
-    frames = malloc(sizeof(t_wallFrame *) * (number_of_rows * frames_per_row + 1));
-    frames[number_of_rows * frames_per_row] = NULL;
+    number_of_rows--;
+    frames = malloc(sizeof(t_wallFrame *) * (cub_args->number_of_frames + 1));
     if (!frames)
         return;
-    frames[0]->x = 0;
-    frames[0]->y = 0;
-    frames[0]->direction = 0;
+    frames[cub_args->number_of_frames] = NULL;
+
+    frames[0] = fill_frame_struct(cub_args->map_lines, 0, 0);
+
+    int count = 0;
+    while (cub_args->map_lines[y])
+    {
+        x = 0;
+        while (cub_args->map_lines[y][x])
+        {
+            if (cub_args->map_lines[y][x] == 'F')
+            {
+                frames[frame_number] = fill_frame_struct(cub_args->map_lines, x, y);
+                frame_number++;
+            }
+            x++;
+        }
+        y++;
+    }
+
+
     cub_args->frames = frames;
 }
+static bool is_logic_frame_helper(char pos)
+{
+    return (pos == 'k' || pos == '1' || pos == 'D' || pos == 'F' || pos == 'X');
+}
+static bool is_logic_frame(t_args *cub_args, int y, int x)
+{
+    char left_side;
+    char right_side;
+    char top_side;
+    char bottom_side;
+    int max_rows;
+    int max_columns;
+
+    max_columns = cub_args->map_columns;
+    max_rows = cub_args->map_rows;
+    if (x - 1 >= 0)
+        left_side = cub_args->map_lines[y][x - 1];
+    else
+        left_side = 'k';
+    if (x + 1 < max_columns)
+        right_side = cub_args->map_lines[y][x + 1];
+    else
+        right_side = 'k';
+    if (y + 1 < max_rows)
+        bottom_side = cub_args->map_lines[y + 1][x];
+    else
+        bottom_side = 'k';
+    if (y - 1 >= 0)
+        top_side = cub_args->map_lines[y - 1][x];
+    else
+        top_side = 'k';
+    return (!is_logic_frame_helper(left_side) || !is_logic_frame_helper(right_side) || !is_logic_frame_helper(top_side) || !is_logic_frame_helper(bottom_side));
+}
+
 static void add_wall_frames(t_args *cub_args)
 {
     int frames_per_row;
     int i;
     int j;
+    cub_args->number_of_frames = 0;
 
     i = 0;
     frames_per_row = 2;
@@ -103,10 +169,10 @@ static void add_wall_frames(t_args *cub_args)
         frames_per_row = 2;
         while (cub_args->map_lines[i][j])
         {
-            if (cub_args->map_lines[i][j] == '1' && frames_per_row)
+            if (cub_args->map_lines[i][j] == '1' && frames_per_row && is_logic_frame(cub_args, i, j) && j != 0 && j < cub_args->map_columns && i != 0 && i < (cub_args->map_rows - 1))
             {
                 cub_args->map_lines[i][j] = 'F';
-                // fill_frame_struct(frames[frame_number++], cub_args->map_lines, j, i);
+                cub_args->number_of_frames++;
                 frames_per_row--;
             }
             j++;
@@ -263,8 +329,16 @@ void parser(int ac, char **av, t_args *cub3d_args)
     set_map_metadata(cub3d_args);
     add_doors(cub3d_args);
     add_wall_frames(cub3d_args);
+    init_wallFrames_struct(cub3d_args);
 
-    // init_wallFrames_struct(cub3d_args);
-
-    // printf("%s\n", directionToString(cub3d_args->frames[0]->direction));
+    // =====Debug======
+    // int i = 0;
+    // while (cub3d_args->map_lines[i])
+    //     printf("%s\n", cub3d_args->map_lines[i++]);
+    // i = 0;
+    // while (cub3d_args->frames[i])
+    // {
+    //     printf("%s [%d-%d] %d\n", directionToString(cub3d_args->frames[i]->direction), cub3d_args->frames[i]->y, cub3d_args->frames[i]->x, cub3d_args->frames[i]->Frame);
+    //     i++;
+    // }
 }
