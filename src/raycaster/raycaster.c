@@ -69,7 +69,7 @@ bool check_door_in_grid(t_data *data, t_inter *inter_h, double x_step, double y_
     double save_inter_y;
 
     save_inter_x = inter_h->xintercept;
-    save_inter_y =inter_h->yintercept;
+    save_inter_y = inter_h->yintercept;
     if (player_in_grid(data))
     {
         start_h_y_door(data, data->ray->ray_ngl, &inter_h->yintercept);
@@ -172,7 +172,7 @@ void raycasting(t_data *data)
         render_wall(data, ray_x, ray->ray_ngl);
         if (data->ray->hit_door || player_in_grid(data))
         {
-            printf ("jj\n");
+            // printf ("jj\n");
             cast_rays_door(data, ray_x);
         }
         ray_x++;

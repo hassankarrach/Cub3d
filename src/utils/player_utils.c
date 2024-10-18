@@ -7,18 +7,18 @@ static int valid_move(t_data *data, double x, double y)
     double start_door;
     double end_door;
 
-    start_door = 200.0;
-    end_door = 376.0;
+    start_door = 220.0;
+    end_door = 380.0;
     if (i >= data->w_map || j >= data->h_map || i < 0 || j < 0)
         return 1;
     if (data->map2d[j][i] == '1' || data->map2d[j][i] == 'F')
         return 1;
     if (data->map2d[j][i] == 'D' || data->map2d[j][i] == 'O')
     {
-        if ((fmod(x, TILE_SIZE) >= start_door && fmod(x, TILE_SIZE) <= end_door))
-            return 0;
+        if (!(fmod(x, TILE_SIZE) >= start_door && fmod(x, TILE_SIZE) <= end_door) && ft_distance(data, data->door->x_intercept, data->door->y_intercept) < 60.0 && data->ply->walk_direction >= 0)
+            return 1;
         else
-            return (1);
+            return (0);
     }
     return 0;
 }

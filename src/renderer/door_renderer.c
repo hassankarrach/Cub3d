@@ -8,10 +8,6 @@ void update_door_animation(t_data *data, t_door *door, double current_time)
 
     i = door->x_intercept / TILE_SIZE;
     j = door->y_intercept / TILE_SIZE;
-    if (data->map2d[j][i] == 'D')
-        door->is_open = 0;
-    else if (data->map2d[j][i] == 'O')
-        door->is_open = 1;
     if (current_time - door->last_update_time >= time_between_frames)
     {
         if (door->is_open && door->current_frame < door->total_frames - 1)
@@ -69,6 +65,21 @@ t_wall_params calculate_door_params(t_data *data)
         params.end_y = S_H - 1;
     return params;
 }
+int apply_brightness(int color, double brightness_factor)
+{
+    int r;
+    int g;
+    int b;
+    
+    r = ((color >> 16) & 0xFF) * brightness_factor;
+    r = clamp(r, 0, 255);
+    g = ((color >> 8) & 0xFF) * brightness_factor;
+    g = clamp(g, 0, 255);
+    b = (color & 0xFF) * brightness_factor;
+    b = clamp(b, 0, 255);
+    return (r << 16) | (g << 8) | b;
+}
+
 void rendring_door(t_data *data, t_door door, int x)
 {
     int texture_x, texture_y;
@@ -77,7 +88,7 @@ void rendring_door(t_data *data, t_door door, int x)
 
     wall_params = calculate_door_params(data);
     texture_x = get_start_drawing_texture_x_door(*data->door);
-    brightness_factor = 1.0 - (data->ray->distance / (TILE_SIZE * 12));
+    brightness_factor = 1.0 - (door.distance / (TILE_SIZE * 12));
     t_texture *texture = selected_texture_door(data, *data->ray);
     while (wall_params.start_y <= wall_params.end_y)
     {
@@ -88,12 +99,7 @@ void rendring_door(t_data *data, t_door door, int x)
             wall_params.start_y++;
             continue;   
         }
-        int r = ((color >> 16) & 0xFF) * brightness_factor;
-        r = clamp(r, 0, 255);
-        int g = ((color >> 8) & 0xFF) * brightness_factor;
-        g = clamp(g, 0, 255);
-        int b = (color & 0xFF) * brightness_factor;
-        b = clamp(b, 0, 255);
+        color = apply_brightness(color, brightness_factor);
         ft_pixel_put(data, x, wall_params.start_y, color);
         wall_params.start_y++;
     }
