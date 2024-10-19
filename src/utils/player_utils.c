@@ -1,19 +1,46 @@
 #include "../../includes/utils.h"
 
+static bool hit_wall(t_data *data, double x, double y)
+{
+    int i;
+    int j;
+    
+    i = (int)(x / (double)TILE_SIZE + 0.0001);
+    j = (int)(y / (double)TILE_SIZE + 0.0001);
+    if (i >= data->w_map || j >= data->h_map || i < 0 || j < 0)
+        return 1;
+    if (data->map2d[j][i] == '1' || data->map2d[j][i] == 'F')
+        return 1;
+    return (0);
+}
+static int valid_move2(t_data *data, double x, double y)
+{
+    if (hit_wall(data, x + 30, y - 30))
+        return 1;
+    else if (hit_wall(data, x - 30 , y + 30))
+        return 1;
+    else if (hit_wall(data, x - 30 , y - 30))
+        return 1;
+    else if (hit_wall(data, x + 30, y + 30))
+        return 1;
+    return (0);
+}
 static int valid_move(t_data *data, double x, double y)
 {
-    int i = (int)(x / TILE_SIZE);
-    int j = (int)(y / TILE_SIZE);
+    int i;
+    int j;
     double start_door;
     double end_door;
 
     start_door = 220.0;
     end_door = 380.0;
+    i = (int)(x / (double)TILE_SIZE + 0.0001);
+    j = (int)(y / (double)TILE_SIZE + 0.0001);
     if (i >= data->w_map || j >= data->h_map || i < 0 || j < 0)
         return 1;
-    if (data->map2d[j][i] == '1' || data->map2d[j][i] == 'F')
-        return 1;
-    if (data->map2d[j][i] == 'D' || data->map2d[j][i] == 'O')
+    else if (valid_move2(data, x, y))
+        return (1);
+    else if (data->map2d[j][i] == 'D' || data->map2d[j][i] == 'O')
     {
         if (!(fmod(x, TILE_SIZE) >= start_door && fmod(x, TILE_SIZE) <= end_door) && ft_distance(data, data->door->x_intercept, data->door->y_intercept) < 60.0 && data->ply->walk_direction >= 0)
             return 1;
