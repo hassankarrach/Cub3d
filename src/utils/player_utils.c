@@ -15,13 +15,13 @@ static bool hit_wall(t_data *data, double x, double y)
 }
 static int valid_move2(t_data *data, double x, double y)
 {
-    if (hit_wall(data, x + 30, y - 30))
+    if (hit_wall(data, x + 25, y - 25))
         return 1;
-    else if (hit_wall(data, x - 30 , y + 30))
+    else if (hit_wall(data, x - 25 , y + 25))
         return 1;
-    else if (hit_wall(data, x - 30 , y - 30))
+    else if (hit_wall(data, x - 25 , y - 25))
         return 1;
-    else if (hit_wall(data, x + 30, y + 30))
+    else if (hit_wall(data, x + 25, y + 25))
         return 1;
     return (0);
 }
