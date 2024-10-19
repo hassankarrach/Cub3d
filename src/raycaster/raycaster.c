@@ -171,10 +171,7 @@ void raycasting(t_data *data)
         ray->distance = calculate_distance(data, angle);
         render_wall(data, ray_x, ray->ray_ngl);
         if (data->ray->hit_door || player_in_grid(data))
-        {
-            // printf ("jj\n");
             cast_rays_door(data, ray_x);
-        }
         ray_x++;
         angle += angleIncrement; // next angle
     }
