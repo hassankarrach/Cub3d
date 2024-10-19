@@ -1,13 +1,24 @@
 #include "../../includes/renderer.h"
+// t_door *get_corret_door(t_door **list_door, x, y)
+// {
+//     int i;
+//     int j;
 
+//     i = (int)(x / (double)TILE_SIZE);
+//     j = (int)(y / (double)TILE_SIZE);
+//     while (list_door && list_door->next != NULL)
+//     {
+//         if (list_door->x == i && list_door->y == j)
+//             break;
+//     }
+//     return (*list_door);
+// }
 void update_door_animation(t_data *data, t_door *door, double current_time)
 {
     double time_between_frames = 0.1; // 100 ms between frames
-    int i;
-    int j;
+    t_door *corret_door;
 
-    i = door->x_intercept / TILE_SIZE;
-    j = door->y_intercept / TILE_SIZE;
+    // corret_door = get_corret_door(door, door->x_intercept, door->y_intercept)
     if (current_time - door->last_update_time >= time_between_frames)
     {
         if (door->is_open && door->current_frame < door->total_frames - 1)
