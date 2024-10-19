@@ -5,8 +5,8 @@ static bool hit_wall(t_data *data, double x, double y)
     int i;
     int j;
     
-    i = (int)(x / (double)TILE_SIZE + 0.0001);
-    j = (int)(y / (double)TILE_SIZE + 0.0001);
+    i = (int)(x / (double)TILE_SIZE);
+    j = (int)(y / (double)TILE_SIZE);
     if (i >= data->w_map || j >= data->h_map || i < 0 || j < 0)
         return 1;
     if (data->map2d[j][i] == '1' || data->map2d[j][i] == 'F')
@@ -34,8 +34,8 @@ static int valid_move(t_data *data, double x, double y)
 
     start_door = 220.0;
     end_door = 380.0;
-    i = (int)(x / (double)TILE_SIZE + 0.0001);
-    j = (int)(y / (double)TILE_SIZE + 0.0001);
+    i = (int)(x / (double)TILE_SIZE);
+    j = (int)(y / (double)TILE_SIZE);
     if (i >= data->w_map || j >= data->h_map || i < 0 || j < 0)
         return 1;
     else if (valid_move2(data, x, y))
