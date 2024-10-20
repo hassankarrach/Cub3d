@@ -60,6 +60,17 @@ void load_door_textures(t_data *data)
     data->textures.door[6] = texture_loader(data, "./assets/textures/door7.xpm");
     data->textures.door[7] = texture_loader(data, "./assets/textures/door8.xpm");
 }
+void load_frame_textures(t_data *data)
+{
+    data->frame_13.frame_13_red = texture_loader(data, "./assets/textures/frame/wallFrame_1_red.xpm");
+    data->frame_13.frame_13_green = texture_loader(data, "./assets/textures/frame/wallFrame_1_green.xpm");
+    data->frame_13.frame_13_blue = texture_loader(data, "./assets/textures/frame/wallFrame_1_blue.xpm");
+    data->frame_13.frame_13_orange = texture_loader(data, "./assets/textures/frame/wallFrame_1_orange.xpm");
+    data->frame_door.frame_door_red = texture_loader(data, "./assets/textures/frame/wallFrame_2_red.xpm");
+    data->frame_door.frame_door_green = texture_loader(data, "./assets/textures/frame/wallFrame_2_green.xpm");
+    data->frame_door.frame_door_blue = texture_loader(data, "./assets/textures/frame/wallFrame_2_blue.xpm");
+    data->frame_door.frame_door_orange = texture_loader(data, "./assets/textures/frame/wallFrame_2_orange.xpm");
+}
 
 static void load_player_textures(t_data *data)
 {
@@ -123,6 +134,7 @@ void init_game(t_data *data, t_args *args)
     data->map2d = args->map_lines;
     data->w_map = --args->map_columns;
     data->h_map = --args->map_rows;
+    data->increase = 32;
     data->door = malloc(sizeof(t_door));
     data->ply = malloc(sizeof(t_player));
     data->ray = malloc(sizeof(t_ray));
@@ -140,4 +152,5 @@ void init_game(t_data *data, t_args *args)
     init_sounds(data);
     init_doors(data, data->door, data->textures.door);
     load_all_textures(data);
+    load_frame_textures(data);
 }

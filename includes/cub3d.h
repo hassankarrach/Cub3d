@@ -124,6 +124,22 @@ typedef struct s_door
 	t_texture *textures[8];	 // Textures for each animation frame (8 in this case)
 } t_door;
 
+typedef struct s_texture_frame_13
+{
+	t_texture *frame_13_red;
+	t_texture *frame_13_green;
+	t_texture *frame_13_blue;
+	t_texture *frame_13_orange;
+} t_frame_13;
+
+typedef struct s_texture_frame_doors
+{
+	t_texture *frame_door_red;
+	t_texture *frame_door_green;
+	t_texture *frame_door_blue;
+	t_texture *frame_door_orange;	
+} t_frame_door;
+
 typedef struct s_textures
 {
 	t_texture *wall_SO;
@@ -142,6 +158,8 @@ typedef struct s_textures
 	t_texture *you_died;
 	t_texture *mini_map;
 	t_texture *icon_player;
+	t_frame_13 frame_13;
+	t_frame_door frame_doors;
 } t_textures;
 
 typedef struct s_data
@@ -166,6 +184,7 @@ typedef struct s_data
 	game_state state;
 	int flag;
 	int selected_wall;
+	int increase;
 } t_data;
 
 typedef struct s_wall_params

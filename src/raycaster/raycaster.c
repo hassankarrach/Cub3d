@@ -138,6 +138,7 @@ t_inter get_v_inter(t_data *data, float angl)
     }
     return (inter_v);
 }
+
 void cast_rays_door(t_data *data, int ray)
 {
     t_door *door;

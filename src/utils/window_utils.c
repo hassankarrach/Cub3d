@@ -17,8 +17,6 @@ int key_press(int keycode, t_data *data)
         data->ply->turn_direction = -1;
     if (keycode == ON_TURN_RIGHT)
         data->ply->turn_direction = 1;
-    
-    // Speed boost
     if (keycode == 102)
     {
         data->ply->move_speed = 3;
@@ -27,6 +25,12 @@ int key_press(int keycode, t_data *data)
     }
     if (keycode == 32)
         data->state = PLAYING;
+    if (keycode == 65453)
+        if (data->increase > 20)
+            data->increase -= 4;
+    if (keycode == 65451)
+        if (data->increase < 40)
+            data->increase += 4;
     return 0;
 }
 int mouse_move(int x, int y, t_data *data)

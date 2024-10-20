@@ -5,15 +5,15 @@ static int pos_to_color(t_data *data, int x, int y)
     float relative_x, relative_y;
     int map_x, map_y;
     
-    float player_x = (data->ply->posX / TILE_SIZE) * 32;
-    float player_y = (data->ply->posY / TILE_SIZE) * 32;
+    float player_x = (data->ply->posX / TILE_SIZE) * data->increase;
+    float player_y = (data->ply->posY / TILE_SIZE) * data->increase;
     relative_x = x - (S_W_MINI_MAP / 2);
     relative_y = y - (S_H_MINI_MAP / 2);
     float rotated_x = cos(data->ply->angle + M_PI / 2) * relative_x - sin(data->ply->angle + M_PI / 2) * relative_y + player_x;
     float rotated_y = sin(data->ply->angle + M_PI / 2) * relative_x + cos(data->ply->angle + M_PI / 2) * relative_y + player_y;
     
-    map_x = (int)(rotated_x / 32);
-    map_y = (int)(rotated_y / 32);
+    map_x = (int)(rotated_x / data->increase);
+    map_y = (int)(rotated_y / data->increase);
     if (map_x < 0 || map_x > data->w_map || map_y < 0 || map_y > data->h_map || rotated_x < 0 || rotated_y < 0)
         return -1;
     if (data->map2d[map_y][map_x] == '1' || data->map2d[map_y][map_x] == 'F')
