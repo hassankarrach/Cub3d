@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycaster.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/21 03:16:33 by kait-baa          #+#    #+#             */
+/*   Updated: 2024/10/21 03:33:02 by kait-baa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/raycaster.h"
 
 t_inter	get_h_inter(t_data *data, float angl)
@@ -11,21 +23,20 @@ t_inter	get_h_inter(t_data *data, float angl)
 	start_h_y(data, angl, &inter_h.yintercept);
 	inter_h.xintercept = data->ply->posX + (inter_h.yintercept
 			- data->ply->posY) / tan(angl);
-	if (isRayFacingUp(angl))
+	if (is_ray_facing_up(angl))
 		y_step *= -1;
 	x_step = y_step / tan(angl);
-	if (isRayFacingLeft(angl) && x_step > 0 || isRayFacingRight(angl)
+	if (is_ray_facing_left(angl) && x_step > 0 || is_ray_facing_right(angl)
 		&& x_step < 0)
 		x_step *= -1;
-	if (isRayFacingUp(angl))
+	if (is_ray_facing_up(angl))
 		inter_h.yintercept -= 0.0001;
 	while (!find_wall(data, inter_h.xintercept, inter_h.yintercept))
 	{
 		inter_h.yintercept += y_step;
 		inter_h.xintercept += x_step;
 	}
-	if (!data->ray->skip_door && check_door_in_grid(data, &inter_h, x_step,
-			y_step))
+	if (!data->ray->skip_door && get_door_inter(data, &inter_h, x_step, y_step))
 		return (inter_h);
 	return (inter_h);
 }
@@ -41,13 +52,13 @@ t_inter	get_v_inter(t_data *data, float angl)
 	start_v_x(data, angl, &inter_v.xintercept);
 	inter_v.yintercept = data->ply->posY + (inter_v.xintercept
 			- data->ply->posX) * tan(angl);
-	if (isRayFacingLeft(angl))
+	if (is_ray_facing_left(angl))
 		x_step *= -1;
 	y_step = x_step * tan(angl);
-	if (isRayFacingUp(angl) && y_step > 0 || (isRayFacingDown(angl)
+	if (is_ray_facing_up(angl) && y_step > 0 || (is_ray_facing_down(angl)
 			&& y_step < 0))
 		y_step *= -1;
-	if (isRayFacingLeft(angl))
+	if (is_ray_facing_left(angl))
 		inter_v.xintercept -= 0.0001;
 	while (!find_wall(data, inter_v.xintercept, inter_v.yintercept))
 	{
@@ -59,15 +70,15 @@ t_inter	get_v_inter(t_data *data, float angl)
 
 void	raycasting(t_data *data)
 {
-	t_ray *ray;
-	double angle;
-	int ray_x;
-	double angleIncrement;
+	t_ray	*ray;
+	double	angle;
+	int		ray_x;
+	double	angle_increment;
 
 	ray_x = 0;
 	ray = data->ray;
 	angle = data->ply->angle - data->ply->fov_rd / 2;
-	angleIncrement = data->ply->fov_rd / S_W;
+	angle_increment = data->ply->fov_rd / S_W;
 	while (ray_x < S_W)
 	{
 		data->ray->skip_door = 1;
@@ -78,6 +89,6 @@ void	raycasting(t_data *data)
 		if (data->ray->hit_door || player_in_grid(data))
 			cast_rays_door(data, ray_x);
 		ray_x++;
-		angle += angleIncrement; // next angle
+		angle += angle_increment;
 	}
 }

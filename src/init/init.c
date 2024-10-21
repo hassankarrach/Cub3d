@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 00:16:52 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/21 00:23:07 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/10/21 05:13:32 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,7 @@ void	init_game(t_data *data, t_args *args)
 	data->w_map = --args->map_columns;
 	data->h_map = --args->map_rows;
 	data->increase = 32;
+	data->flag = 0;
 	data->door = malloc(sizeof(t_door));
 	data->ply = malloc(sizeof(t_player));
 	data->ray = malloc(sizeof(t_ray));

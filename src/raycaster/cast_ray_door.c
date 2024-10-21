@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cast_ray_door.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/21 03:15:00 by kait-baa          #+#    #+#             */
+/*   Updated: 2024/10/21 04:42:05 by kait-baa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/raycaster.h"
 
 bool	is_within_map(double x, double y, t_data *data)
@@ -39,7 +51,7 @@ bool	is_door(double x, double y, t_data *data)
 	return (data->map2d[j][i] == 'D' || data->map2d[j][i] == 'O');
 }
 
-bool	check_door_in_grid(t_data *data, t_inter *inter_h, double x_step,
+bool	get_door_inter(t_data *data, t_inter *inter_h, double x_step,
 		double y_step)
 {
 	double	save_inter_x;
@@ -53,7 +65,7 @@ bool	check_door_in_grid(t_data *data, t_inter *inter_h, double x_step,
 		inter_h->xintercept = data->ply->posX + (inter_h->yintercept
 				- data->ply->posY) / tan(data->ray->ray_ngl);
 		if (fmod(data->ply->posY, TILE_SIZE) < TILE_SIZE / 2
-			&& isRayFacingUp(data->ray->ray_ngl))
+			&& is_ray_facing_up(data->ray->ray_ngl))
 		{
 			inter_h->xintercept = save_inter_x;
 			inter_h->yintercept = save_inter_y;
@@ -68,7 +80,7 @@ bool	check_door_in_grid(t_data *data, t_inter *inter_h, double x_step,
 
 void	cast_rays_door(t_data *data, int ray)
 {
-	t_door *door;
+	t_door	*door;
 
 	door = data->door;
 	data->ray->skip_door = 0;
