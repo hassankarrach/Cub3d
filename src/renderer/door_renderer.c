@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 05:03:55 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/21 05:03:56 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/10/21 07:12:40 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,25 @@
 
 void	update_door_animation(t_data *data, t_door *door, double current_time)
 {
+	int i;
+	int j;
 	double	time_between_frames;
-	t_door	*corret_door;
+	t_wall_door	*corret_door;
 
+	i = (int)(door->x_intercept / (double)TILE_SIZE);
+	j = (int)(door->y_intercept / (double)TILE_SIZE);
 	time_between_frames = 0.1;
-	// corret_door = get_corret_door(door, door->x_intercept, door->y_intercept)
-	if (current_time - door->last_update_time >= time_between_frames)
-	{
-		if (door->is_open && door->current_frame < door->total_frames - 1)
-			door->current_frame++;
-		else if (!door->is_open && door->current_frame)
-			door->current_frame--;
-		door->last_update_time = current_time;
-	}
+	corret_door = get_corret_door(door->doors, i, j);
+	if (corret_door)
+		printf ("%d\n", corret_door->i);
+	// if (current_time - door->last_update_time >= time_between_frames)
+	// {
+	// 	if (corret_door->is_open && corret_door->current_frame < door->total_frames - 1)
+	// 		corret_door->current_frame++;
+	// 	else if (!corret_door->is_open && corret_door->current_frame)
+	// 		corret_door->current_frame--;
+	// 	door->last_update_time = current_time;
+	// }
 }
 
 t_wall_params	calculate_door_params(t_data *data)

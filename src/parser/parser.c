@@ -7,24 +7,29 @@ static void add_doors(t_args *cub_args)
     int doors_count;
 
     i = 0;
-    doors_count = 3;
-    while (cub_args->map_lines[i] && doors_count)
+    doors_count = 0;
+    cub_args->doors = malloc(sizeof(t_wall_door *) * 4);
+    cub_args->doors[3] = NULL;
+    while (cub_args->map_lines[i] && doors_count < 3)
     {
         j = 0;
         // don't add 2 doors beside each other
-        while (cub_args->map_lines[i][j] && doors_count)
+        while (cub_args->map_lines[i][j] && doors_count < 3)
         {
             if (cub_args->map_lines[i][j] == '0')
             {
-                if (cub_args->map_lines[i - 1][j] == '1' && cub_args->map_lines[i + 1][j] == '1' && cub_args->map_lines[i][j - 1] != 'D' && cub_args->map_lines[i][j + 1] != 'D')
+                // if (cub_args->map_lines[i - 1][j] == '1' && cub_args->map_lines[i + 1][j] == '1' && cub_args->map_lines[i][j - 1] != 'D' && cub_args->map_lines[i][j + 1] != 'D')
+                // {
+                //     cub_args->map_lines[i][j] = 'D';
+                //     doors_count--;
+                // }
+                if (cub_args->map_lines[i][j - 1] == '1' && cub_args->map_lines[i][j + 1] == '1' && cub_args->map_lines[i - 1][j] != 'D' && cub_args->map_lines[i + 1][j] != 'D')
                 {
                     cub_args->map_lines[i][j] = 'D';
-                    doors_count--;
-                }
-                else if (cub_args->map_lines[i][j - 1] == '1' && cub_args->map_lines[i][j + 1] == '1' && cub_args->map_lines[i - 1][j] != 'D' && cub_args->map_lines[i + 1][j] != 'D')
-                {
-                    cub_args->map_lines[i][j] = 'D';
-                    doors_count--;
+                     cub_args->doors[doors_count] = malloc(sizeof(t_wall_door));
+                    cub_args->doors[doors_count]->i = j;
+                    cub_args->doors[doors_count]->j = i;
+                    doors_count++;
                 }
             }
             j++;
@@ -327,7 +332,7 @@ void parser(int ac, char **av, t_args *cub3d_args)
     parse_map_lines(cub3d_args->map_lines);
     remove_empty(cub3d_args->map_lines);
     set_map_metadata(cub3d_args);
-    // add_doors(cub3d_args);
+    add_doors(cub3d_args);
     add_wall_frames(cub3d_args);
     init_wallFrames_struct(cub3d_args);
 

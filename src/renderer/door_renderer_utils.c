@@ -6,26 +6,28 @@
 /*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 05:08:12 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/21 05:08:13 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/10/21 07:15:04 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/renderer.h"
 
-// t_door *get_corret_door(t_door **list_door, x, y)
-// {
-//     int i;
-//     int j;
+t_wall_door *get_corret_door(t_wall_door **list_door, int i, int j)
+{
+	int n;
 
-//     i = (int)(x / (double)TILE_SIZE);
-//     j = (int)(y / (double)TILE_SIZE);
-//     while (list_door && list_door->next != NULL)
-//     {
-//         if (list_door->x == i && list_door->y == j)
-//             break ;
-//     }
-//     return (*list_door);
-// }
+	n = 0;
+    while (n < 3 && list_door[n])
+    {
+		printf ("i : %d j : %d\n", list_door[n]->i, list_door[n]->j);
+        if (list_door[n]->i == i && list_door[n]->j == j)
+		{
+            return (list_door[n]);
+		}
+		n++;
+    }
+    return (NULL);
+}
 
 int	get_start_drawing_texture_x_door(t_door door_ray)
 {

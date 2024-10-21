@@ -64,6 +64,7 @@ typedef struct s_inter t_inter;
 typedef enum FrameType e_FrameType;
 typedef enum Direction e_Direction;
 typedef struct s_wallFrame t_wallFrame;
+typedef struct s_wall_door t_wall_door;
 
 typedef struct s_rgb
 {
@@ -109,6 +110,7 @@ typedef struct s_args
     int map_columns;
     int number_of_frames;
     t_wallFrame **frames;
+	t_wall_door **doors;
 } t_args;
 
 typedef struct s_door
@@ -117,11 +119,11 @@ typedef struct s_door
 	bool is_ver_ray;
 	bool is_open;
 	int current_frame;
-	int total_frames;		 // Total frames for the door animation (e.g., 8)
-	double x_intercept;		 // X intersection for the door
-	double y_intercept;		 // Y intersection for the door
-	double last_update_time; // Last time the frame was updated
-	t_texture *textures[8];	 // Textures for each animation frame (8 in this case)
+	int total_frames;
+	double x_intercept;
+	double y_intercept;
+	double last_update_time;
+	t_wall_door **doors;
 } t_door;
 
 typedef struct s_texture_frame_13

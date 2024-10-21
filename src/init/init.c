@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 00:16:52 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/21 05:13:32 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/10/21 06:55:26 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,12 +142,23 @@ void	load_all_textures(t_data *data)
 
 void	init_doors(t_data *data, t_door *door, t_texture **door_textures)
 {
+	int	i;
+
 	door->is_open = 0;
 	door->distance = sqrt(pow(data->w_map * TILE_SIZE, 2) + pow(data->h_map
 				* TILE_SIZE, 2));
 	door->current_frame = 0;
 	door->total_frames = 26;
 	door->last_update_time = 0;
+	door->doors = data->args->doors;
+
+	i = 0;
+	while (i < 3 && door->doors[i])
+	{
+		door->doors[i]->is_open = 0;
+		door->doors[i]->current_frame = 0;
+		i++;
+	}
 }
 
 void	init_game(t_data *data, t_args *args)
