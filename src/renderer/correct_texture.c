@@ -13,24 +13,26 @@ t_wallFrame *get_currect_texture(t_wallFrame **wall_frame, int i, int j)
     }
     return (NULL);
 }
-// t_texture *selected_texture( e_Direction direction, t_texture_fr *texture_frame)
-// {
-//     if (direction == TOP)
-//         return (texture_frame);
-//     else if (direction == BOTTOM)
-//         return (texture_frame);
-//     else if (direction == LEFT)
-//         return (texture_frame);
-//     else if (direction == RIGHT)
-//         return (texture_frame);
-//     return NULL;   
-// }
+static t_texture *selected_texture_frames( e_Direction direction, t_frames texture_frame)
+{
+    if (direction == TOP)
+        return (texture_frame.frame_blue);
+    else if (direction == BOTTOM)
+        return (texture_frame.frame_red);
+    else if (direction == LEFT)
+        return (texture_frame.frame_orange);
+    else if (direction == RIGHT)
+        return (texture_frame.frame_green);
+    return NULL;   
+}
 t_texture *get_wall_frame(t_data data, e_Direction direction, t_texture *texture_wall)
 {
     t_wallFrame *wall_frame;
+    t_textures textures;
     int i;
     int j;
 
+    textures = data.textures;
     i = (int)(data.ray->min_inter.xintercept / TILE_SIZE);
     j = (int)(data.ray->min_inter.yintercept / TILE_SIZE);
     if (i >= data.w_map || j >= data.h_map || i < 0 || j < 0)
@@ -40,10 +42,10 @@ t_texture *get_wall_frame(t_data data, e_Direction direction, t_texture *texture
         return texture_wall;
     if (wall_frame->direction == direction)
     {
-        if (wall_frame->Frame == 1)
-            return (data.textures.wall_frame1);
-        else
-            return (data.textures.wall_frame2);
+        // if (wall_frame->Frame == 1)
+            return (selected_texture_frames(direction, textures.frame_13));
+        // else
+            // return (selected_texture_frames(direction, textures.frame_doors));
     }
     return (texture_wall);
 }

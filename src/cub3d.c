@@ -37,7 +37,6 @@ static int game_loop(void *arg)
         draw_player(data, current_time);
         drawing_3d_game(data);
     }
-    // draw_sky_floor(data);
 
     return (0);
 }
@@ -50,9 +49,7 @@ int main(int ac, char **av)
     parser(ac, av, &cub3d_args);
 
     init_game(&data, &cub3d_args);
-    
     handle_events(&data);
-
     mlx_loop_hook(data.mlx->mlx, game_loop, &data);
 
     mlx_loop(data.mlx->mlx);
