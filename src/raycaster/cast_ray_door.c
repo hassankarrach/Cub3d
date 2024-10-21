@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 03:15:00 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/21 04:42:05 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/10/21 06:50:25 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,17 @@ bool	is_within_map(double x, double y, t_data *data)
 
 void	update_door_status(t_data *data, int i, int j, float dist_door)
 {
+	t_wall_door *door;
+
+	door = get_corret_door(data->door->doors, i, j);
 	if (data->map2d[j][i] == 'D' && dist_door < 600.0 && !data->door->is_open)
 	{
-		data->door->is_open = 1;
+		door->is_open = 1;
 		data->map2d[j][i] = 'O';
 	}
 	else if (data->map2d[j][i] == 'O' && dist_door > 600.0)
 	{
-		data->door->is_open = 0;
+		door->is_open = 0;
 		data->map2d[j][i] = 'D';
 	}
 }
