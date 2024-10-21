@@ -1,33 +1,5 @@
 #include "../../includes/renderer.h"
 
-// void draw_sky_floor(t_data *data)
-// {
-//     int x, y;
-//     int center_x = S_W / 2;
-//     int center_y_sky = (S_H / 2) + data->ply->look_offset; // Adjust sky based on look_offset   
-//     int max_distance = sqrt((S_W / 2) * (S_W / 2) + S_H * S_H); // Max distance from center
-
-//     for (y = 0; y < S_H; y++)
-//     {
-//         for (x = 0; x < S_W; x++)
-//         {
-//             if (y < S_H / 2 + data->ply->look_offset) // Adjust sky rendering based on look_offset
-//             {
-//                 double distance = sqrt((x - center_x) * (x - center_x) + (y - center_y_sky) * (y - center_y_sky));
-//                 double normalized_distance = distance / max_distance;
-//                 if (normalized_distance > 1.0)
-//                     normalized_distance = 1.0;
-
-//                 double bright_factor = pow(normalized_distance, 3);
-//                 int r = (int)((1.0 - bright_factor) * 0 + bright_factor * data->args->Ceiling_color.r);
-//                 int g = (int)((1.0 - bright_factor) * 0 + bright_factor * data->args->Ceiling_color.g);
-//                 int b = (int)((1.0 - bright_factor) * 0 + bright_factor * data->args->Ceiling_color.b);
-//                 int gradient_color = (r << 16) | (g << 8) | b;
-//                 ft_pixel_put(data, x, y, gradient_color);
-//             }
-//         }
-//     }
-// }
 void draw_sky_floor(t_data *data)
 {
     int x, y;
@@ -36,12 +8,10 @@ void draw_sky_floor(t_data *data)
     int max_distance_squared = (S_W / 2) * (S_W / 2) + S_H * S_H;
     double inv_max_distance = 1.0 / sqrt(max_distance_squared);
 
-    // Precompute color components
     int r_ceiling = data->args->Ceiling_color.r;
     int g_ceiling = data->args->Ceiling_color.g;
     int b_ceiling = data->args->Ceiling_color.b;
 
-    // Precompute lookup table for pow(x, 3)
     #define LUT_SIZE 1024
     double pow_lut[LUT_SIZE];
     for (int i = 0; i < LUT_SIZE; i++) {
@@ -81,11 +51,12 @@ static double get_wall_height(t_ray *ray, t_player ply)
     double wall_height;
     double distance;
 
-    dis_player = (S_W / 2) / tan((FOV * DEG_TO_RAD) / 2);   // Distance from player to projection plane 
+    dis_player = (S_W / 2) / tan((FOV * DEG_TO_RAD) / 2);
     distance = ray->distance * cos(ply.angle - ray->ray_ngl);
     wall_height = (dis_player * TILE_SIZE) / distance;
     return wall_height;
 }
+
 t_wall_params calculate_wall_params(t_data *data)
 {
     t_wall_params params;
@@ -104,14 +75,7 @@ t_wall_params calculate_wall_params(t_data *data)
         params.end_y = S_H - 1;
     return params;
 }
-int	clamp(int value, int min, int max)
-{
-	if (value < min)
-		return (min);
-	if (value > max)
-		return (max);
-	return (value);
-}
+
 void render_wall(t_data *data, int x, double ray_angle)
 {
     int texture_x, texture_y;
@@ -125,7 +89,7 @@ void render_wall(t_data *data, int x, double ray_angle)
     while (wall_params.start_y <= wall_params.end_y)
     {
         texture_y = ((wall_params.start_y - wall_params.save_y) * 576) / wall_params.wall_height;
-        int color = get_pixel_from_texture(texture, texture_x, texture_y);
+        int color = get_pixel(texture, texture_x, texture_y);
         if (color || color != BLK)
         {
             int r = ((color >> 16) & 0xFF) * brightness_factor;

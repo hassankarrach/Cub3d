@@ -48,7 +48,7 @@ static void	draw_player_icon(t_data *data)
 		x = 0;
 		while (x < data->textures.icon_player->width)
 		{
-			color = get_pixel_from_texture(data->textures.icon_player, x, y);
+			color = get_pixel(data->textures.icon_player, x, y);
 			if (color != BLK)
 				ft_pixel_put(data, x + start_x, y + start_y, color);
 			x++;
@@ -69,7 +69,7 @@ static void	set_pixels_img(t_data *data)
 		y = 0;
 		while (y < S_H_MINI_MAP + 14)
 		{
-			color = get_pixel_from_texture(data->textures.mini_map, x, y);
+			color = get_pixel(data->textures.mini_map, x, y);
 			if (color != BLK)
 				ft_pixel_put(data, x, y, color);
 			y++;

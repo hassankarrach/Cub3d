@@ -1,33 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rays_directions.c                                  :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/21 03:33:11 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/21 03:33:12 by kait-baa         ###   ########.fr       */
+/*   Created: 2024/10/21 05:05:21 by kait-baa          #+#    #+#             */
+/*   Updated: 2024/10/21 05:20:22 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/raycaster.h"
+#include "../../includes/renderer.h"
 
-int	is_ray_facing_down(float rayAngle)
+int	clamp(int value, int min, int max)
 {
-	return (rayAngle > 0 && rayAngle < M_PI);
+	if (value < min)
+		return (min);
+	if (value > max)
+		return (max);
+	return (value);
 }
 
-int	is_ray_facing_up(float rayAngle)
+void	ft_pixel_put(t_data *data, int x, int y, int color)
 {
-	return (!is_ray_facing_down(rayAngle));
-}
+	char *dst;
 
-int	is_ray_facing_right(float rayAngle)
-{
-	return (rayAngle < 0.5 * M_PI || rayAngle > 1.5 * M_PI);
-}
-
-int	is_ray_facing_left(float rayAngle)
-{
-	return (!is_ray_facing_right(rayAngle));
+	dst = data->mlx->addr + (y * data->mlx->line_length + x
+			* (data->mlx->bits_per_pixel / 8));
+	if (x >= 0 && x < S_W && y >= 0 && y < S_H)
+		*(int *)dst = color;
 }

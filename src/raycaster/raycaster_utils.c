@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 02:15:52 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/21 02:15:53 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/10/21 03:33:02 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ double	calculate_distance(t_data *data, float angle)
 
 void	start_h_y(t_data *data, double angl, double *h_y)
 {
-	if (isRayFacingDown(angl))
+	if (is_ray_facing_down(angl))
 		*h_y = floor(data->ply->posY / TILE_SIZE) * TILE_SIZE + TILE_SIZE;
 	else
 		*h_y = floor(data->ply->posY / TILE_SIZE) * TILE_SIZE;
@@ -56,7 +56,7 @@ void	start_h_y(t_data *data, double angl, double *h_y)
 
 void	start_v_x(t_data *data, double angl, double *v_x)
 {
-	if (isRayFacingLeft(angl))
+	if (is_ray_facing_left(angl))
 		*v_x = floor(data->ply->posX / TILE_SIZE) * TILE_SIZE;
 	else
 		*v_x = floor(data->ply->posX / TILE_SIZE) * TILE_SIZE + TILE_SIZE;
@@ -67,7 +67,7 @@ void	start_h_y_door(t_data *data, double angl, double *h_y)
 	double	tile_size;
 
 	tile_size = TILE_SIZE / 2;
-	if (isRayFacingDown(angl))
+	if (is_ray_facing_down(angl))
 		*h_y = floor(data->ply->posY / tile_size) * tile_size + tile_size;
 	else
 		*h_y = floor(data->ply->posY / tile_size) * tile_size;
