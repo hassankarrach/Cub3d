@@ -1,10 +1,15 @@
 F 2, 7, 60
-SO ./texts/wall22.xpm
-WE ./texts/wall22.xpm
-EA ./texts/wall22.xpm
-NO ./texts/wall22.xpm
+SO ./assets/textures/wall_SO.xpm
+WE ./assets/textures/wall_WE.xpm
+EA ./assets/textures/wall_EA.xpm
+NO ./assets/textures/wall_NO.xpm
 C 0, 0, 0
 
 11111
 10W01
+10001
+10101
+10101
+10101
+10001
 11111

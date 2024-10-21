@@ -105,13 +105,11 @@ void rendring_door(t_data *data, t_door door, int x)
     {
         texture_y = ((wall_params.start_y - wall_params.save_y) * 576) / wall_params.wall_height;
         int color = get_pixel_from_texture(texture, texture_x, texture_y);
-        if (color == 0)
+        if (color != 0 && color != BLK)
         {
-            wall_params.start_y++;
-            continue;   
+            color = apply_brightness(color, brightness_factor);
+            ft_pixel_put(data, x, wall_params.start_y, color);
         }
-        color = apply_brightness(color, brightness_factor);
-        ft_pixel_put(data, x, wall_params.start_y, color);
         wall_params.start_y++;
     }
 }

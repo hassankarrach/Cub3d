@@ -327,7 +327,7 @@ void parser(int ac, char **av, t_args *cub3d_args)
     parse_map_lines(cub3d_args->map_lines);
     remove_empty(cub3d_args->map_lines);
     set_map_metadata(cub3d_args);
-    add_doors(cub3d_args);
+    // add_doors(cub3d_args);
     add_wall_frames(cub3d_args);
     init_wallFrames_struct(cub3d_args);
 

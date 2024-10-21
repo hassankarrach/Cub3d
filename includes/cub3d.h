@@ -126,19 +126,12 @@ typedef struct s_door
 
 typedef struct s_texture_frame_13
 {
-	t_texture *frame_13_red;
-	t_texture *frame_13_green;
-	t_texture *frame_13_blue;
-	t_texture *frame_13_orange;
-} t_frame_13;
+	t_texture *frame_red;
+	t_texture *frame_green;
+	t_texture *frame_blue;
+	t_texture *frame_orange;
+} t_frames;
 
-typedef struct s_texture_frame_doors
-{
-	t_texture *frame_door_red;
-	t_texture *frame_door_green;
-	t_texture *frame_door_blue;
-	t_texture *frame_door_orange;	
-} t_frame_door;
 
 typedef struct s_textures
 {
@@ -151,15 +144,15 @@ typedef struct s_textures
 	t_texture *wall_frame2;
 
 	t_texture *player[26];
-	t_texture *door[8];
+	t_texture *door[24];
 
 	t_texture *logo;
 	t_texture *press_to_start;
 	t_texture *you_died;
 	t_texture *mini_map;
 	t_texture *icon_player;
-	t_frame_13 frame_13;
-	t_frame_door frame_doors;
+	t_frames frame_13;
+	t_frames frame_doors;
 } t_textures;
 
 typedef struct s_data
