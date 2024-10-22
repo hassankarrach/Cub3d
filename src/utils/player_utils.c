@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 05:23:23 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/21 05:59:02 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/10/21 20:50:33 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,8 @@ static int	valid_move(t_data *data, double x, double y)
 
 void	head_bobbing(t_data *data)
 {
-	static double	bobbing_time;
+	static double	bobbing_time = 0;
 
-	bobbing_time = 0;
 	if (data->ply->walk_direction)
 	{
 		bobbing_time += BOBBING_SPEED * data->ply->bobbing_speed;

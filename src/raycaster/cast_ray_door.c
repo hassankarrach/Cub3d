@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 03:15:00 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/21 06:50:25 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/10/22 05:10:42 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,49 @@ bool	is_within_map(double x, double y, t_data *data)
 	return (i >= 0 && i < data->w_map && j >= 0 && j < data->h_map);
 }
 
-void	update_door_status(t_data *data, int i, int j, float dist_door)
-{
-	t_wall_door *door;
+// void	update_door_status(t_data *data, int i, int j, float dist_door)
+// {
+// 	t_wall_door	*door;
 
-	door = get_corret_door(data->door->doors, i, j);
-	if (data->map2d[j][i] == 'D' && dist_door < 600.0 && !data->door->is_open)
+// 	door = get_corret_door(data, data->door->doors);
+// 	if (!door)
+// 		return ;
+// 	if (data->map2d[door->j][door->i] == 'D'
+// 		&& dist_door < DOOR_INTERACTION_DISTANCE && !door->is_open)
+// 	{
+// 		door->is_open = 1;
+// 		data->map2d[door->j][door->i] = 'O';
+// 	}
+// 	else if (data->map2d[door->j][door->i] == 'O'
+// 			&& dist_door > DOOR_INTERACTION_DISTANCE)
+// 	{
+// 		door->is_open = 0;
+// 		data->map2d[door->j][door->i] = 'D';
+// 	}
+// }
+
+void	update_door_status(t_data *data)
+{
+	t_wall_door	**door;
+	float		dist_door;
+	int n;
+
+	n = 0;
+	door = data->door->doors;
+	while (n < 3 && door[n])
 	{
-		door->is_open = 1;
-		data->map2d[j][i] = 'O';
-	}
-	else if (data->map2d[j][i] == 'O' && dist_door > 600.0)
-	{
-		door->is_open = 0;
-		data->map2d[j][i] = 'D';
+		dist_door = ft_distance(data, door[n]->i * TILE_SIZE, door[n]->j * TILE_SIZE);
+		if (dist_door < DOOR_INTERACTION_DISTANCE && !door[n]->is_open)
+		{
+			door[n]->is_open = 1;
+			data->map2d[door[n]->j][door[n]->i] = 'O';
+		}
+		else if (dist_door > DOOR_INTERACTION_DISTANCE)
+		{
+			door[n]->is_open = 0;
+			data->map2d[door[n]->j][door[n]->i] = 'D';
+		}
+		n++;
 	}
 }
 
@@ -45,12 +74,11 @@ bool	is_door(double x, double y, t_data *data)
 	int		j;
 	float	dist_door;
 
-	i = (int)(x / (double)TILE_SIZE);
-	j = (int)(y / (double)TILE_SIZE);
+	i = (int)floor(x / (double)TILE_SIZE);
+	j = (int)floor(y / (double)TILE_SIZE);
 	dist_door = ft_distance(data, x, y);
 	if (!is_within_map(x, y, data))
 		return (false);
-	update_door_status(data, i, j, dist_door);
 	return (data->map2d[j][i] == 'D' || data->map2d[j][i] == 'O');
 }
 
@@ -91,8 +119,7 @@ void	cast_rays_door(t_data *data, int ray)
 	door->x_intercept = data->ray->min_inter.xintercept;
 	door->y_intercept = data->ray->min_inter.yintercept;
 	door->is_ver_ray = data->ray->v_or_h;
-	if (is_door(door->x_intercept, door->y_intercept, data)
-		&& data->ray->v_or_h == 1)
+	if (is_door(door->x_intercept, door->y_intercept, data))
 		rendring_door(data, *data->door, ray);
 	data->ray->hit_door = false;
 }
