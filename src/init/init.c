@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 00:16:52 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/21 06:55:26 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/10/22 05:10:01 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,11 @@ void	init_doors(t_data *data, t_door *door, t_texture **door_textures)
 		i++;
 	}
 }
-
+/*
+i : 1 j : 1
+i : 8 j : 1
+i : 7 j : 5
+*/
 void	init_game(t_data *data, t_args *args)
 {
 	data->args = args;
