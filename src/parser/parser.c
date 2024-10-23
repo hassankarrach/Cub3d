@@ -13,32 +13,19 @@ static void add_doors(t_args *cub_args)
     while (cub_args->map_lines[i] && doors_count < 3)
     {
         j = 0;
-        // don't add 2 doors beside each other
         while (cub_args->map_lines[i][j] && doors_count < 3)
         {
-            if (cub_args->map_lines[i][j] == '0')
-            {
-                // if (cub_args->map_lines[i - 1][j] == '1' && cub_args->map_lines[i + 1][j] == '1' && cub_args->map_lines[i][j - 1] != 'D' && cub_args->map_lines[i][j + 1] != 'D')
-                // {
-                //     cub_args->map_lines[i][j] = 'D';
-                //     doors_count--;
-                // }
-                if (cub_args->map_lines[i][j - 1] == '1' && cub_args->map_lines[i][j + 1] == '1' && cub_args->map_lines[i - 1][j] != 'D' && cub_args->map_lines[i + 1][j] != 'D')
+                if (cub_args->map_lines[i][j] == 'D')
                 {
                     cub_args->doors[doors_count] = malloc(sizeof(t_wall_door));
-                    cub_args->map_lines[i][j] = 'D';
                     cub_args->doors[doors_count]->i = j;
                     cub_args->doors[doors_count]->j = i;
                     doors_count++;
                 }
-            }
             j++;
         }
         i++;
     }
-                    // cub_args->map_lines[13][5] = 'D';
-                    // cub_args->doors[2]->i = 5;
-                    // cub_args->doors[2]->j = 13;
 }
 
 static t_wallFrame *fill_frame_struct(char **map_lines, int x, int y) // use this to fill later.

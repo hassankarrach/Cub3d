@@ -147,8 +147,8 @@ typedef struct s_textures
 	t_texture				*wall_frame1;
 	t_texture				*wall_frame2;
 
-	t_texture				*player[26];
-	t_texture				*door[24];
+	t_texture				*player[24];
+	t_texture				*door[26];
 
 	t_texture				*logo;
 	t_texture				*press_to_start;

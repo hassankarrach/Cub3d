@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 03:15:00 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/23 01:13:30 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/10/23 21:37:12 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,33 +59,6 @@ bool	is_door(double x, double y, t_data *data)
 	if (!is_within_map(x, y, data))
 		return (false);
 	return (data->map2d[j][i] == 'D' || data->map2d[j][i] == 'O');
-}
-
-bool	get_door_inter(t_data *data, t_inter *inter_h, double x_step,
-		double y_step)
-{
-	double	save_inter_x;
-	double	save_inter_y;
-
-	save_inter_x = inter_h->xintercept;
-	save_inter_y = inter_h->yintercept;
-	if (player_in_grid(data))
-	{
-		start_h_y_door(data, data->ray->ray_ngl, &inter_h->yintercept);
-		inter_h->xintercept = data->ply->posX + (inter_h->yintercept
-				- data->ply->posY) / tan(data->ray->ray_ngl);
-		if (fmod(data->ply->posY, TILE_SIZE) < TILE_SIZE / 2
-			&& is_ray_facing_up(data->ray->ray_ngl))
-		{
-			inter_h->xintercept = save_inter_x;
-			inter_h->yintercept = save_inter_y;
-			return (false);
-		}
-		return (true);
-	}
-	inter_h->xintercept += x_step / 2;
-	inter_h->yintercept += y_step / 2;
-	return (false);
 }
 
 void	cast_rays_door(t_data *data, int ray)

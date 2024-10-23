@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 05:19:14 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/21 05:19:15 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/10/23 23:05:06 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ void	handle_events(t_data *data)
 
 int	key_press(int keycode, t_data *data)
 {
-	if (keycode == ON_KEYUP || keycode == 102)
+	if (keycode == KEY_W || keycode == ON_KEYUP)
 		data->ply->walk_direction = 1;
-	if (keycode == ON_KEYDOWN)
+	if (keycode == KEY_S)
 		data->ply->walk_direction = -1;
-	if (keycode == ON_TURN_LEFT)
+	if (keycode == KEY_A)
 		data->ply->turn_direction = -1;
-	if (keycode == ON_TURN_RIGHT)
+	if (keycode == KEY_D)
 		data->ply->turn_direction = 1;
-	if (keycode == 102)
+	if (keycode == ON_KEYUP)
 	{
 		data->ply->move_speed = 3;
 		data->ply->bobbing_speed = 1.5;
@@ -38,12 +38,14 @@ int	key_press(int keycode, t_data *data)
 	}
 	if (keycode == 32)
 		data->state = PLAYING;
-	if (keycode == 65453)
+	if (keycode == KEY_VOLUMEDOWN)
 		if (data->increase > 20)
 			data->increase -= 4;
-	if (keycode == 65451)
+	if (keycode == KEY_VOLUMEUP)
 		if (data->increase < 40)
 			data->increase += 4;
+	if (keycode == ON_DESTROY)
+		close_window(data);
 	return (0);
 }
 
@@ -68,11 +70,11 @@ int	mouse_move(int x, int y, t_data *data)
 
 int	key_release(int keycode, t_data *data)
 {
-	if (keycode == ON_KEYUP || keycode == ON_KEYDOWN || keycode == 102)
+	if (keycode == KEY_W || keycode == KEY_S || keycode == ON_KEYUP)
 		data->ply->walk_direction = 0;
-	if (keycode == ON_TURN_LEFT || keycode == ON_TURN_RIGHT)
+	if (keycode == KEY_A || keycode == KEY_D)
 		data->ply->turn_direction = 0;
-	if (keycode == 102)
+	if (keycode == ON_KEYUP)
 	{
 		data->ply->move_speed = 1;
 		data->ply->bobbing_speed = 1;
@@ -83,8 +85,9 @@ int	key_release(int keycode, t_data *data)
 
 int	close_window(t_data *data)
 {
-	mlx_destroy_window(data->mlx->mlx, data->mlx->win);
+	clean_resources(data);
+	// mlx_destroy_window(data->mlx->mlx, data->mlx->win);
 	// stop_all_sounds(data);
 	exit(0);
 	return (0);
-}
+}	

@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 00:16:52 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/22 05:10:01 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/10/23 22:43:53 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,22 @@ static void	init_sounds(t_data *data)
 	i = 0;
 	while (i < 5)
 		data->sounds[i++].pid = 0;
+}
+
+t_texture	*texture_loader(t_data *data, char *texture_path)
+{
+	t_texture	*texture;
+
+	texture = malloc(sizeof(t_texture));
+	if (!texture)
+		ft_error("Memory allocation failed");
+	texture->img = mlx_xpm_file_to_image(data->mlx->mlx, texture_path,
+			&texture->width, &texture->height);
+	if (!texture->img)
+		ft_error("Texture loading failed");
+	texture->addr = mlx_get_data_addr(texture->img, &texture->bits_per_pixel,
+			&texture->line_length, &texture->endian);
+	return (texture);
 }
 
 void	load_door_textures(t_data *data)
@@ -160,11 +176,7 @@ void	init_doors(t_data *data, t_door *door, t_texture **door_textures)
 		i++;
 	}
 }
-/*
-i : 1 j : 1
-i : 8 j : 1
-i : 7 j : 5
-*/
+
 void	init_game(t_data *data, t_args *args)
 {
 	data->args = args;
