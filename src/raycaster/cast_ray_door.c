@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 03:15:00 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/22 05:10:42 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/10/23 01:13:30 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,27 +21,6 @@ bool	is_within_map(double x, double y, t_data *data)
 	j = (int)(y / (double)TILE_SIZE);
 	return (i >= 0 && i < data->w_map && j >= 0 && j < data->h_map);
 }
-
-// void	update_door_status(t_data *data, int i, int j, float dist_door)
-// {
-// 	t_wall_door	*door;
-
-// 	door = get_corret_door(data, data->door->doors);
-// 	if (!door)
-// 		return ;
-// 	if (data->map2d[door->j][door->i] == 'D'
-// 		&& dist_door < DOOR_INTERACTION_DISTANCE && !door->is_open)
-// 	{
-// 		door->is_open = 1;
-// 		data->map2d[door->j][door->i] = 'O';
-// 	}
-// 	else if (data->map2d[door->j][door->i] == 'O'
-// 			&& dist_door > DOOR_INTERACTION_DISTANCE)
-// 	{
-// 		door->is_open = 0;
-// 		data->map2d[door->j][door->i] = 'D';
-// 	}
-// }
 
 void	update_door_status(t_data *data)
 {
@@ -119,7 +98,7 @@ void	cast_rays_door(t_data *data, int ray)
 	door->x_intercept = data->ray->min_inter.xintercept;
 	door->y_intercept = data->ray->min_inter.yintercept;
 	door->is_ver_ray = data->ray->v_or_h;
-	if (is_door(door->x_intercept, door->y_intercept, data))
+	if (is_door(door->x_intercept, door->y_intercept, data) && door->is_ver_ray)
 		rendring_door(data, *data->door, ray);
 	data->ray->hit_door = false;
 }
