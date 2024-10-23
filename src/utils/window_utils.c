@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 05:19:14 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/23 23:05:06 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/10/23 23:46:00 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ int	key_release(int keycode, t_data *data)
 int	close_window(t_data *data)
 {
 	clean_resources(data);
-	// mlx_destroy_window(data->mlx->mlx, data->mlx->win);
 	// stop_all_sounds(data);
 	exit(0);
 	return (0);

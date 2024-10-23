@@ -22,7 +22,6 @@ enum
 	KEY_VOLUMEUP = 65451
 };
 
-//Player Structure
 typedef struct s_player
 {
 	double					angle;
