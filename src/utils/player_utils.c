@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 05:23:23 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/21 20:50:33 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/10/23 21:39:10 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,7 @@ static bool	hit_wall(t_data *data, double x, double y)
 	if (data->map2d[j][i] == '1' || data->map2d[j][i] == 'F')
 		return (1);
 	else if (data->map2d[j][i] == 'D' || data->map2d[j][i] == 'O')
-		if (!(fmod(x, TILE_SIZE) >= start_door && fmod(x,
-					TILE_SIZE) <= end_door) && ft_distance(data,
-				data->door->x_intercept, data->door->y_intercept) < 60.0
-			&& data->ply->walk_direction >= 0)
+		if (data->door->current_frame != data->door->total_frames - 1)
 			return (1);
 	return (0);
 }
@@ -50,6 +47,7 @@ static int	valid_move2(t_data *data, double x, double y)
 }
 
 static int	valid_move(t_data *data, double x, double y)
+
 {
 	int	i;
 	int	j;

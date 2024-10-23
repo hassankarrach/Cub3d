@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 04:24:31 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/23 01:11:51 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/10/23 22:43:40 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,20 +73,4 @@ int	check_wall_frame(t_data data)
 	if (data.map2d[j][i] == 'F')
 		return (1);
 	return (0);
-}
-
-t_texture	*texture_loader(t_data *data, char *texture_path)
-{
-	t_texture	*texture;
-
-	texture = malloc(sizeof(t_texture));
-	if (!texture)
-		ft_error("Memory allocation failed");
-	texture->img = mlx_xpm_file_to_image(data->mlx->mlx, texture_path,
-			&texture->width, &texture->height);
-	if (!texture->img)
-		ft_error("Texture loading failed");
-	texture->addr = mlx_get_data_addr(texture->img, &texture->bits_per_pixel,
-			&texture->line_length, &texture->endian);
-	return (texture);
 }

@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 05:03:55 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/23 01:17:37 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/10/23 21:29:07 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,7 @@ void	update_door_animation(t_data *data, t_door *door, double current_time)
 			&& corret_door->current_frame < door->total_frames - 1)
 			corret_door->current_frame++;
 		else if (corret_door->current_frame > 0 && dist_door > DOOR_INTERACTION_DISTANCE)
-		{
-			printf ("jj\n");
 			corret_door->current_frame--;
-		}
 		door->last_update_time = current_time;
 	}	
 	door->current_frame = corret_door->current_frame;

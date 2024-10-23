@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 03:16:33 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/23 01:04:53 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/10/23 21:28:33 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_inter	get_h_inter(t_data *data, float angl)
 		inter_h.yintercept += y_step;
 		inter_h.xintercept += x_step;
 	}
-	if (!data->ray->skip_door && get_door_inter(data, &inter_h, x_step, y_step))
+	if (!data->ray->skip_door && get_door_inter_h(data, &inter_h, x_step, y_step))
 		return (inter_h);
 	return (inter_h);
 }

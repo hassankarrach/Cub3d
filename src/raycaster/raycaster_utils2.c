@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 02:16:10 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/23 00:24:55 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/10/23 21:24:39 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,23 @@ bool	player_in_grid(t_data *data)
 		return (true);
 	else
 		return (false);
+}
+
+t_inter	min_distance(t_inter inter_h, t_inter inter_v, t_data *data)
+{
+	double	h_dist;
+	double	v_dist;
+
+	h_dist = ft_distance(data, inter_h.xintercept, inter_h.yintercept);
+	v_dist = ft_distance(data, inter_v.xintercept, inter_v.yintercept);
+	if (h_dist <= v_dist)
+	{
+		data->ray->v_or_h = 1;
+		return (inter_h);
+	}
+	else
+	{
+		data->ray->v_or_h = 0;
+		return (inter_v);
+	}
 }

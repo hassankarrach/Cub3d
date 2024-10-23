@@ -34,10 +34,12 @@ void					start_h_y_door(t_data *data, double angl, double *h_y);
 int						find_wall(t_data *data, double x, double y);
 bool					is_door(double x, double y, t_data *data);
 bool					player_in_grid(t_data *data);
-bool					get_door_inter(t_data *data, t_inter *inter_h,
+bool					get_door_inter_h(t_data *data, t_inter *inter_h,
 							double x_step, double y_step);
 void					cast_rays_door(t_data *data, int ray);
 bool					is_within_map(double x, double y, t_data *data);
 bool					is_door_2(double x, double y, t_data *data);
+t_inter					min_distance(t_inter inter_h, t_inter inter_v,
+							t_data *data);
 
 #endif
