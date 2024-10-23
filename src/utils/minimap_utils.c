@@ -23,14 +23,15 @@ static int	pos_to_color(t_data *data, int x, int y)
 		|| rotated_x < 0 || rotated_y < 0)
 		return (-1);
 	if (data->map2d[map_y][map_x] == '1' || data->map2d[map_y][map_x] == 'F')
-		return (MAP_CLR); // Wall
+		return (MAP_CLR);
 	if (data->map2d[map_y][map_x] == 'D')
-		return (ORNG); // Wall
+		return (ORNG);
 	if (data->map2d[map_y][map_x] == 'O')
 		return (GREN);
 	else
-		return (-1); // Empty space
+		return (-1);
 }
+
 static void	draw_player_icon(t_data *data)
 {
 	int	x;
@@ -56,6 +57,7 @@ static void	draw_player_icon(t_data *data)
 		y++;
 	}
 }
+
 static void	set_pixels_img(t_data *data)
 {
 	int	x;
@@ -77,6 +79,7 @@ static void	set_pixels_img(t_data *data)
 		x++;
 	}
 }
+
 static int	adjust_color_opacity(int color, float fade_factor)
 {
 	int	r;
