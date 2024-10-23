@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 05:03:55 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/22 05:09:24 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/10/23 01:17:37 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,25 @@
 void	update_door_animation(t_data *data, t_door *door, double current_time)
 {
 	t_wall_door	*corret_door;
+	float		dist_door;
 
 	corret_door = get_corret_door(data, door->doors);
 	if (!corret_door)
 		return ;
+	dist_door = ft_distance(data, corret_door->i * TILE_SIZE, corret_door->j
+			* TILE_SIZE);
 	if (current_time - door->last_update_time >= DOOR_ANIMATION_FRAME_TIME)
 	{
 		if (corret_door->is_open
 			&& corret_door->current_frame < door->total_frames - 1)
 			corret_door->current_frame++;
-		else if (!corret_door->is_open && corret_door->current_frame)
+		else if (corret_door->current_frame > 0 && dist_door > DOOR_INTERACTION_DISTANCE)
+		{
+			printf ("jj\n");
 			corret_door->current_frame--;
+		}
 		door->last_update_time = current_time;
-	}
+	}	
 	door->current_frame = corret_door->current_frame;
 }
 t_wall_params	calculate_door_params(t_data *data)

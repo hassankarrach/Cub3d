@@ -37,5 +37,7 @@ bool					player_in_grid(t_data *data);
 bool					get_door_inter(t_data *data, t_inter *inter_h,
 							double x_step, double y_step);
 void					cast_rays_door(t_data *data, int ray);
+bool					is_within_map(double x, double y, t_data *data);
+bool					is_door_2(double x, double y, t_data *data);
 
 #endif
