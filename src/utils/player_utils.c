@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 05:23:23 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/23 23:47:53 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/10/24 23:55:46 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,26 @@
 
 static bool	hit_wall(t_data *data, double x, double y)
 {
-	int		i;
-	int		j;
-	double	start_door;
-	double	end_door;
+	t_wall_door	*c_door;
+	int			i;
+	int			j;
 
-	start_door = 220.0;
-	end_door = 380.0;
+	c_door = get_corret_door((int)(data->ray->min_inter.xintercept / TILE_SIZE),
+								(int)(data->ray->min_inter.yintercept
+										/ TILE_SIZE),
+								data->door->doors);
 	i = (int)(x / (double)TILE_SIZE);
 	j = (int)(y / (double)TILE_SIZE);
 	if (i >= data->w_map || j >= data->h_map || i < 0 || j < 0)
 		return (1);
 	if (data->map2d[j][i] == '1' || data->map2d[j][i] == 'F')
 		return (1);
-	else if (data->map2d[j][i] == 'D' || data->map2d[j][i] == 'O')
-		if (data->door->current_frame != data->door->total_frames - 1)
+	else if (c_door && (data->map2d[j][i] == 'D' || data->map2d[j][i] == 'O'))
+	{
+		data->ply->walk_direction = 0;
+		if (c_door->current_frame != data->door->total_frames - 1)
 			return (1);
+	}
 	return (0);
 }
 
@@ -49,8 +53,8 @@ static int	valid_move2(t_data *data, double x, double y)
 static int	valid_move(t_data *data, double x, double y)
 
 {
-	int	i;
-	int	j;
+	int i;
+	int j;
 
 	i = (int)(x / (double)TILE_SIZE);
 	j = (int)(y / (double)TILE_SIZE);

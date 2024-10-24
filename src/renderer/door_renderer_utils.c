@@ -6,24 +6,20 @@
 /*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 05:08:12 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/23 20:07:07 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/10/24 23:52:24 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/renderer.h"
 
-t_wall_door	*get_corret_door(t_data *data, t_wall_door **list_door)
+t_wall_door	*get_corret_door(int i, int j, t_wall_door **list_door)
 {
-	int		i;
-	int		j;
 	int		n;
 	float	corr;
 
 	corr = 0.001;
-	if (is_ray_facing_up(data->ply->angle))
-		corr *= -1;
-	i = (int)(data->door->x_intercept / (double)TILE_SIZE + corr);
-	j = (int)(data->door->y_intercept / (double)TILE_SIZE + corr);
+	// if (is_ray_facing_up(data->ply->angle))
+	// corr *= -1;
 	n = 0;
 	while (n < 3 && list_door[n])
 	{
@@ -47,7 +43,14 @@ int	get_start_drawing_texture_x_door(t_door door_ray)
 
 t_texture	*selected_texture_door(t_data *data, t_ray ray)
 {
-	return (data->textures.door[data->door->current_frame]);
+	int			i;
+	int			j;
+	t_wall_door	*c_door;
+
+	i = (int)(ray.min_inter.xintercept / TILE_SIZE);
+	j = (int)(ray.min_inter.yintercept / TILE_SIZE);
+	c_door = get_corret_door(i, j, data->door->doors);
+	return (data->textures.door[c_door->current_frame]);
 }
 
 double	get_door_height(t_door *door, t_ray *ray, t_player ply)

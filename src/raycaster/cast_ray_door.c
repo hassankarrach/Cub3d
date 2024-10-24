@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 03:15:00 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/23 21:37:12 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/10/24 23:38:19 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool	is_within_map(double x, double y, t_data *data)
 	return (i >= 0 && i < data->w_map && j >= 0 && j < data->h_map);
 }
 
-void	update_door_status(t_data *data)
+void	update_door_status(t_data *data, double current_time)
 {
 	t_wall_door	**door;
 	float		dist_door;
@@ -43,6 +43,7 @@ void	update_door_status(t_data *data)
 			door[n]->is_open = 0;
 			data->map2d[door[n]->j][door[n]->i] = 'D';
 		}
+		update_door_animation(data, data->door, current_time, door[n]);
 		n++;
 	}
 }
