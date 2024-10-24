@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 00:16:52 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/23 23:50:22 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/10/24 23:36:37 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ void	init_doors(t_data *data, t_door *door, t_texture **door_textures)
 	i = 0;
 	while (i < 3 && door->doors[i])
 	{
+		door->doors[i]->last_update_time = 0;
 		door->doors[i]->is_open = 0;
 		door->doors[i]->current_frame = 0;
 		i++;

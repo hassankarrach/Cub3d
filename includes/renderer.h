@@ -32,6 +32,6 @@ t_texture                       *get_wall_frame(t_data data, e_Direction directi
 int								get_start_drawing_texture_x_door(t_door door_ray);
 t_texture						*selected_texture_door(t_data *data, t_ray ray);
 double							get_door_height(t_door *door, t_ray *ray, t_player ply);
-t_wall_door						*get_corret_door(t_data *data, t_wall_door **list_door);
+t_wall_door						*get_corret_door(int i, int j, t_wall_door **list_door);
 
 #endif

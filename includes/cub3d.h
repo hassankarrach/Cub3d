@@ -223,10 +223,11 @@ int							is_ray_facing_left(float rayAngle);
 void						load_door_textures(t_data *data);
 void						rendring_door(t_data *data, t_door door, int x);
 void						update_door_animation(t_data *data, t_door *door,
-								double current_time);
+								double current_time, t_wall_door *c_door);
 void						update_ply_animation(t_data *data, t_player *ply,
 								double current_time);
 bool						player_in_grid(t_data *data);
-void						update_door_status(t_data *data);
+void	update_door_status(t_data *data,
+						double current_time);
 
 #endif
