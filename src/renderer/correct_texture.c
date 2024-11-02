@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   correct_texture.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 04:24:31 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/23 22:43:40 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/01 19:09:03 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,11 @@ t_texture	*get_wall_frame(t_data data, e_Direction direction,
 	if (wall_frame == NULL)
 		return (texture_wall);
 	if (wall_frame->direction == direction)
-		return (selected_texture_frames(direction, textures.frame_13));
+	{
+		if (wall_frame->Frame == 1)
+			return (selected_texture_frames(direction, textures.frame_13));
+		return (selected_texture_frames(direction, textures.frame_doors));
+	}
 	return (texture_wall);
 }
 

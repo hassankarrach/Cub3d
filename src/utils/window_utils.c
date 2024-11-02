@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 05:19:14 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/23 23:46:00 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/01 17:41:50 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ int	key_press(int keycode, t_data *data)
 		data->ply->turn_direction = 1;
 	if (keycode == ON_KEYUP)
 	{
-		data->ply->move_speed = 3;
-		data->ply->bobbing_speed = 1.5;
-		data->ply->bobbing_amplitude = 1.4;
+		data->ply->move_speed = 2;
+		data->ply->bobbing_speed = 1.2;
+		data->ply->bobbing_amplitude = 1.2;
 	}
 	if (keycode == 32)
 		data->state = PLAYING;

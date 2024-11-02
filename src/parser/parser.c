@@ -157,11 +157,11 @@ static void add_wall_frames(t_args *cub_args)
     cub_args->number_of_frames = 0;
 
     i = 0;
-    frames_per_row = 2;
+    frames_per_row = 4;
     while (cub_args->map_lines[i])
     {
         j = 0;
-        frames_per_row = 2;
+        frames_per_row = 4;
         while (cub_args->map_lines[i][j])
         {
             if (cub_args->map_lines[i][j] == '1' && frames_per_row && is_logic_frame(cub_args, i, j) && j != 0 && j < cub_args->map_columns && i != 0 && i < (cub_args->map_rows - 1))
@@ -232,6 +232,8 @@ static void parse_file_lines(t_args *cub3d_args, char **file_lines)
     char *curr_line;
 
     i = 0;
+    if (!file_lines)
+        ft_error("map is empty!");
     while (file_lines[i])
     {
         curr_line = ft_strtrim(file_lines[i], " ");
@@ -327,9 +329,9 @@ void parser(int ac, char **av, t_args *cub3d_args)
     init_wallFrames_struct(cub3d_args);
 
     // =====Debug======
-    // int i = 0;
-    // while (cub3d_args->map_lines[i])
-    //     printf("%s\n", cub3d_args->map_lines[i++]);
+    int i = 0;
+    while (cub3d_args->map_lines[i])
+        printf("%s\n", cub3d_args->map_lines[i++]);
     // i = 0;
     // while (cub3d_args->frames[i])
     // {

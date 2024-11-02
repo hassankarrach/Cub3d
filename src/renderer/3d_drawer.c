@@ -4,47 +4,46 @@ void draw_sky_floor(t_data *data)
 {
     int x, y;
     int center_x = S_W / 2;
-    int center_y_sky = (S_H / 2) + data->ply->look_offset;
-    int max_distance_squared = (S_W / 2) * (S_W / 2) + S_H * S_H;
-    double inv_max_distance = 1.0 / sqrt(max_distance_squared);
+    int center_y_sky = (S_H / 2) + data->ply->look_offset; // Adjust sky based on look_offset
+    int center_y_floor = (S_H / 2) + data->ply->look_offset; // Adjust floor based on look_offset
+    int max_distance = sqrt((S_W / 2) * (S_W / 2) + S_H * S_H); // Max distance from center
 
-    int r_ceiling = data->args->Ceiling_color.r;
-    int g_ceiling = data->args->Ceiling_color.g;
-    int b_ceiling = data->args->Ceiling_color.b;
-
-    #define LUT_SIZE 1024
-    double pow_lut[LUT_SIZE];
-    for (int i = 0; i < LUT_SIZE; i++) {
-        double x = (double)i / (LUT_SIZE - 1);
-        pow_lut[i] = x * x * x;
-    }
-
-    for (y = 0; y < S_H / 2 + data->ply->look_offset; y++)
+    for (y = 0; y < S_H; y++)
     {
-        int dy = y - center_y_sky;
-        dy *= dy;
-
         for (x = 0; x < S_W; x++)
         {
-            int dx = x - center_x;
-            int distance_squared = dx * dx + dy;
-            
-            double normalized_distance = sqrt(distance_squared) * inv_max_distance;
-            if (normalized_distance > 1.0)
-                normalized_distance = 1.0;
+            if (y < S_H / 2 + data->ply->look_offset) // Adjust sky rendering based on look_offset
+            {
+                double distance = sqrt((x - center_x) * (x - center_x) + (y - center_y_sky) * (y - center_y_sky));
+                double normalized_distance = distance / max_distance;
+                if (normalized_distance > 1.0)
+                    normalized_distance = 1.0;
 
-            int lut_index = (int)(normalized_distance * (LUT_SIZE - 1));
-            double bright_factor = pow_lut[lut_index];
+                double bright_factor = pow(normalized_distance, 3);
+                int r = (int)((1.0 - bright_factor) * 0 + bright_factor * 1);
+                int g = (int)((1.0 - bright_factor) * 0 + bright_factor * 32);
+                int b = (int)((1.0 - bright_factor) * 0 + bright_factor * 71);
+                int gradient_color = (r << 16) | (g << 8) | b;
+                ft_pixel_put(data, x, y, gradient_color);
+            }
+            else if (y > S_H / 2 + data->ply->look_offset) // Adjust floor rendering based on look_offset
+            {
+                double distance = sqrt((x - center_x) * (x - center_x) + (y - center_y_floor) * (y - center_y_floor));
+                double normalized_distance = distance / max_distance;
+                if (normalized_distance > 1.0)
+                    normalized_distance = 1.0;
 
-            int r = (int)(bright_factor * r_ceiling);
-            int g = (int)(bright_factor * g_ceiling);
-            int b = (int)(bright_factor * b_ceiling);
-
-            int gradient_color = (r << 16) | (g << 8) | b;
-            ft_pixel_put(data, x, y, gradient_color);
+                double dark_factor = pow(normalized_distance, 0.7);
+                int r = (int)(dark_factor * 59);
+                int g = (int)(dark_factor * 8);
+                int b = (int)(dark_factor * 4);
+                int gradient_color = (r << 16) | (g << 8) | b;
+                ft_pixel_put(data, x, y, gradient_color);
+            }
         }
     }
 }
+
 static double get_wall_height(t_ray *ray, t_player ply)
 {
     double dis_player;

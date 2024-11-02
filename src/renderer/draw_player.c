@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 04:32:08 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/21 04:38:04 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/01 17:53:48 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	update_ply_animation(t_data *data, t_player *ply, double current_time)
 
 	time_between_frames = 0.03;
 	if (data->ply->move_speed != 1)
-		time_between_frames = 0;
+		time_between_frames = 0.02;
 	if (current_time - ply->last_update_time >= time_between_frames)
 	{
 		if (ply->current_frame < ply->total_frames - 1)

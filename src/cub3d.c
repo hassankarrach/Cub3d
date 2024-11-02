@@ -4,6 +4,9 @@ static int game_loop(void *arg)
 {
     static int i = 0;
     static double bobbing_time = 0;
+    double	time_between_frames;
+    static double last_update_time;
+    time_between_frames = 0.02;
     t_data *data = (t_data *)arg;
 
     double current_time = get_time_in_seconds();
@@ -24,8 +27,12 @@ static int game_loop(void *arg)
         mlx_clear_window(data->mlx->mlx, data->mlx->win);
         if (!data->ply->walk_direction)
         {
-            bobbing_time += 0.08;
-            data->ply->look_offset += sin(bobbing_time) * 2;
+            if (current_time - data->last_update_time >= time_between_frames)
+            {
+                bobbing_time += 0.08;
+                data->ply->look_offset += sin(bobbing_time) * 3;
+                data->last_update_time = current_time;
+            }
         }
         draw_sky_floor(data);
         floor_casting(data, 0);
@@ -49,10 +56,10 @@ int main(int ac, char **av)
 
     parser(ac, av, &cub3d_args);
 
-    init_game(&data, &cub3d_args);
-    handle_events(&data);
-    mlx_loop_hook(data.mlx->mlx, game_loop, &data);
+    // init_game(&data, &cub3d_args);
+    // handle_events(&data);
+    // mlx_loop_hook(data.mlx->mlx, game_loop, &data);
 
-    mlx_loop(data.mlx->mlx);
+    // mlx_loop(data.mlx->mlx);
     return (0);
 }

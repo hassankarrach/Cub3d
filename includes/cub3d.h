@@ -39,11 +39,11 @@
 # define FOV 60
 # define ROTATION_SPEED 4 * DEG_TO_RAD //  2 * (PI / 180)
 # define MOVE_SPEED 7
-# define BOBBING_SPEED 0.3
-# define BOBBING_AMPLITUDE 3
+# define BOBBING_SPEED 0.2
+# define BOBBING_AMPLITUDE 2
 # define DEG_TO_RAD (M_PI / 180)
-# define DOOR_INTERACTION_DISTANCE 800.0
-# define DOOR_ANIMATION_FRAME_TIME 0.075
+# define DOOR_INTERACTION_DISTANCE 600.0
+# define DOOR_ANIMATION_FRAME_TIME 0.040
 
 # define BLK 0xFF000000  // Black
 # define GREY 0xFF808080 // Grey
@@ -181,6 +181,7 @@ typedef struct s_data
 	int						flag;
 	int						selected_wall;
 	int						increase;
+	double last_update_time;
 }							t_data;
 
 typedef struct s_wall_params
