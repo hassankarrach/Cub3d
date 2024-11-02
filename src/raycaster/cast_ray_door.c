@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cast_ray_door.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 03:15:00 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/24 23:38:19 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/01 18:35:16 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,22 @@ void	update_door_status(t_data *data, double current_time)
 	t_wall_door	**door;
 	float		dist_door;
 	int n;
+	double distance;
 
 	n = 0;
+	distance = 500;
 	door = data->door->doors;
+	if (is_ray_facing_up(data->ply->angle))
+		distance = 800;
 	while (n < 3 && door[n])
 	{
 		dist_door = ft_distance(data, door[n]->i * TILE_SIZE, door[n]->j * TILE_SIZE);
-		if (dist_door < DOOR_INTERACTION_DISTANCE && !door[n]->is_open)
+		if (dist_door < distance && !door[n]->is_open)
 		{
 			door[n]->is_open = 1;
 			data->map2d[door[n]->j][door[n]->i] = 'O';
 		}
-		else if (dist_door > DOOR_INTERACTION_DISTANCE)
+		else if (dist_door > distance)
 		{
 			door[n]->is_open = 0;
 			data->map2d[door[n]->j][door[n]->i] = 'D';

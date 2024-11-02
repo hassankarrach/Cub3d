@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 05:23:23 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/24 23:55:46 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/01 17:21:42 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ static bool	hit_wall(t_data *data, double x, double y)
 		return (1);
 	if (data->map2d[j][i] == '1' || data->map2d[j][i] == 'F')
 		return (1);
-	else if (c_door && (data->map2d[j][i] == 'D' || data->map2d[j][i] == 'O'))
-	{
-		data->ply->walk_direction = 0;
-		if (c_door->current_frame != data->door->total_frames - 1)
-			return (1);
-	}
+	// else if (c_door && (data->map2d[j][i] == 'D' || data->map2d[j][i] == 'O'))
+	// {
+	// 	data->ply->walk_direction = 0;
+	// 	if (c_door->current_frame != data->door->total_frames - 1)
+	// 		return (1);
+	// }
 	return (0);
 }
 

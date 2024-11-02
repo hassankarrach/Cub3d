@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 00:16:52 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/24 23:36:37 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/01 18:01:25 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	init_player(t_player *player, t_data *data)
 	data->ply->move_speed = 1;
 	data->ply->bobbing_speed = 1;
 	data->ply->bobbing_amplitude = 1;
+	data->last_update_time = get_time_in_seconds();
 	get_angle(data);
 	init_player_texture(data, data->ply, data->textures.player);
 }
