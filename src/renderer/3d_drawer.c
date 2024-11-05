@@ -1,109 +1,109 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   3d_drawer.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/05 22:54:09 by hkarrach          #+#    #+#             */
+/*   Updated: 2024/11/05 23:01:46 by hkarrach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/renderer.h"
 
-void draw_sky_floor(t_data *data)
+void	draw_sky_floor(t_data *data)
 {
-    int x, y;
-    int center_x = S_W / 2;
-    int center_y_sky = (S_H / 2) + data->ply->look_offset; // Adjust sky based on look_offset
-    int center_y_floor = (S_H / 2) + data->ply->look_offset; // Adjust floor based on look_offset
-    int max_distance = sqrt((S_W / 2) * (S_W / 2) + S_H * S_H); // Max distance from center
+	int				x;
+	int				y;
+	t_sky_params	params;
+	double			norm_dist;
+	int				color;
 
-    for (y = 0; y < S_H; y++)
-    {
-        for (x = 0; x < S_W; x++)
-        {
-            if (y < S_H / 2 + data->ply->look_offset) // Adjust sky rendering based on look_offset
-            {
-                double distance = sqrt((x - center_x) * (x - center_x) + (y - center_y_sky) * (y - center_y_sky));
-                double normalized_distance = distance / max_distance;
-                if (normalized_distance > 1.0)
-                    normalized_distance = 1.0;
-
-                double bright_factor = pow(normalized_distance, 3);
-                int r = (int)((1.0 - bright_factor) * 0 + bright_factor * 1);
-                int g = (int)((1.0 - bright_factor) * 0 + bright_factor * 32);
-                int b = (int)((1.0 - bright_factor) * 0 + bright_factor * 71);
-                int gradient_color = (r << 16) | (g << 8) | b;
-                ft_pixel_put(data, x, y, gradient_color);
-            }
-            else if (y > S_H / 2 + data->ply->look_offset) // Adjust floor rendering based on look_offset
-            {
-                double distance = sqrt((x - center_x) * (x - center_x) + (y - center_y_floor) * (y - center_y_floor));
-                double normalized_distance = distance / max_distance;
-                if (normalized_distance > 1.0)
-                    normalized_distance = 1.0;
-
-                double dark_factor = pow(normalized_distance, 0.7);
-                int r = (int)(dark_factor * 59);
-                int g = (int)(dark_factor * 8);
-                int b = (int)(dark_factor * 4);
-                int gradient_color = (r << 16) | (g << 8) | b;
-                ft_pixel_put(data, x, y, gradient_color);
-            }
-        }
-    }
+	y = 0;
+	params.center_x = S_W / 2;
+	params.center_y_sky = (S_H / 2) + data->ply->look_offset;
+	params.max_distance = sqrt((S_W / 2) * (S_W / 2) + S_H * S_H);
+	while (y < S_H / 2 + data->ply->look_offset)
+	{
+		x = 0;
+		while (x < S_W)
+		{
+			norm_dist = calculate_normalized_distance(x, y, &params);
+			color = calculate_sky_color(norm_dist);
+			ft_pixel_put(data, x, y, color);
+			x++;
+		}
+		y++;
+	}
 }
 
-static double get_wall_height(t_ray *ray, t_player ply)
+static double	get_wall_height(t_ray *ray, t_player ply)
 {
-    double dis_player;
-    double wall_height;
-    double distance;
+	double	dis_player;
+	double	wall_height;
+	double	distance;
 
-    dis_player = (S_W / 2) / tan((FOV * DEG_TO_RAD) / 2);
-    distance = ray->distance * cos(ply.angle - ray->ray_ngl);
-    wall_height = (dis_player * TILE_SIZE) / distance;
-    return wall_height;
+	dis_player = (S_W / 2) / tan((FOV * DEG_TO_RAD) / 2);
+	distance = ray->distance * cos(ply.angle - ray->ray_ngl);
+	wall_height = (dis_player * TILE_SIZE) / distance;
+	return (wall_height);
 }
 
-t_wall_params calculate_wall_params(t_data *data)
+t_wall_params	calculate_wall_params(t_data *data)
 {
-    t_wall_params params;
-    int look_offset;
+	t_wall_params	params;
+	int				look_offset;
 
-    look_offset = data->ply->look_offset;
-    params.wall_height = get_wall_height(data->ray, *data->ply);
-    params.start_y = (S_H / 2) - ((int)params.wall_height / 2) + look_offset;
-    params.end_y = (S_H / 2) + ((int)params.wall_height / 2) + look_offset;
-    params.save_y = params.start_y;
-    if (params.start_y < 0)
-        params.start_y = 0;
-    if (params.end_y >= S_H)
-        params.end_y = S_H - 1;
-    if (params.end_y >= S_H)
-        params.end_y = S_H - 1;
-    return params;
+	look_offset = data->ply->look_offset;
+	params.wall_height = get_wall_height(data->ray, *data->ply);
+	params.start_y = (S_H / 2) - ((int)params.wall_height / 2) + look_offset;
+	params.end_y = (S_H / 2) + ((int)params.wall_height / 2) + look_offset;
+	params.save_y = params.start_y;
+	if (params.start_y < 0)
+		params.start_y = 0;
+	if (params.end_y >= S_H)
+		params.end_y = S_H - 1;
+	if (params.end_y >= S_H)
+		params.end_y = S_H - 1;
+	return (params);
 }
 
-void render_wall(t_data *data, int x, double ray_angle)
+void	render_wall(t_data *data, int x, double ray_angle)
 {
-    int texture_x, texture_y;
-    double brightness_factor;
-    t_wall_params wall_params;
+	int				texture_x;
+	int				texture_y;
+	double			brightness_factor;
+	t_wall_params	wall_params;
+	t_texture		*texture;
+	int				color;
 
-    wall_params = calculate_wall_params(data);
-    texture_x = get_start_drawing_texture_x(*data->ray);
-    brightness_factor = 1.0 - (data->ray->distance / (TILE_SIZE * 12));
-    t_texture *texture = selected_texture(data, *data->ray, ray_angle);
-    while (wall_params.start_y <= wall_params.end_y)
-    {
-        texture_y = ((wall_params.start_y - wall_params.save_y) * 576) / wall_params.wall_height;
-        int color = get_pixel(texture, texture_x, texture_y);
-        if (color || color != BLK)
-        {
-            int r = ((color >> 16) & 0xFF) * brightness_factor;
-            r = clamp(r, 0, 255);
-            int g = ((color >> 8) & 0xFF) * brightness_factor;
-            g = clamp(g, 0, 255);
-            int b = (color & 0xFF) * brightness_factor;
-            b = clamp(b, 0, 255);
-            color = (r << 16) | (g << 8) | b;
-            ft_pixel_put(data, x, wall_params.start_y, color);
-        }
-        wall_params.start_y++;
-    }
+	wall_params = calculate_wall_params(data);
+	texture_x = get_start_drawing_texture_x(*data->ray);
+	brightness_factor = 1.0 - (data->ray->distance / (TILE_SIZE * 12));
+	texture = selected_texture(data, *data->ray, ray_angle);
+	while (wall_params.start_y <= wall_params.end_y)
+	{
+		texture_y = ((wall_params.start_y - wall_params.save_y) * 576)
+			/ wall_params.wall_height;
+		color = get_pixel(texture, texture_x, texture_y);
+		if (color || color != BLK)
+		{
+			int r = ((color >> 16) & 0xFF) * brightness_factor;
+			r = clamp(r, 0, 255);
+			int g = ((color >> 8) & 0xFF) * brightness_factor;
+			g = clamp(g, 0, 255);
+			int b = (color & 0xFF) * brightness_factor;
+			b = clamp(b, 0, 255);
+			color = (r << 16) | (g << 8) | b;
+			ft_pixel_put(data, x, wall_params.start_y, color);
+		}
+		wall_params.start_y++;
+	}
 }
-void drawing_3d_game(t_data *data)
+
+void	drawing_3d_game(t_data *data)
 {
-    mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->mlx->img, 0, 0);
+	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win,
+		data->mlx->img, 0, 0);
 }

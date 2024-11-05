@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   init_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 00:01:14 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/22 01:34:13 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/05 22:21:26 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+
+void	init_player(t_player *player, t_data *data)
+{
+	get_x_y_player(data);
+	player->posX = data->index_x * TILE_SIZE + TILE_SIZE / 2;
+	player->posY = data->index_y * TILE_SIZE + TILE_SIZE / 2;
+	player->fov_rd = 60 * DEG_TO_RAD;
+	player->walk_direction = 0;
+	player->turn_direction = 0;
+	data->ply->move_speed = 1;
+	data->ply->bobbing_speed = 1;
+	data->ply->bobbing_amplitude = 1;
+	data->last_update_time = get_time_in_seconds();
+	get_angle(data);
+	init_player_texture(data, data->ply, data->textures.player);
+}
 
 void	get_angle(t_data *m)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 03:16:33 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/23 21:28:33 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/05 22:37:24 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,31 @@
 
 t_inter	get_h_inter(t_data *data, float angl)
 {
-	t_inter	inter_h;
-	double	x_step;
-	double	y_step;
+	t_inter	intr_h;
+	double	x_stp;
+	double	y_stp;
 
-	inter_h.is_door = false;
-	y_step = TILE_SIZE;
-	start_h_y(data, angl, &inter_h.yintercept);
-	inter_h.xintercept = data->ply->posX + (inter_h.yintercept
+	intr_h.is_door = false;
+	y_stp = TILE_SIZE;
+	start_h_y(data, angl, &intr_h.yintercept);
+	intr_h.xintercept = data->ply->posX + (intr_h.yintercept
 			- data->ply->posY) / tan(angl);
 	if (is_ray_facing_up(angl))
-		y_step *= -1;
-	x_step = y_step / tan(angl);
-	if (is_ray_facing_left(angl) && x_step > 0 || is_ray_facing_right(angl)
-		&& x_step < 0)
-		x_step *= -1;
+		y_stp *= -1;
+	x_stp = y_stp / tan(angl);
+	if (is_ray_facing_left(angl) && x_stp > 0 || is_ray_facing_right(angl)
+		&& x_stp < 0)
+		x_stp *= -1;
 	if (is_ray_facing_up(angl))
-		inter_h.yintercept -= 0.0001;
-	while (!find_wall(data, inter_h.xintercept, inter_h.yintercept))
+		intr_h.yintercept -= 0.0001;
+	while (!find_wall(data, intr_h.xintercept, intr_h.yintercept))
 	{
-		inter_h.yintercept += y_step;
-		inter_h.xintercept += x_step;
+		intr_h.yintercept += y_stp;
+		intr_h.xintercept += x_stp;
 	}
-	if (!data->ray->skip_door && get_door_inter_h(data, &inter_h, x_step, y_step))
-		return (inter_h);
-	return (inter_h);
+	if (!data->ray->skip_door && get_door_inter_h(data, &intr_h, x_stp, y_stp))
+		return (intr_h);
+	return (intr_h);
 }
 
 t_inter	get_v_inter(t_data *data, float angl)

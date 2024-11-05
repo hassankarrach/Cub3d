@@ -13,17 +13,10 @@ static int game_loop(void *arg)
 
     if (data->state == LOBBY)
         lobby(data);
-    else if (data->state == DEAD)
-        you_died(data);
     else if (data->state == PAUSED)
         game_pause(data);
     else
     {
-        if (!data->sounds[1].is_playing)
-        {
-            // stop_all_sounds(data);
-            // play_sound(&data->sounds[1]);
-        }
         mlx_clear_window(data->mlx->mlx, data->mlx->win);
         if (!data->ply->walk_direction)
         {
@@ -39,13 +32,11 @@ static int game_loop(void *arg)
         raycasting(data);
         render_mini_map(data);
         update_door_status(data, current_time);
-        // update_door_animation(data, data->door, current_time);
         update_ply_animation(data, data->ply, current_time);
         update_player(data->ply, data);
         draw_player(data, current_time);
         drawing_3d_game(data);
     }
-
     return (0);
 }
 
@@ -56,10 +47,15 @@ int main(int ac, char **av)
 
     parser(ac, av, &cub3d_args);
 
-    // init_game(&data, &cub3d_args);
-    // handle_events(&data);
-    // mlx_loop_hook(data.mlx->mlx, game_loop, &data);
+    init_game(&data, &cub3d_args);
+    handle_events(&data);
+    int i;
 
-    // mlx_loop(data.mlx->mlx);
+    i = 0;
+    while (data.args->map_lines[i])
+        printf("%s\n", data.args->map_lines[i++]);
+    mlx_loop_hook(data.mlx->mlx, game_loop, &data);
+
+    mlx_loop(data.mlx->mlx);
     return (0);
 }

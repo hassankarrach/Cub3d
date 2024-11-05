@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 03:15:00 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/01 18:35:16 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/05 22:26:03 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,32 +22,31 @@ bool	is_within_map(double x, double y, t_data *data)
 	return (i >= 0 && i < data->w_map && j >= 0 && j < data->h_map);
 }
 
-void	update_door_status(t_data *data, double current_time)
+void	update_door_status(t_data *data, double currtime)
 {
-	t_wall_door	**door;
 	float		dist_door;
-	int n;
-	double distance;
+	int			n;
+	double		distance;
 
 	n = 0;
 	distance = 500;
-	door = data->door->doors;
 	if (is_ray_facing_up(data->ply->angle))
 		distance = 800;
-	while (n < 3 && door[n])
+	while (n < 3 && data->door->doors[n])
 	{
-		dist_door = ft_distance(data, door[n]->i * TILE_SIZE, door[n]->j * TILE_SIZE);
-		if (dist_door < distance && !door[n]->is_open)
+		dist_door = ft_distance(data, data->door->doors[n]->i * TILE_SIZE,
+				data->door->doors[n]->j * TILE_SIZE);
+		if (dist_door < distance && !data->door->doors[n]->is_open)
 		{
-			door[n]->is_open = 1;
-			data->map2d[door[n]->j][door[n]->i] = 'O';
+			data->door->doors[n]->is_open = 1;
+			data->map2d[data->door->doors[n]->j][data->door->doors[n]->i] = 'O';
 		}
 		else if (dist_door > distance)
 		{
-			door[n]->is_open = 0;
-			data->map2d[door[n]->j][door[n]->i] = 'D';
+			data->door->doors[n]->is_open = 0;
+			data->map2d[data->door->doors[n]->j][data->door->doors[n]->i] = 'D';
 		}
-		update_door_animation(data, data->door, current_time, door[n]);
+		update_door_animation(data, data->door, currtime, data->door->doors[n]);
 		n++;
 	}
 }
