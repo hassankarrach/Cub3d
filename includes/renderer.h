@@ -43,4 +43,6 @@ double							get_door_height(t_door *door, t_ray *ray, t_player ply);
 t_wall_door						*get_corret_door(int i, int j, t_wall_door **list_door);
 double                          calculate_normalized_distance(int x, int y, t_sky_params *params);
 int                             calculate_sky_color(double normalized_distance);
+void							drawer_floor(t_data *data, int x);
+int								adjust_color_opacity2(int color, double fade_factor);
 #endif

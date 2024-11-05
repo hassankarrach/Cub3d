@@ -28,7 +28,7 @@ static int game_loop(void *arg)
             }
         }
         draw_sky_floor(data);
-        floor_casting(data, 0);
+        drawer_floor(data, 0);
         raycasting(data);
         render_mini_map(data);
         update_door_status(data, current_time);

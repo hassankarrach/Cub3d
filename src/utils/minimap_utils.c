@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 23:29:08 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/05 23:33:02 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/06 00:29:56 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	set_pixels_img(t_data *data)
 	}
 }
 
-static int	adjust_color_opacity(int color, float fade_factor)
+int	adjust_color_opacity2(int color, double fade_factor)
 {
 	int	r;
 	int	g;
@@ -69,9 +69,12 @@ static int	adjust_color_opacity(int color, float fade_factor)
 	r = (color >> 16) & 0xFF;
 	g = (color >> 8) & 0xFF;
 	b = color & 0xFF;
-	r = (int)(r * fade_factor);
-	g = (int)(g * fade_factor);
-	b = (int)(b * fade_factor);
+	r = r * fade_factor;
+	r = clamp(r, 0, 255);
+	g = g * fade_factor;
+	g = clamp(g, 0, 255);
+	b = b * fade_factor;
+	b = clamp(b, 0, 255);
 	return ((r << 16) | (g << 8) | b);
 }
 

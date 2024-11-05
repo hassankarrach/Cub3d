@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 22:54:09 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/05 23:01:46 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/06 00:25:21 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,31 +71,24 @@ t_wall_params	calculate_wall_params(t_data *data)
 
 void	render_wall(t_data *data, int x, double ray_angle)
 {
-	int				texture_x;
-	int				texture_y;
 	double			brightness_factor;
 	t_wall_params	wall_params;
 	t_texture		*texture;
 	int				color;
 
 	wall_params = calculate_wall_params(data);
-	texture_x = get_start_drawing_texture_x(*data->ray);
+	wall_params.texture_x = get_start_drawing_texture_x(*data->ray);
 	brightness_factor = 1.0 - (data->ray->distance / (TILE_SIZE * 12));
 	texture = selected_texture(data, *data->ray, ray_angle);
 	while (wall_params.start_y <= wall_params.end_y)
 	{
-		texture_y = ((wall_params.start_y - wall_params.save_y) * 576)
-			/ wall_params.wall_height;
-		color = get_pixel(texture, texture_x, texture_y);
+		wall_params.texture_y = ((wall_params.start_y - \
+			wall_params.save_y) * 576) / wall_params.wall_height;
+		color = get_pixel(texture, wall_params.texture_x, \
+			wall_params.texture_y);
 		if (color || color != BLK)
 		{
-			int r = ((color >> 16) & 0xFF) * brightness_factor;
-			r = clamp(r, 0, 255);
-			int g = ((color >> 8) & 0xFF) * brightness_factor;
-			g = clamp(g, 0, 255);
-			int b = (color & 0xFF) * brightness_factor;
-			b = clamp(b, 0, 255);
-			color = (r << 16) | (g << 8) | b;
+			color = adjust_color_opacity2(color, brightness_factor);
 			ft_pixel_put(data, x, wall_params.start_y, color);
 		}
 		wall_params.start_y++;
