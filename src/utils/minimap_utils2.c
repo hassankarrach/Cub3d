@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 23:24:37 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/05 23:33:32 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/06 00:14:58 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,13 @@ float	calculate_fade_factor(int x, int y)
 void	render_pixel(t_data *data, int x, int y)
 {
 	int		color;
-	float	fade_factor;
+	double	fade_factor;
 	int		faded_color;
 
 	color = pos_to_color(data, x, y);
 	if (color == -1)
 		return ;
 	fade_factor = calculate_fade_factor(x, y);
-	faded_color = adjust_color_opacity(color, fade_factor);
+	faded_color = adjust_color_opacity2(color, fade_factor);
 	ft_pixel_put(data, x, y, faded_color);
 }

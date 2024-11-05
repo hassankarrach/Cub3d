@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   floor.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 02:10:21 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/21 02:12:06 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/06 00:13:28 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/raycaster.h"
+#include "../../includes/renderer.h"
 
 static int	adjust_color_opacity(t_rgb Floor_color, float brightness_factor)
 {
@@ -27,7 +27,7 @@ static int	adjust_color_opacity(t_rgb Floor_color, float brightness_factor)
 	return ((r << 16) | (g << 8) | b);
 }
 
-void	floor_casting(t_data *data, int x)
+void	drawer_floor(t_data *data, int x)
 {
 	int		y;
 	int		color;

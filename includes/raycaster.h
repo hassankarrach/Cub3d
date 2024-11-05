@@ -24,7 +24,6 @@ typedef struct s_ray
 	t_inter				min_inter;
 }						t_ray;
 
-void					floor_casting(t_data *data, int x);
 double					normalize_angle(double angle);
 double					ft_distance(t_data *data, double x, double y);
 double					calculate_distance(t_data *data, float angle);
