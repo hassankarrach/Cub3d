@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 05:08:12 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/01 18:15:21 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/05 23:02:48 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ t_wall_door	*get_corret_door(int i, int j, t_wall_door **list_door)
 	float	corr;
 
 	corr = 0.001;
-	// if (is_ray_facing_up(data->ply->angle))
-	// corr *= -1;
 	n = 0;
 	while (n < 3 && list_door[n])
 	{

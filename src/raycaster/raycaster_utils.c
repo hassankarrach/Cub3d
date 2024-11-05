@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 02:15:52 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/23 20:54:53 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/05 22:29:23 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	start_h_y_door(t_data *data, double angl, double *h_y)
 void	start_v_x_door(t_data *data, double angl, double *v_x)
 {
 	double	tile_size;
-	
+
 	tile_size = TILE_SIZE / 2;
 	if (is_ray_facing_left(angl))
 		*v_x = floor(data->ply->posX / tile_size) * tile_size;

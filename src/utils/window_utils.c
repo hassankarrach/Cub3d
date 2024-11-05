@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 05:19:14 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/01 17:41:50 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/05 23:13:17 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ int	key_press(int keycode, t_data *data)
 		data->ply->bobbing_speed = 1.2;
 		data->ply->bobbing_amplitude = 1.2;
 	}
+	if (keycode == 112)
+		data->state = PAUSED;
 	if (keycode == 32)
 		data->state = PLAYING;
-	if (keycode == KEY_VOLUMEDOWN)
-		if (data->increase > 20)
-			data->increase -= 4;
-	if (keycode == KEY_VOLUMEUP)
-		if (data->increase < 40)
-			data->increase += 4;
+	if (keycode == KEY_VOLUMEDOWN && data->increase > 20)
+		data->increase -= 4;
+	if (keycode == KEY_VOLUMEUP && data->increase < 40)
+		data->increase += 4;
 	if (keycode == ON_DESTROY)
 		close_window(data);
 	return (0);
@@ -86,7 +86,6 @@ int	key_release(int keycode, t_data *data)
 int	close_window(t_data *data)
 {
 	clean_resources(data);
-	// stop_all_sounds(data);
 	exit(0);
 	return (0);
-}	
+}

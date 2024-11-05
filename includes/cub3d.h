@@ -73,12 +73,7 @@ typedef struct s_rgb
 	int						g;
 	int						b;
 }							t_rgb;
-typedef struct s_sound
-{
-	const char				*file_path;
-	pid_t					pid;
-	int						is_playing;
-}							t_sound;
+
 typedef struct s_texture
 {
 	void					*img;
@@ -95,7 +90,6 @@ typedef enum e_game_state
 	LOBBY,
 	PLAYING,
 	PAUSED,
-	DEAD
 }							game_state;
 
 typedef struct s_args
@@ -107,9 +101,11 @@ typedef struct s_args
 	char					*West_texture;
 	char					*East_texture;
 	char					**map_lines;
+	char					**file_lines;
 	int						map_rows;
 	int						map_columns;
 	int						number_of_frames;
+	int						player_count;
 	t_wallFrame				**frames;
 	t_wall_door				**doors;
 }							t_args;
@@ -176,7 +172,6 @@ typedef struct s_data
 	t_door					*door;
 	t_ray					*ray;
 	t_player				*ply;
-	t_sound					sounds[5];
 	game_state				state;
 	int						flag;
 	int						selected_wall;
@@ -211,6 +206,12 @@ typedef struct s_mlx
 // ===============================
 // GAME
 void						init_game(t_data *data, t_args *args);
+void						load_player_textures(t_data *data);
+void						init_player_texture(t_data *data, t_player *ply, t_texture **ply_textures);
+void	load_door_textures(t_data *data);
+void	load_all_textures(t_data *data);
+void	load_frame_textures(t_data *data);
+void	init_player(t_player *player, t_data *data);
 void						raycasting(t_data *data);
 void						get_x_y_player(t_data *m);
 t_inter						get_h_inter(t_data *data, float angl);
@@ -228,7 +229,7 @@ void						update_door_animation(t_data *data, t_door *door,
 void						update_ply_animation(t_data *data, t_player *ply,
 								double current_time);
 bool						player_in_grid(t_data *data);
-void	update_door_status(t_data *data,
+void						update_door_status(t_data *data,
 						double current_time);
 
 #endif

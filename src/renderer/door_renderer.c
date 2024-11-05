@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   door_renderer.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 05:03:55 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/24 23:37:27 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/05 23:02:33 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	update_door_animation(t_data *data, t_door *door, double current_time,
 	}
 	door->current_frame = c_door->current_frame;
 }
+
 t_wall_params	calculate_door_params(t_data *data)
 {
 	t_wall_params	params;

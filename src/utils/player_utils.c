@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 05:23:23 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/01 17:21:42 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/05 23:19:34 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,14 @@ static bool	hit_wall(t_data *data, double x, double y)
 	int			j;
 
 	c_door = get_corret_door((int)(data->ray->min_inter.xintercept / TILE_SIZE),
-								(int)(data->ray->min_inter.yintercept
-										/ TILE_SIZE),
-								data->door->doors);
+			(int)(data->ray->min_inter.yintercept / TILE_SIZE),
+			data->door->doors);
 	i = (int)(x / (double)TILE_SIZE);
 	j = (int)(y / (double)TILE_SIZE);
 	if (i >= data->w_map || j >= data->h_map || i < 0 || j < 0)
 		return (1);
 	if (data->map2d[j][i] == '1' || data->map2d[j][i] == 'F')
 		return (1);
-	// else if (c_door && (data->map2d[j][i] == 'D' || data->map2d[j][i] == 'O'))
-	// {
-	// 	data->ply->walk_direction = 0;
-	// 	if (c_door->current_frame != data->door->total_frames - 1)
-	// 		return (1);
-	// }
 	return (0);
 }
 
@@ -51,10 +44,9 @@ static int	valid_move2(t_data *data, double x, double y)
 }
 
 static int	valid_move(t_data *data, double x, double y)
-
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = (int)(x / (double)TILE_SIZE);
 	j = (int)(y / (double)TILE_SIZE);

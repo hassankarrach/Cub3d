@@ -3,6 +3,14 @@
 
 # include "cub3d.h"
 
+typedef struct s_sky_params
+{
+    int center_x;
+    int center_y_sky;
+    int max_distance;
+}   t_sky_params;
+
+
 typedef struct s_data			t_data;
 typedef struct s_texture		t_texture;
 typedef struct s_wall_params	t_wall_params;
@@ -33,5 +41,6 @@ int								get_start_drawing_texture_x_door(t_door door_ray);
 t_texture						*selected_texture_door(t_data *data, t_ray ray);
 double							get_door_height(t_door *door, t_ray *ray, t_player ply);
 t_wall_door						*get_corret_door(int i, int j, t_wall_door **list_door);
-
+double                          calculate_normalized_distance(int x, int y, t_sky_params *params);
+int                             calculate_sky_color(double normalized_distance);
 #endif
