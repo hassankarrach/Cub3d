@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 15:45:21 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/05 19:06:44 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/07 23:22:06 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ static void	parse_file_lines(t_args *args, char **file_lines)
 		if (is_texture(curr_line))
 			texture_path_extracter(curr_line, args);
 		else if (ft_strncmp(curr_line, "F", 1) == 0)
-			rgb_extracter(args, curr_line + 1, &args->Floor_color);
+			rgb_extracter(args, curr_line + 1, &args->floor_color);
 		else if (ft_strncmp(curr_line, "C", 1) == 0)
-			rgb_extracter(args, curr_line + 1, &args->Ceiling_color);
+			rgb_extracter(args, curr_line + 1, &args->ceiling_color);
 		else if (curr_line == NULL)
 			i++;
 		else if (curr_line[0] == '1' && (free(curr_line), 1))

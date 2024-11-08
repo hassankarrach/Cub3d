@@ -6,13 +6,13 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 04:24:31 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/01 19:09:03 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/08 22:00:55 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/renderer.h"
 
-t_wallFrame	*get_currect_texture(t_wallFrame **wall_frame, int i, int j)
+t_wall_frame	*get_currect_texture(t_wall_frame **wall_frame, int i, int j)
 {
 	int	n;
 
@@ -26,7 +26,7 @@ t_wallFrame	*get_currect_texture(t_wallFrame **wall_frame, int i, int j)
 	return (NULL);
 }
 
-static t_texture	*selected_texture_frames(e_Direction direction,
+static t_texture	*selected_texture_frames(t_direction direction,
 											t_frames texture_frame)
 {
 	if (direction == TOP)
@@ -40,13 +40,13 @@ static t_texture	*selected_texture_frames(e_Direction direction,
 	return (NULL);
 }
 
-t_texture	*get_wall_frame(t_data data, e_Direction direction,
+t_texture	*get_wall_frame(t_data data, t_direction direction,
 		t_texture *texture_wall)
 {
-	t_wallFrame	*wall_frame;
-	t_textures	textures;
-	int			i;
-	int			j;
+	t_wall_frame	*wall_frame;
+	t_textures		textures;
+	int				i;
+	int				j;
 
 	textures = data.textures;
 	i = (int)(data.ray->min_inter.xintercept / TILE_SIZE);
@@ -58,7 +58,7 @@ t_texture	*get_wall_frame(t_data data, e_Direction direction,
 		return (texture_wall);
 	if (wall_frame->direction == direction)
 	{
-		if (wall_frame->Frame == 1)
+		if (wall_frame->frame == 1)
 			return (selected_texture_frames(direction, textures.frame_13));
 		return (selected_texture_frames(direction, textures.frame_doors));
 	}

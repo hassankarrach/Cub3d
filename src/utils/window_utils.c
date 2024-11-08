@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 05:19:14 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/05 23:13:17 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/08 21:50:42 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ int	key_press(int keycode, t_data *data)
 		data->ply->turn_direction = 1;
 	if (keycode == ON_KEYUP)
 	{
-		data->ply->move_speed = 2;
-		data->ply->bobbing_speed = 1.2;
-		data->ply->bobbing_amplitude = 1.2;
+		data->ply->move_speed = 3;
+		data->ply->bobbing_speed = 1.9;
+		data->ply->bobbing_amplitude = 1.4;
 	}
 	if (keycode == 112)
 		data->state = PAUSED;

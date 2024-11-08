@@ -6,23 +6,23 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 02:10:21 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/06 00:13:28 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/07 23:21:59 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/renderer.h"
 
-static int	adjust_color_opacity(t_rgb Floor_color, float brightness_factor)
+static int	adjust_color_opacity(t_rgb floor_color, float brightness_factor)
 {
 	int	r;
 	int	g;
 	int	b;
 
-	r = (Floor_color.r) * brightness_factor;
+	r = (floor_color.r) * brightness_factor;
 	r = clamp(r, 0, 255);
-	g = (Floor_color.g) * brightness_factor;
+	g = (floor_color.g) * brightness_factor;
 	g = clamp(g, 0, 255);
-	b = (Floor_color.b) * brightness_factor;
+	b = (floor_color.b) * brightness_factor;
 	b = clamp(b, 0, 255);
 	return ((r << 16) | (g << 8) | b);
 }
@@ -42,7 +42,7 @@ void	drawer_floor(t_data *data, int x)
 		x = 0;
 		while (x < S_W)
 		{
-			color = adjust_color_opacity(data->args->Floor_color, \
+			color = adjust_color_opacity(data->args->floor_color, \
 					brightness_factor);
 			ft_pixel_put(data, x, y, color);
 			x++;

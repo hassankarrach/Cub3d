@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/07 23:22:35 by hkarrach          #+#    #+#             */
+/*   Updated: 2024/11/08 21:37:41 by hkarrach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 // main header
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -16,8 +28,6 @@
 // libs includes ================>
 # include "../lib/libft/libft.h"
 # include "../lib/mlx/mlx.h"
-// ===============================
-
 // inner includes ===============>
 # include "parser.h"
 # include "player.h"
@@ -25,23 +35,19 @@
 # include "renderer.h"
 # include "scenes.h"
 # include "utils.h"
-// ===============================
-
 // Macros  ======================>
 # define S_W 1000 // screen width
 # define S_H 1000 // screen height
-
 # define S_W_MINI_MAP 286
 # define S_H_MINI_MAP 215
 # define S_TITLE "Cub3D"
 # define TILE_SIZE 576
 # define M_PI 3.14159265358979323846
 # define FOV 60
-# define ROTATION_SPEED 4 * DEG_TO_RAD //  2 * (PI / 180)
+# define ROTATION_SPEED 0.06
 # define MOVE_SPEED 7
 # define BOBBING_SPEED 0.2
 # define BOBBING_AMPLITUDE 2
-# define DEG_TO_RAD (M_PI / 180)
 # define DOOR_INTERACTION_DISTANCE 600.0
 # define DOOR_ANIMATION_FRAME_TIME 0.040
 
@@ -62,9 +68,8 @@ typedef struct s_mlx		t_mlx;
 typedef struct s_vec		t_vec;
 typedef struct s_inter		t_inter;
 
-typedef enum FrameType		e_FrameType;
-typedef enum Direction		e_Direction;
-typedef struct s_wallFrame	t_wallFrame;
+typedef enum frame_type		t_frame_type;
+typedef struct s_wallFrame	t_wall_frame;
 typedef struct s_wall_door	t_wall_door;
 
 typedef struct s_rgb
@@ -90,23 +95,23 @@ typedef enum e_game_state
 	LOBBY,
 	PLAYING,
 	PAUSED,
-}							game_state;
+}							t_game_state;
 
 typedef struct s_args
 {
-	t_rgb					Floor_color;
-	t_rgb					Ceiling_color;
-	char					*North_texture;
-	char					*South_texture;
-	char					*West_texture;
-	char					*East_texture;
+	t_rgb					floor_color;
+	t_rgb					ceiling_color;
+	char					*north_texture;
+	char					*south_texture;
+	char					*west_texture;
+	char					*east_texture;
 	char					**map_lines;
 	char					**file_lines;
 	int						map_rows;
 	int						map_columns;
 	int						number_of_frames;
 	int						player_count;
-	t_wallFrame				**frames;
+	t_wall_frame			**frames;
 	t_wall_door				**doors;
 }							t_args;
 
@@ -134,10 +139,10 @@ typedef struct s_texture_frame_13
 
 typedef struct s_textures
 {
-	t_texture				*wall_SO;
-	t_texture				*wall_WE;
-	t_texture				*wall_EA;
-	t_texture				*wall_NO;
+	t_texture				*wall_so;
+	t_texture				*wall_we;
+	t_texture				*wall_ea;
+	t_texture				*wall_no;
 
 	t_texture				*wall_frame1;
 	t_texture				*wall_frame2;
@@ -164,19 +169,15 @@ typedef struct s_data
 	t_args					*args;
 	t_mlx					*mlx;
 	t_mlx					*mlx_map;
-
-	//textures ========
 	t_textures				textures;
-	//=================
-
 	t_door					*door;
 	t_ray					*ray;
 	t_player				*ply;
-	game_state				state;
+	t_game_state			state;
 	int						flag;
 	int						selected_wall;
 	int						increase;
-	double last_update_time;
+	double					last_update_time;
 }							t_data;
 
 typedef struct s_wall_params
@@ -203,15 +204,15 @@ typedef struct s_mlx
 	t_data					*data;
 }							t_mlx;
 
-// ===============================
 // GAME
 void						init_game(t_data *data, t_args *args);
 void						load_player_textures(t_data *data);
-void						init_player_texture(t_data *data, t_player *ply, t_texture **ply_textures);
-void	load_door_textures(t_data *data);
-void	load_all_textures(t_data *data);
-void	load_frame_textures(t_data *data);
-void	init_player(t_player *player, t_data *data);
+void						init_player_texture(t_data *data, t_player *ply,
+								t_texture **ply_textures);
+void						load_door_textures(t_data *data);
+void						load_all_textures(t_data *data);
+void						load_frame_textures(t_data *data);
+void						init_player(t_player *player, t_data *data);
 void						raycasting(t_data *data);
 void						get_x_y_player(t_data *m);
 t_inter						get_h_inter(t_data *data, float angl);
@@ -230,6 +231,6 @@ void						update_ply_animation(t_data *data, t_player *ply,
 								double current_time);
 bool						player_in_grid(t_data *data);
 void						update_door_status(t_data *data,
-						double current_time);
+								double current_time);
 
 #endif

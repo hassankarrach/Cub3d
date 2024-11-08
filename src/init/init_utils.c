@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 22:18:23 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/05 22:20:45 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/07 23:21:39 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,10 @@ void	load_frame_textures(t_data *data)
 
 void	load_wall_textures(t_data *data)
 {
-	data->textures.wall_EA = texture_loader(data, data->args->East_texture);
-	data->textures.wall_NO = texture_loader(data, data->args->North_texture);
-	data->textures.wall_SO = texture_loader(data, data->args->South_texture);
-	data->textures.wall_WE = texture_loader(data, data->args->West_texture);
+	data->textures.wall_ea = texture_loader(data, data->args->east_texture);
+	data->textures.wall_no = texture_loader(data, data->args->north_texture);
+	data->textures.wall_so = texture_loader(data, data->args->south_texture);
+	data->textures.wall_we = texture_loader(data, data->args->west_texture);
 }
 
 void	load_all_textures(t_data *data)

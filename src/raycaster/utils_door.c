@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 22:29:33 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/05 22:29:34 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/08 21:10:30 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ bool	get_door_inter_h(t_data *data, t_inter *inter_h, double x_step,
 	if (player_in_grid(data))
 	{
 		start_h_y_door(data, data->ray->ray_ngl, &inter_h->yintercept);
-		inter_h->xintercept = data->ply->posX + (inter_h->yintercept
-				- data->ply->posY) / tan(data->ray->ray_ngl);
-		if (fmod(data->ply->posY, TILE_SIZE) < TILE_SIZE / 2
+		inter_h->xintercept = data->ply->pos_y + (inter_h->yintercept
+				- data->ply->pos_y) / tan(data->ray->ray_ngl);
+		if (fmod(data->ply->pos_y, TILE_SIZE) < TILE_SIZE / 2
 			&& is_ray_facing_up(data->ray->ray_ngl))
 		{
 			inter_h->xintercept = save_inter_x;

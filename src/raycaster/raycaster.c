@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 03:16:33 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/05 22:37:24 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/08 21:02:24 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ t_inter	get_h_inter(t_data *data, float angl)
 	intr_h.is_door = false;
 	y_stp = TILE_SIZE;
 	start_h_y(data, angl, &intr_h.yintercept);
-	intr_h.xintercept = data->ply->posX + (intr_h.yintercept
-			- data->ply->posY) / tan(angl);
+	intr_h.xintercept = data->ply->pos_x + (intr_h.yintercept
+			- data->ply->pos_y) / tan(angl);
 	if (is_ray_facing_up(angl))
 		y_stp *= -1;
 	x_stp = y_stp / tan(angl);
@@ -50,8 +50,8 @@ t_inter	get_v_inter(t_data *data, float angl)
 	inter_v.is_door = false;
 	x_step = TILE_SIZE;
 	start_v_x(data, angl, &inter_v.xintercept);
-	inter_v.yintercept = data->ply->posY + (inter_v.xintercept
-			- data->ply->posX) * tan(angl);
+	inter_v.yintercept = data->ply->pos_y + (inter_v.xintercept
+			- data->ply->pos_x) * tan(angl);
 	if (is_ray_facing_left(angl))
 		x_step *= -1;
 	y_step = x_step * tan(angl);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kait-baa <kait-baa@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 04:17:02 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/10/23 00:55:34 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/07 23:20:51 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ t_texture	*get_vertical_texture(t_data *data, float ray_angle)
 	if (is_ray_facing_up(ray_angle))
 	{
 		if (check_wall_frame(*data))
-			return (get_wall_frame(*data, TOP, data->textures.wall_NO));
-		return (data->textures.wall_NO);
+			return (get_wall_frame(*data, TOP, data->textures.wall_no));
+		return (data->textures.wall_no);
 	}
 	else if (is_ray_facing_down(ray_angle))
 	{
 		if (check_wall_frame(*data))
-			return (get_wall_frame(*data, BOTTOM, data->textures.wall_SO));
-		return (data->textures.wall_SO);
+			return (get_wall_frame(*data, BOTTOM, data->textures.wall_so));
+		return (data->textures.wall_so);
 	}
 	return (NULL);
 }
@@ -34,14 +34,14 @@ t_texture	*get_horizontal_texture(t_data *data, float ray_angle)
 	if (is_ray_facing_left(ray_angle))
 	{
 		if (check_wall_frame(*data))
-			return (get_wall_frame(*data, LEFT, data->textures.wall_WE));
-		return (data->textures.wall_WE);
+			return (get_wall_frame(*data, LEFT, data->textures.wall_we));
+		return (data->textures.wall_we);
 	}
 	else if (is_ray_facing_right(ray_angle))
 	{
 		if (check_wall_frame(*data))
-			return (get_wall_frame(*data, RIGHT, data->textures.wall_EA));
-		return (data->textures.wall_EA);
+			return (get_wall_frame(*data, RIGHT, data->textures.wall_ea));
+		return (data->textures.wall_ea);
 	}
 	return (NULL);
 }

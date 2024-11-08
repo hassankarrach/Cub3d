@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 05:23:23 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/05 23:19:34 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/08 21:36:10 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,21 +74,21 @@ void	update_player(t_player *player, t_data *data)
 	double	new_x;
 	double	new_y;
 
-	new_x = player->posX;
-	new_y = player->posY;
+	new_x = player->pos_x;
+	new_y = player->pos_y;
 	player->angle += player->turn_direction * ROTATION_SPEED;
 	player->angle = normalize_angle(player->angle);
 	new_x += player->walk_direction * (MOVE_SPEED * data->ply->move_speed)
 		* cos(player->angle);
 	new_y += player->walk_direction * (MOVE_SPEED * data->ply->move_speed)
 		* sin(player->angle);
-	if (!valid_move(data, new_x, player->posY))
+	if (!valid_move(data, new_x, player->pos_y))
 	{
-		player->posX = new_x;
+		player->pos_x = new_x;
 	}
-	if (!valid_move(data, player->posX, new_y))
+	if (!valid_move(data, player->pos_x, new_y))
 	{
-		player->posY = new_y;
+		player->pos_y = new_y;
 	}
 	head_bobbing(data);
 }

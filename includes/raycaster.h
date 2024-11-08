@@ -1,5 +1,17 @@
-#ifndef RAYCASTING_H
-# define RAYCASTING_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycaster.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/08 21:16:49 by hkarrach          #+#    #+#             */
+/*   Updated: 2024/11/08 21:17:25 by hkarrach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef RAYCASTER_H
+# define RAYCASTER_H
 
 # include "../includes/cub3d.h"
 # include "../includes/player.h"
