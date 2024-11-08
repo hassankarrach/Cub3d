@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 02:16:10 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/01 18:21:03 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/08 21:01:44 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ double	ft_distance(t_data *data, double x, double y)
 	double	dx;
 	double	dy;
 
-	dx = x - data->ply->posX;
-	dy = y - data->ply->posY;
+	dx = x - data->ply->pos_x;
+	dy = y - data->ply->pos_y;
 	return (sqrt((dx * dx) + (dy * dy)));
 }
 
@@ -57,8 +57,8 @@ bool	player_in_grid(t_data *data)
 	int	player_tile_x;
 	int	player_tile_y;
 
-	player_tile_x = (int)floor(data->ply->posX / TILE_SIZE);
-	player_tile_y = (int)floor(data->ply->posY / TILE_SIZE);
+	player_tile_x = (int)floor(data->ply->pos_x / TILE_SIZE);
+	player_tile_y = (int)floor(data->ply->pos_y / TILE_SIZE);
 	if (data->map2d[player_tile_y][player_tile_x] == 'D'
 		|| data->map2d[player_tile_y][player_tile_x] == 'O')
 		return (true);

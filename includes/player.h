@@ -1,8 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/08 20:59:01 by hkarrach          #+#    #+#             */
+/*   Updated: 2024/11/08 20:59:37 by hkarrach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PLAYER_H
 # define PLAYER_H
 
 # include "../includes/cub3d.h"
+
 typedef struct s_texture	t_texture;
+
 enum
 {
 	ON_KEYDOWN = 65364,
@@ -27,8 +41,8 @@ typedef struct s_player
 	double					angle;
 	double					fov_rd;
 	char					player_dir;
-	double					posX;
-	double					posY;
+	double					pos_x;
+	double					pos_y;
 	int						look_offset;
 	int						walk_direction;
 	int						turn_direction;

@@ -6,25 +6,25 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 19:04:23 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/05 22:13:17 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/08 22:00:12 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/parser.h"
 
-t_wallFrame	*fill_frame_struct(char **map_lines, int x, int y)
+t_wall_frame	*fill_frame_struct(char **map_lines, int x, int y)
 {
-	t_wallFrame	*frame;
-	int			available_directions[4];
-	int			max_rows;
-	int			count;
+	t_wall_frame	*frame;
+	int				available_directions[4];
+	int				max_rows;
+	int				count;
 
 	max_rows = 0;
 	count = 0;
-	frame = malloc(sizeof(t_wallFrame));
+	frame = malloc(sizeof(t_wall_frame));
 	frame->x = x;
 	frame->y = y;
-	frame->Frame = rand() % 2 + 1;
+	frame->frame = rand() % 2 + 1;
 	while (map_lines[max_rows++])
 		;
 	max_rows--;
@@ -49,7 +49,7 @@ void	init_wallframes_struct(t_args *cub_args)
 
 	frame_number = 0;
 	y = 0;
-	cub_args->frames = malloc(sizeof(t_wallFrame *)
+	cub_args->frames = malloc(sizeof(t_wall_frame *)
 			* (cub_args->number_of_frames + 1));
 	if (!cub_args->frames)
 		return ;

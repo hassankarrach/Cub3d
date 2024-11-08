@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   renderer.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/08 20:52:18 by hkarrach          #+#    #+#             */
+/*   Updated: 2024/11/08 21:13:53 by hkarrach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef RENDERER_H
 # define RENDERER_H
 
@@ -5,19 +17,18 @@
 
 typedef struct s_sky_params
 {
-    int center_x;
-    int center_y_sky;
-    int max_distance;
-}   t_sky_params;
-
+	int	center_x;
+	int	center_y_sky;
+	int	max_distance;
+}	t_sky_params;
 
 typedef struct s_data			t_data;
 typedef struct s_texture		t_texture;
 typedef struct s_wall_params	t_wall_params;
 typedef struct s_ray			t_ray;
-typedef enum Direction e_Direction;
-typedef struct s_door t_door;
-typedef struct s_wall_door t_wall_door;
+typedef struct s_door			t_door;
+typedef struct s_wall_door		t_wall_door;
+typedef enum direction			t_direction;
 
 void							draw_sky_floor(t_data *data);
 t_texture						*texture_loader(t_data *data,
@@ -35,14 +46,20 @@ int								get_pixel(t_texture *texture,
 									int offset_x, int offset_y);
 int								get_start_drawing_texture_x(t_ray ray);
 int								check_wall_frame(t_data data);
-t_texture                       *get_wall_frame(t_data data, e_Direction direction,
-                                t_texture *texture_wall);
-int								get_start_drawing_texture_x_door(t_door door_ray);
+int								get_start_drawing_texture_x_door(
+									t_door door_ray);
 t_texture						*selected_texture_door(t_data *data, t_ray ray);
-double							get_door_height(t_door *door, t_ray *ray, t_player ply);
-t_wall_door						*get_corret_door(int i, int j, t_wall_door **list_door);
-double                          calculate_normalized_distance(int x, int y, t_sky_params *params);
-int                             calculate_sky_color(double normalized_distance);
+double							get_door_height(t_door *door, t_ray *ray,
+									t_player ply);
+t_wall_door						*get_corret_door(int i, int j,
+									t_wall_door **list_door);
+double							calculate_normalized_distance(int x, int y,
+									t_sky_params *params);
+int								calculate_sky_color(double normalized_distance);
 void							drawer_floor(t_data *data, int x);
-int								adjust_color_opacity2(int color, double fade_factor);
+int								adjust_color_opacity2(int color,
+									double fade_factor);
+t_texture						*get_wall_frame(t_data data,
+									t_direction direction,
+									t_texture *texture_wall);
 #endif

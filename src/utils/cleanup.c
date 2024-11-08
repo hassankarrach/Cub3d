@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 23:05:57 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/05 23:16:24 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/07 23:21:39 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ static void	freer(t_args *args)
 	int		i;
 
 	lines = args->file_lines;
-	free(args->East_texture);
-	free(args->South_texture);
-	free(args->West_texture);
-	free(args->North_texture);
+	free(args->east_texture);
+	free(args->south_texture);
+	free(args->west_texture);
+	free(args->north_texture);
 	i = 0;
 	while (lines[i])
 	{
@@ -69,10 +69,10 @@ void	clean_resources(t_data *data)
 	i = 0;
 	while (i < 24)
 		free_texture(data->mlx, data->textures.player[i++]);
-	free_texture(data->mlx, data->textures.wall_EA);
-	free_texture(data->mlx, data->textures.wall_NO);
-	free_texture(data->mlx, data->textures.wall_SO);
-	free_texture(data->mlx, data->textures.wall_WE);
+	free_texture(data->mlx, data->textures.wall_ea);
+	free_texture(data->mlx, data->textures.wall_no);
+	free_texture(data->mlx, data->textures.wall_so);
+	free_texture(data->mlx, data->textures.wall_we);
 	free_texture(data->mlx, data->textures.mini_map);
 	free_texture(data->mlx, data->textures.icon_player);
 	free_texture(data->mlx, data->textures.logo);

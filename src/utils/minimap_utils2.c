@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 23:24:37 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/06 00:14:58 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/08 21:08:10 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ t_coord	calculate_map_coords(t_data *data, int x, int y)
 	float	rotated_y;
 	t_coord	coords;
 
-	player_x = (data->ply->posX / TILE_SIZE) * data->increase;
-	player_y = (data->ply->posY / TILE_SIZE) * data->increase;
+	player_x = (data->ply->pos_x / TILE_SIZE) * data->increase;
+	player_y = (data->ply->pos_y / TILE_SIZE) * data->increase;
 	rotated_x = cos(data->ply->angle + M_PI / 2) * (x - S_W_MINI_MAP / 2)
 		- sin(data->ply->angle + M_PI / 2) * (y - S_H_MINI_MAP / 2)
 		+ player_x;

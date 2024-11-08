@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 02:15:52 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/05 22:29:23 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/08 21:00:51 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,17 @@ double	calculate_distance(t_data *data, float angle)
 void	start_h_y(t_data *data, double angl, double *h_y)
 {
 	if (is_ray_facing_down(angl))
-		*h_y = floor(data->ply->posY / TILE_SIZE) * TILE_SIZE + TILE_SIZE;
+		*h_y = floor(data->ply->pos_y / TILE_SIZE) * TILE_SIZE + TILE_SIZE;
 	else
-		*h_y = floor(data->ply->posY / TILE_SIZE) * TILE_SIZE;
+		*h_y = floor(data->ply->pos_y / TILE_SIZE) * TILE_SIZE;
 }
 
 void	start_v_x(t_data *data, double angl, double *v_x)
 {
 	if (is_ray_facing_left(angl))
-		*v_x = floor(data->ply->posX / TILE_SIZE) * TILE_SIZE;
+		*v_x = floor(data->ply->pos_x / TILE_SIZE) * TILE_SIZE;
 	else
-		*v_x = floor(data->ply->posX / TILE_SIZE) * TILE_SIZE + TILE_SIZE;
+		*v_x = floor(data->ply->pos_x / TILE_SIZE) * TILE_SIZE + TILE_SIZE;
 }
 
 void	start_h_y_door(t_data *data, double angl, double *h_y)
@@ -49,9 +49,9 @@ void	start_h_y_door(t_data *data, double angl, double *h_y)
 
 	tile_size = TILE_SIZE / 2;
 	if (is_ray_facing_down(angl))
-		*h_y = floor(data->ply->posY / tile_size) * tile_size + tile_size;
+		*h_y = floor(data->ply->pos_y / tile_size) * tile_size + tile_size;
 	else
-		*h_y = floor(data->ply->posY / tile_size) * tile_size;
+		*h_y = floor(data->ply->pos_y / tile_size) * tile_size;
 }
 
 void	start_v_x_door(t_data *data, double angl, double *v_x)
@@ -60,7 +60,7 @@ void	start_v_x_door(t_data *data, double angl, double *v_x)
 
 	tile_size = TILE_SIZE / 2;
 	if (is_ray_facing_left(angl))
-		*v_x = floor(data->ply->posX / tile_size) * tile_size;
+		*v_x = floor(data->ply->pos_x / tile_size) * tile_size;
 	else
-		*v_x = floor(data->ply->posX / tile_size) * tile_size + tile_size;
+		*v_x = floor(data->ply->pos_x / tile_size) * tile_size + tile_size;
 }

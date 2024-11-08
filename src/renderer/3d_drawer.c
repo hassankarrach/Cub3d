@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 22:54:09 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/06 00:25:21 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/08 21:27:37 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static double	get_wall_height(t_ray *ray, t_player ply)
 	double	wall_height;
 	double	distance;
 
-	dis_player = (S_W / 2) / tan((FOV * DEG_TO_RAD) / 2);
+	dis_player = (S_W / 2) / tan((ply.fov_rd) / 2);
 	distance = ray->distance * cos(ply.angle - ray->ray_ngl);
 	wall_height = (dis_player * TILE_SIZE) / distance;
 	return (wall_height);

@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 18:08:20 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/05 22:16:44 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/07 23:21:39 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ void	texture_path_extracter(char *line, t_args *cub3d_args)
 		free(line);
 		ft_error(cub3d_args, "invalid texture file path.", true, true);
 	}
-	if (ft_strncmp(line, "NO", 2) == 0 && !cub3d_args->North_texture)
-		cub3d_args->North_texture = value;
-	else if (ft_strncmp(line, "SO", 2) == 0 && !cub3d_args->South_texture)
-		cub3d_args->South_texture = value;
-	else if (ft_strncmp(line, "WE", 2) == 0 && !cub3d_args->West_texture)
-		cub3d_args->West_texture = value;
-	else if (ft_strncmp(line, "EA", 2) == 0 && !cub3d_args->East_texture)
-		cub3d_args->East_texture = value;
+	if (ft_strncmp(line, "NO", 2) == 0 && !cub3d_args->north_texture)
+		cub3d_args->north_texture = value;
+	else if (ft_strncmp(line, "SO", 2) == 0 && !cub3d_args->south_texture)
+		cub3d_args->south_texture = value;
+	else if (ft_strncmp(line, "WE", 2) == 0 && !cub3d_args->west_texture)
+		cub3d_args->west_texture = value;
+	else if (ft_strncmp(line, "EA", 2) == 0 && !cub3d_args->east_texture)
+		cub3d_args->east_texture = value;
 	else
 	{
 		free(line);
