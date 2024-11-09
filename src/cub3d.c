@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 22:56:01 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/08 21:59:45 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/09 02:46:53 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
 static void	game_logic(t_data *data, double time_between_frames)
-{
+{ 
 	double			current_time;
 	static double	bobbing_time = 0;
 
-	current_time = get_time_in_seconds();
 	mlx_clear_window(data->mlx->mlx, data->mlx->win);
+	current_time = get_time_in_seconds();
 	if (!data->ply->walk_direction)
 	{
 		if (current_time - data->last_update_time >= time_between_frames)
