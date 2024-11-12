@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 23:28:20 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/08 21:14:45 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/11 23:42:17 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ bool			is_logic_frame_helper(char pos);
 bool			is_logic_frame(t_args *cub_args, int y, int x);
 bool			is_texture(char *line);
 void			init_wallframes_struct(t_args *cub_args);
+void init_structs_args(t_args *args);
 
 #endif

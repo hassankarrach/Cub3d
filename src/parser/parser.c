@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 15:45:21 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/07 23:22:06 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/11 23:44:38 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	parse_top_bottom_lines(t_args *args, char *line)
 	}
 }
 
-static void	parse_middle_lines(t_args *args, char **lines,
+static int	parse_middle_lines(t_args *args, char **lines,
 	int i, int j)
 {
 	char	*tmp;
@@ -38,19 +38,21 @@ static void	parse_middle_lines(t_args *args, char **lines,
 		tmp = ft_strtrim(line, " ");
 		if ((j == 0 && tmp[j] != '1') || (j == (int)ft_strlen(line) - 1
 				&& tmp[j] != '1'))
-			ft_error(args, "Map is not closed/surrounded by walls.",
-				true, true);
+			return (free(tmp),
+				ft_error(args, "Map error.", true, true));
 		if (tmp[j] != 'D' && tmp[j] != '1' && tmp[j] != '0' && tmp[j] != 'N'
 			&& tmp[j] != 'S' && tmp[j] != 'E' && tmp[j] != 'W' && tmp[j] != ' ')
-			ft_error(args, "Invalid map character.", true, true);
+			return (free(tmp), ft_error(args, "Invalid map character.",
+					true, true));
 		if (tmp[j] == 'N' || tmp[j] == 'S' || tmp[j] == 'E' || tmp[j] == 'W')
 			args->player_count++;
 		if (tmp[j] == '0' || tmp[j] == 'N' || tmp[j] == 'S' || tmp[j] == 'E'
 			|| tmp[j] == 'W')
 			if (check_surroundings(lines, i, j))
-				ft_error(args, "Map is not closed/surrounded by walls.",
-					true, true);
+				return (free(tmp),
+					ft_error(args, "Map error.", true, true));
 		j++;
+		free(tmp);
 	}
 }
 

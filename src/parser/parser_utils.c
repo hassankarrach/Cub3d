@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 18:06:45 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/05 18:07:59 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/10 21:50:28 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ char	**file_to_arr(t_args *args, char *file_path)
 	{
 		tmp = ft_strjoin(full_lines, curr_line);
 		free(curr_line);
+		// free(full_lines);
 		full_lines = tmp;
 		curr_line = get_next_line(fd);
 	}

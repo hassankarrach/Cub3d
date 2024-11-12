@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 23:29:08 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/09 02:39:33 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/11 22:43:18 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ int	adjust_color_opacity2(int color, double fade_factor)
 	r = (color >> 16) & 0xFF;
 	g = (color >> 8) & 0xFF;
 	b = color & 0xFF;
-	r = r * fade_factor;
+	r = (int)(r * fade_factor);
 	r = clamp(r, 0, 255);
-	g = g * fade_factor;
+	g = (int)(g * fade_factor);
 	g = clamp(g, 0, 255);
-	b = b * fade_factor;
+	b = (int)(b * fade_factor);
 	b = clamp(b, 0, 255);
 	return ((r << 16) | (g << 8) | b);
 }

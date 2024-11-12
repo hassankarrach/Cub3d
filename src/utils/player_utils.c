@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 05:23:23 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/08 21:36:10 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/12 03:45:19 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,12 @@ static int	valid_move(t_data *data, double x, double y)
 	j = (int)(y / (double)TILE_SIZE);
 	if (i >= data->w_map || j >= data->h_map || i < 0 || j < 0)
 		return (1);
+	else if (data->map2d[j][i] == 'O' && data->door->current_frame == 0)
+	{
+		data->ply->move_speed = 1;
+		data->ply->bobbing_speed = 1;
+		data->ply->bobbing_amplitude = 1;
+	}
 	else if (valid_move2(data, x, y))
 		return (1);
 	return (0);
