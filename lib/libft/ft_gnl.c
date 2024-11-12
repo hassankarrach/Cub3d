@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_gnl.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/10 21:21:09 by kait-baa          #+#    #+#             */
+/*   Updated: 2024/11/10 21:23:39 by kait-baa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 static char	*ft_gnl_strjoin(char *s1, char *s2)
@@ -37,10 +49,10 @@ char	*get_next_line(int fd)
 	while (readed > 0)
 	{
 		if (buff[0] == '\n')
-        {
-            line = ft_gnl_strjoin(line, buff);
+		{
+			line = ft_gnl_strjoin(line, buff);
 			break ;
-        }
+		}
 		line = ft_gnl_strjoin(line, buff);
 		readed = read(fd, buff, 1);
 	}

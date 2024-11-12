@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 23:22:35 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/08 21:37:41 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/12 02:54:30 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_inter		t_inter;
 typedef enum frame_type		t_frame_type;
 typedef struct s_wallFrame	t_wall_frame;
 typedef struct s_wall_door	t_wall_door;
+typedef struct s_sky_params		t_sky_params;
 
 typedef struct s_rgb
 {

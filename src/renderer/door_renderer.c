@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   door_renderer.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 05:03:55 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/05 23:02:33 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/12 03:05:55 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,14 @@ int	apply_brightness(int color, double brightness_factor)
 	int	g;
 	int	b;
 
-	r = ((color >> 16) & 0xFF) * brightness_factor;
+	r = 0;
+	g = 0;
+	b = 0;
+	r = (int)(((color >> 16) & 0xFF) * brightness_factor);
 	r = clamp(r, 0, 255);
-	g = ((color >> 8) & 0xFF) * brightness_factor;
+	g = (int)(((color >> 8) & 0xFF) * brightness_factor);
 	g = clamp(g, 0, 255);
-	b = (color & 0xFF) * brightness_factor;
+	b = (int)((color & 0xFF) * brightness_factor);
 	b = clamp(b, 0, 255);
 	return ((r << 16) | (g << 8) | b);
 }

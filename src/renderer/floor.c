@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   floor.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 02:10:21 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/07 23:21:59 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/12 03:07:06 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ static int	adjust_color_opacity(t_rgb floor_color, float brightness_factor)
 	int	g;
 	int	b;
 
-	r = (floor_color.r) * brightness_factor;
+	r = (int)((floor_color.r) * brightness_factor);
 	r = clamp(r, 0, 255);
-	g = (floor_color.g) * brightness_factor;
+	g = (int)((floor_color.g) * brightness_factor);
 	g = clamp(g, 0, 255);
-	b = (floor_color.b) * brightness_factor;
+	b = (int)((floor_color.b) * brightness_factor);
 	b = clamp(b, 0, 255);
 	return ((r << 16) | (g << 8) | b);
 }

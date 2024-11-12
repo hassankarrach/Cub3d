@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 05:08:12 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/09 02:56:20 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/12 03:18:25 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ t_texture	*selected_texture_door(t_data *data, t_ray ray)
 	i = (int)(ray.min_inter.xintercept / TILE_SIZE);
 	j = (int)(ray.min_inter.yintercept / TILE_SIZE);
 	c_door = get_corret_door(i, j, data->door->doors);
+	data->door->current_frame = c_door->current_frame;
 	return (data->textures.door[c_door->current_frame]);
 }
 

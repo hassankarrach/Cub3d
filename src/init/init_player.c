@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 00:01:14 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/08 21:21:48 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/12 02:53:05 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	init_player(t_player *player, t_data *data)
 	player->pos_x = data->index_x * TILE_SIZE + TILE_SIZE / 2;
 	player->pos_y = data->index_y * TILE_SIZE + TILE_SIZE / 2;
 	player->fov_rd = 60 * (M_PI / 180);
+	player->look_offset = 0;
 	player->walk_direction = 0;
 	player->turn_direction = 0;
 	data->ply->move_speed = 1;

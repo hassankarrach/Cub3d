@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 00:16:52 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/05 22:40:44 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/12 02:51:20 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ void	init_ray(t_ray *ray)
 	ray->hit_door = 0;
 	ray->skip_door = 0;
 	ray->distance = 0;
+	ray->v_or_h = 0;
+	ray->wall_height = 0;
+	ray->min_inter.is_door = 0;
+	ray->min_inter.xintercept = 0;
+	ray->min_inter.yintercept = 0;
 }
 
 void	load_player_textures(t_data *data)
@@ -88,9 +93,9 @@ void	init_game(t_data *data, t_args *args)
 		&data->mlx->line_length, \
 		&data->mlx->endian);
 	data->state = LOBBY;
+	init_player(data->ply, data);
 	load_door_textures(data);
 	init_ray(data->ray);
-	init_player(data->ply, data);
 	init_doors(data, data->door, data->textures.door);
 	load_frame_textures(data);
 	load_all_textures(data);

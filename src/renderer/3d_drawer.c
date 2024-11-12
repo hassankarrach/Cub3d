@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 22:54:09 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/09 02:57:13 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/12 03:08:57 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@ void	draw_sky_floor(t_data *data)
 	y = 0;
 	params.center_x = S_W / 2;
 	params.center_y_sky = (S_H / 2) + data->ply->look_offset;
-	params.max_distance = sqrt((S_W / 2) * (S_W / 2) + S_H * S_H);
-	while (y < S_H / 2 + data->ply->look_offset)
+	params.max_distance = sqrt((params.center_x) * (params.center_x) + \
+		S_H * S_H);
+	while (y < params.center_y_sky)
 	{
 		x = 0;
 		while (x < S_W)

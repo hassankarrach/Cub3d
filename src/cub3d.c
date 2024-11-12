@@ -6,14 +6,14 @@
 /*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 22:56:01 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/09 02:46:53 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/12 03:11:19 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
 static void	game_logic(t_data *data, double time_between_frames)
-{ 
+{
 	double			current_time;
 	static double	bobbing_time = 0;
 
@@ -44,7 +44,7 @@ static int	game_loop(void *arg)
 	double			time_between_frames;
 	t_data			*data;
 
-	time_between_frames = 0.02;
+	time_between_frames = 0.03;
 	data = (t_data *)arg;
 	if (data->state == LOBBY)
 		lobby(data);
