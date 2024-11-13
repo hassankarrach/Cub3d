@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils4.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 19:04:23 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/08 22:00:12 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/13 02:29:05 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_wall_frame	*fill_frame_struct(char **map_lines, int x, int y)
 	while (map_lines[max_rows++])
 		;
 	max_rows--;
-	if ((x + 1) < (ft_strlen(map_lines[0] - 1)) && map_lines[y][x + 1] == '0')
+	if ((x + 1) < (ft_strlen(map_lines[0]) - 1) && map_lines[y][x + 1] == '0')
 		available_directions[count++] = RIGHT;
 	if ((x - 1 >= 0) && map_lines[y][x - 1] == '0')
 		available_directions[count++] = LEFT;
