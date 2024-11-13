@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 18:06:45 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/10 21:50:28 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/13 02:59:05 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,15 @@
 
 int	check_surroundings(char **map_lines, int i, int j)
 {
+	int	line_len;
+	int	map_rows;
+
+	map_rows = 0;
+	line_len = ft_strlen(map_lines[i]);
+	while (map_lines[map_rows])
+		map_rows++;
+	if (i >= map_rows || j >= line_len || i < 0 || j < 0 || !map_lines[i][j])
+		return (0);
 	return (map_lines[i - 1][j] == ' ' || map_lines[i + 1][j] == ' ' ||
 			map_lines[i][j - 1] == ' ' || map_lines[i][j + 1] == ' ');
 }
