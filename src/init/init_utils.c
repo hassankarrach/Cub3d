@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 22:18:23 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/07 23:21:39 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/15 22:23:27 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,14 @@ void	load_door_textures(t_data *data)
 	int		i;
 	char	*full_path;
 	char	*tmp;
+	char	*texture_id;
 
 	i = 1;
 	while (i <= 26)
 	{
-		full_path = ft_strjoin("./assets/textures/doors/door_", ft_itoa(i));
+		texture_id = ft_itoa(i);
+		full_path = ft_strjoin("./assets/textures/doors/door_", texture_id);
+		free(texture_id);
 		tmp = full_path;
 		full_path = ft_strjoin(full_path, ".xpm");
 		data->textures.door[i - 1] = texture_loader(data, full_path);

@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 21:18:20 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/08 21:19:44 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/15 22:01:46 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_coord					calculate_map_coords(t_data *data, int x, int y);
 int						map_tile_to_color(t_data *data, int map_x, int map_y);
 int						pos_to_color(t_data *data, int x, int y);
 float					calculate_fade_factor(int x, int y);
+void					freer(t_args *args);
 void					render_pixel(t_data *data, int x, int y);
 
 #endif
