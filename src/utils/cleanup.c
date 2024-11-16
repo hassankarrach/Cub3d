@@ -6,13 +6,13 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 23:05:57 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/07 23:21:39 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/16 01:26:27 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/utils.h"
 
-static void	freer(t_args *args)
+void	freer(t_args *args)
 {
 	char	**lines;
 	int		i;
@@ -28,7 +28,8 @@ static void	freer(t_args *args)
 		free(lines[i]);
 		i++;
 	}
-	free(lines);
+	if (lines)
+		free(lines);
 }
 
 int	ft_error(t_args *args, char *error_msg, bool should_exit, bool should_free)
@@ -65,7 +66,10 @@ void	clean_resources(t_data *data)
 
 	i = 0;
 	while (i < 26)
-		free_texture(data->mlx, data->textures.door[i++]);
+	{
+		free_texture(data->mlx, data->textures.door[i]);
+		i++;
+	}
 	i = 0;
 	while (i < 24)
 		free_texture(data->mlx, data->textures.player[i++]);
@@ -82,4 +86,5 @@ void	clean_resources(t_data *data)
 	free(data->ply);
 	free(data->ray);
 	free_mlx(data->mlx);
+	freer(data->args);
 }

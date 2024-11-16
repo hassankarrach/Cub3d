@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 00:16:52 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/12 02:51:20 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/15 22:14:40 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,14 @@ void	load_player_textures(t_data *data)
 	int		i;
 	char	*full_path;
 	char	*tmp;
+	char	*texture_id;
 
 	i = 1;
 	while (i <= 24)
 	{
-		full_path = ft_strjoin("./assets/player/player_", ft_itoa(i));
+		texture_id = ft_itoa(i);
+		full_path = ft_strjoin("./assets/player/player_", texture_id);
+		free(texture_id);
 		tmp = full_path;
 		full_path = ft_strjoin(full_path, ".xpm");
 		data->textures.player[i - 1] = texture_loader(data, full_path);
