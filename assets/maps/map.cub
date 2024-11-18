@@ -1,0 +1,22 @@
+F 60, 7, 2
+SO ./assets/textures/wall_SO.xpm
+WE ./assets/textures/wall_SO.xpm
+EA ./assets/textures/wall_SO.xpm
+NO ./assets/textures/wall_SO.xpm
+C 1, 32, 71
+
+111111111
+101000101
+101111111
+100000001
+100010101
+100010001
+100010011
+101101111
+1001010E1
+110000111
+100011111
+110010001
+100011111
+100000001
+111111111

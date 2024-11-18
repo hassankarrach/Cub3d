@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 05:03:55 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/12 03:05:55 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/18 07:14:55 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	rendring_door(t_data *data, t_door door, int x)
 				* 576) / wall_params.wall_height;
 		color = get_pixel(texture, wall_params.texture_x,
 				wall_params.texture_y);
-		if (color != 0 && color != BLK)
+		if (color != 0 && color != (int)BLK)
 		{
 			color = apply_brightness(color, wall_params.brightness_factor);
 			ft_pixel_put(data, x, wall_params.start_y, color);

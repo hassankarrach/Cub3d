@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 18:08:20 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/07 23:21:39 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/18 05:47:49 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	set_map_metadata(t_args *args)
 	int	rows;
 
 	rows = 0;
-	while (args->map_lines[rows])
+	while (args->map2d[rows])
 		rows++;
 	args->map_rows = rows;
-	args->map_columns = get_taller_line(args->map_lines);
+	args->map_columns = get_taller_line(args->map2d);
 }
 
 void	texture_path_extracter(char *line, t_args *cub3d_args)

@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 05:23:23 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/12 03:45:19 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/18 07:13:15 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,9 @@
 
 static bool	hit_wall(t_data *data, double x, double y)
 {
-	t_wall_door	*c_door;
 	int			i;
 	int			j;
 
-	c_door = get_corret_door((int)(data->ray->min_inter.xintercept / TILE_SIZE),
-			(int)(data->ray->min_inter.yintercept / TILE_SIZE),
-			data->door->doors);
 	i = (int)(x / (double)TILE_SIZE);
 	j = (int)(y / (double)TILE_SIZE);
 	if (i >= data->w_map || j >= data->h_map || i < 0 || j < 0)

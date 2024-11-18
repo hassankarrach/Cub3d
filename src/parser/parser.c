@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 15:45:21 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/15 23:28:07 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/18 07:10:01 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,23 @@ static int	parse_middle_lines(t_args *args, char **lines,
 		j++;
 		free(tmp);
 	}
+	return (1);
 }
 
-static void	parse_map_lines(t_args *args, char **map_lines)
+static void	parse_map2d(t_args *args, char **map2d)
 {
 	int	i;
 	int	j;
 
 	i = 0;
 	args->player_count = 0;
-	while (map_lines[i])
+	while (map2d[i])
 	{
 		j = 0;
-		if (i == 0 || !map_lines[i + 1])
-			parse_top_bottom_lines(args, map_lines[i]);
+		if (i == 0 || !map2d[i + 1])
+			parse_top_bottom_lines(args, map2d[i]);
 		else
-			parse_middle_lines(args, map_lines, i, j);
+			parse_middle_lines(args, map2d, i, j);
 		i++;
 	}
 	if (args->player_count != 1)
@@ -101,7 +102,7 @@ static void	parse_file_lines(t_args *args, char **file_lines)
 			ft_error(args, "Invalid Identifier.", true, true);
 		i++;
 	}
-	args->map_lines = file_lines + i;
+	args->map2d = file_lines + i;
 }
 
 void	parser(int ac, char **av, t_args *cub3d_args)
@@ -113,8 +114,8 @@ void	parser(int ac, char **av, t_args *cub3d_args)
 	ft_memset(cub3d_args, 0, sizeof(t_args));
 	cub3d_args->file_lines = file_to_arr(cub3d_args, av[1]);
 	parse_file_lines(cub3d_args, cub3d_args->file_lines);
-	parse_map_lines(cub3d_args, cub3d_args->map_lines);
-	remove_empty(cub3d_args->map_lines);
+	parse_map2d(cub3d_args, cub3d_args->map2d);
+	remove_empty(cub3d_args->map2d);
 	set_map_metadata(cub3d_args);
 	add_doors(cub3d_args);
 	add_wall_frames(cub3d_args);

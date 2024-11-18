@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 00:01:14 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/12 02:53:05 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/18 05:47:49 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,17 @@ void	get_x_y_player(t_data *m)
 	int	j;
 
 	i = 0;
-	while (m->args->map_lines[i])
+	while (m->args->map2d[i])
 	{
 		j = 0;
-		while (m->args->map_lines[i][j])
+		while (m->args->map2d[i][j])
 		{
-			if (m->args->map_lines[i][j] == 'N'
-				|| m->args->map_lines[i][j] == 'S'
-				|| m->args->map_lines[i][j] == 'W'
-				|| m->args->map_lines[i][j] == 'E')
+			if (m->args->map2d[i][j] == 'N'
+				|| m->args->map2d[i][j] == 'S'
+				|| m->args->map2d[i][j] == 'W'
+				|| m->args->map2d[i][j] == 'E')
 			{
-				m->ply->player_dir = m->args->map_lines[i][j];
+				m->ply->player_dir = m->args->map2d[i][j];
 				m->index_x = j;
 				m->index_y = i;
 				return ;

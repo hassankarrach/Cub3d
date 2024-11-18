@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils3.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 18:54:33 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/05 19:01:52 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/18 06:21:14 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ void	add_doors(t_args *cub_args)
 	while (i < 4)
 		cub_args->doors[i++] = NULL;
 	i = 0;
-	while (cub_args->map_lines[i] && doors_count < 3)
+	while (cub_args->map2d[i] && doors_count < 3)
 	{
 		j = 0;
-		while (cub_args->map_lines[i][j] && doors_count < 3)
+		while (cub_args->map2d[i][j] && doors_count < 3)
 		{
-			if (cub_args->map_lines[i][j] == 'D')
+			if (cub_args->map2d[i][j] == 'D')
 			{
 				init_door(cub_args, doors_count, i, j);
 				doors_count++;
@@ -56,17 +56,17 @@ void	add_wall_frames(t_args *cub_args)
 	cub_args->number_of_frames = 0;
 	i = 0;
 	frames_per_row = 2;
-	while (cub_args->map_lines[i])
+	while (cub_args->map2d[i])
 	{
 		j = 0;
 		frames_per_row = 2;
-		while (cub_args->map_lines[i][j])
+		while (cub_args->map2d[i][j])
 		{
-			if (cub_args->map_lines[i][j] == '1' && frames_per_row && i != 0
+			if (cub_args->map2d[i][j] == '1' && frames_per_row && i != 0
 				&& is_logic_frame(cub_args, i, j) && j != 0
 				&& j < cub_args->map_columns && i < (cub_args->map_rows - 1))
 			{
-				cub_args->map_lines[i][j] = 'F';
+				cub_args->map2d[i][j] = 'F';
 				cub_args->number_of_frames++;
 				frames_per_row--;
 			}
@@ -91,5 +91,6 @@ char	*fill_extra(char *line, int max_len)
 		res = tmp;
 		curr_line_len++;
 	}
+	free(line);
 	return (res);
 }

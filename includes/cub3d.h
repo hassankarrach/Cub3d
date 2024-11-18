@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 23:22:35 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/12 02:54:30 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/18 06:13:10 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ typedef struct s_args
 	char					*south_texture;
 	char					*west_texture;
 	char					*east_texture;
-	char					**map_lines;
+	char					**map2d;
 	char					**file_lines;
 	int						map_rows;
 	int						map_columns;
@@ -144,9 +144,6 @@ typedef struct s_textures
 	t_texture				*wall_we;
 	t_texture				*wall_ea;
 	t_texture				*wall_no;
-
-	t_texture				*wall_frame1;
-	t_texture				*wall_frame2;
 
 	t_texture				*player[24];
 	t_texture				*door[26];

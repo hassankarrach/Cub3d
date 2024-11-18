@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 04:32:08 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/01 17:53:48 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/18 07:15:08 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	draw_player(t_data *data, double current_time)
 				x += 560;
 			color = get_pixel(data->textures.player[data->ply->current_frame], \
 				x, y - start_y);
-			if (color != BLK && color)
+			if (color != (int)BLK && color)
 				ft_pixel_put(data, x, y, color);
 		}
 	}
