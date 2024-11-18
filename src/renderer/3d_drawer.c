@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 22:54:09 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/12 03:08:57 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/18 07:14:49 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	render_wall(t_data *data, int x, double ray_angle)
 			wall_params.save_y) * 576) / wall_params.wall_height;
 		color = get_pixel(texture, wall_params.texture_x, \
 			wall_params.texture_y);
-		if (color || color != BLK)
+		if (color || color != (int)BLK)
 		{
 			color = adjust_color_opacity2(color, brightness_factor);
 			ft_pixel_put(data, x, wall_params.start_y, color);

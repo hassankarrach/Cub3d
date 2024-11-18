@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 23:29:08 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/11 22:43:18 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/18 07:15:15 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	draw_player_icon(t_data *data)
 		while (x < data->textures.icon_player->width)
 		{
 			color = get_pixel(data->textures.icon_player, x, y);
-			if (color != BLK)
+			if (color != (int)BLK)
 				ft_pixel_put(data, x + start_x, y + start_y, color);
 			x++;
 		}
@@ -52,7 +52,7 @@ static void	set_pixels_img(t_data *data)
 		while (y < S_H_MINI_MAP + 14)
 		{
 			color = get_pixel(data->textures.mini_map, x, y);
-			if (color != BLK)
+			if (color != (int)BLK)
 				ft_pixel_put(data, x, y, color);
 			y++;
 		}

@@ -19,7 +19,7 @@ MLX_DIR = ./lib/mlx
 MLX_LIB = $(MLX_DIR)/libmlx.a
 MLX_INCLUDE = -I$(MLX_DIR)
 
-CFLAGS = -ffast-math -I/usr/include/X11 #-g -O3 
+CFLAGS = -ffast-math -I/usr/include/X11-Wall -Wextra -Werror #-g3
 LDFLAGS = -L$(MLX_DIR) -lmlx -L/usr/lib/x86_64-linux-gnu -lX11 -lXext -lm	
 
 # SRCS ============>
@@ -29,7 +29,7 @@ LIBFT_SRCS = $(addprefix ./lib/libft/, ft_strlen.c ft_strncmp.c ft_strrchr.c \
 
 SCENES_SRC = $(addprefix ./src/scenes/, lobby.c pause.c)
 PARSER_SRC = $(addprefix ./src/parser/, parser.c parser_utils.c parser_utils2.c parser_utils3.c parser_utils4.c)
-UTILS_SRC = $(addprefix ./src/utils/, cleanup.c player_utils.c minimap_utils.c minimap_utils2.c window_utils.c time_utils.c)
+UTILS_SRC = $(addprefix ./src/utils/, cleanup.c player_utils.c minimap_utils.c minimap_utils2.c window_utils.c time_utils.c utils_clean.c)
 INITIALIZER_SRC = $(addprefix ./src/init/, init.c init_player.c init_utils.c)
 RAYCASTER_SRC = $(addprefix ./src/raycaster/, raycaster.c raycaster_utils.c rays_directions.c cast_ray_door.c raycaster_utils2.c utils_door.c)
 RENDERER_SRC = $(addprefix ./src/renderer/, door_renderer.c sky_drawer.c 3d_drawer.c draw_player.c correct_texture.c texture_utils.c texture_utils2.c utils.c door_renderer_utils.c  floor.c)

@@ -3,28 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 18:06:45 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/15 22:12:02 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/18 07:11:45 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/parser.h"
 
-int	check_surroundings(char **map_lines, int i, int j)
+int	check_surroundings(char **map2d, int i, int j)
 {
 	int	line_len;
 	int	map_rows;
 
 	map_rows = 0;
-	line_len = ft_strlen(map_lines[i]);
-	while (map_lines[map_rows])
+	line_len = ft_strlen(map2d[i]);
+	while (map2d[map_rows])
 		map_rows++;
-	if (i >= map_rows || j >= line_len || i < 0 || j < 0 || !map_lines[i][j])
+	if (i >= map_rows || j >= line_len || i < 0 || j < 0 || !map2d[i][j])
 		return (0);
-	return (map_lines[i - 1][j] == ' ' || map_lines[i + 1][j] == ' ' ||
-			map_lines[i][j - 1] == ' ' || map_lines[i][j + 1] == ' ');
+	return (map2d[i - 1][j] == ' ' || map2d[i + 1][j] == ' ' ||
+			map2d[i][j - 1] == ' ' || map2d[i][j + 1] == ' ');
 }
 
 int	is_file_path_valid(char *file_path)
@@ -65,42 +65,40 @@ char	**file_to_arr(t_args *args, char *file_path)
 	return (lines);
 }
 
-void	remove_empty(char **map_lines)
+void	remove_empty(char **map2d)
 {
 	int		i;
 	int		j;
-	int		curr_line_len;
 	int		taller_line;
-	char	*tmp;
 
 	i = 0;
-	taller_line = get_taller_line(map_lines);
-	while (map_lines[i])
+	taller_line = get_taller_line(map2d);
+	while (map2d[i])
 	{
 		j = 0;
-		while (map_lines[i][j])
+		while (map2d[i][j])
 		{
-			if (map_lines[i][j] == ' ')
-				map_lines[i][j] = 'X';
+			if (map2d[i][j] == ' ')
+				map2d[i][j] = 'X';
 			j++;
 		}
-		if (ft_strlen(map_lines[i]) < taller_line)
-			map_lines[i] = fill_extra(map_lines[i], taller_line);
+		if (ft_strlen(map2d[i]) < (size_t)taller_line)
+			map2d[i] = fill_extra(map2d[i], taller_line);
 		i++;
 	}
 }
 
-int	get_taller_line(char **map_lines)
+int	get_taller_line(char **map2d)
 {
 	int	i;
 	int	max_len;
 
 	i = 0;
 	max_len = 0;
-	while (map_lines[i])
+	while (map2d[i])
 	{
-		if (ft_strlen(map_lines[i]) > max_len)
-			max_len = ft_strlen(map_lines[i]);
+		if (ft_strlen(map2d[i]) > (size_t)max_len)
+			max_len = ft_strlen(map2d[i]);
 		i++;
 	}
 	return (max_len);
