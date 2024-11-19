@@ -3,81 +3,77 @@
 /*                                                        :::      ::::::::   */
 /*   minimap_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 23:24:37 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/18 07:06:55 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/19 03:50:13 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/utils.h"
 
-t_coord	calculate_map_coords(t_data *data, int x, int y)
+int	adjust_color_opacity2(int color, float fade_factor)
 {
-	float	player_x;
-	float	player_y;
-	float	rotated_x;
-	float	rotated_y;
-	t_coord	coords;
+	int	r;
+	int	g;
+	int	b;
 
-	player_x = (data->ply->pos_x / TILE_SIZE) * data->increase;
-	player_y = (data->ply->pos_y / TILE_SIZE) * data->increase;
-	rotated_x = cos(data->ply->angle + M_PI / 2) * (x - S_W_MINI_MAP / 2)
-		- sin(data->ply->angle + M_PI / 2) * (y - S_H_MINI_MAP / 2)
-		+ player_x;
-	rotated_y = sin(data->ply->angle + M_PI / 2) * (x - S_W_MINI_MAP / 2)
-		+ cos(data->ply->angle + M_PI / 2) * (y - S_H_MINI_MAP / 2)
-		+ player_y;
-	coords.map_x = (int)(rotated_x / data->increase);
-	coords.map_y = (int)(rotated_y / data->increase);
-	return (coords);
+	r = (color >> 16) & 0xFF;
+	r = (int)(r * fade_factor);
+	g = (color >> 8) & 0xFF;
+	g = (int)(g * fade_factor);
+	b = color & 0xFF;
+	b = (int)(b * fade_factor);
+	return ((r << 16) | (g << 8) | b);
 }
 
-int	map_tile_to_color(t_data *data, int map_x, int map_y)
+static float	get_rotated_x(t_data *data, int x, int y)
 {
-	char	tile;
+	float	relative_x;
+	float	relative_y;
+	float	player_x;
+	float	angle;
 
-	if (map_x < 0 || map_x >= data->w_map || map_y < 0 || map_y >= data->h_map)
-		return (-1);
-	tile = data->map2d[map_y][map_x];
-	if (tile == '1' || tile == 'F')
-		return (MAP_CLR);
-	if (tile == 'D')
-		return (ORNG);
-	if (tile == 'O')
-		return (GREN);
-	return (-1);
+	relative_x = x - (S_W_MINI_MAP / 2);
+	relative_y = y - (S_H_MINI_MAP / 2);
+	player_x = (data->ply->pos_x / TILE_SIZE) * data->increase;
+	angle = data->ply->angle + M_PI / 2;
+	return (cos(angle) * relative_x - sin(angle) * relative_y + player_x);
+}
+
+static float	get_rotated_y(t_data *data, int x, int y)
+{
+	float	relative_x;
+	float	relative_y;
+	float	player_y;
+	float	angle;
+
+	relative_x = x - (S_W_MINI_MAP / 2);
+	relative_y = y - (S_H_MINI_MAP / 2);
+	player_y = (data->ply->pos_y / TILE_SIZE) * data->increase;
+	angle = data->ply->angle + M_PI / 2;
+	return (sin(angle) * relative_x + cos(angle) * relative_y + player_y);
 }
 
 int	pos_to_color(t_data *data, int x, int y)
 {
-	t_coord	coords;
+	float	rotated_x;
+	float	rotated_y;
+	int		map_x;
+	int		map_y;
 
-	coords = calculate_map_coords(data, x, y);
-	return (map_tile_to_color(data, coords.map_x, coords.map_y));
-}
-
-float	calculate_fade_factor(int x, int y)
-{
-	float	distance;
-	float	max_distance;
-
-	distance = sqrt(pow(x - S_W_MINI_MAP / 2, 2)
-			+ pow(y - S_H_MINI_MAP / 2, 2));
-	max_distance = sqrt(pow(S_W_MINI_MAP / 2, 2) + pow(S_H_MINI_MAP / 2, 2));
-	return (1.0 - (distance / max_distance * 0.5));
-}
-
-void	render_pixel(t_data *data, int x, int y)
-{
-	int		color;
-	double	fade_factor;
-	int		faded_color;
-
-	color = pos_to_color(data, x, y);
-	if (color == -1)
-		return ;
-	fade_factor = calculate_fade_factor(x, y);
-	faded_color = adjust_color_opacity2(color, fade_factor);
-	ft_pixel_put(data, x, y, faded_color);
+	rotated_x = get_rotated_x(data, x, y);
+	rotated_y = get_rotated_y(data, x, y);
+	map_x = (int)(rotated_x / data->increase);
+	map_y = (int)(rotated_y / data->increase);
+	if (map_x < 0 || map_x > data->w_map || map_y < 0 || map_y > data->h_map
+		|| rotated_x < 0 || rotated_y < 0)
+		return (-1);
+	if (data->map2d[map_y][map_x] == '1' || data->map2d[map_y][map_x] == 'F')
+		return (MAP_CLR);
+	if (data->map2d[map_y][map_x] == 'D')
+		return (ORNG);
+	if (data->map2d[map_y][map_x] == 'O')
+		return (GREN);
+	return (-1);
 }

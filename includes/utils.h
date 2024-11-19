@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 21:18:20 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/18 04:09:45 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/19 03:34:30 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,11 @@ double					get_time_in_seconds(void);
 int						clamp(int value, int min, int max);
 void					ft_pixel_put(t_data *data, int x, int y, int color);
 void					clean_resources(t_data *data);
-t_coord					calculate_map_coords(t_data *data, int x, int y);
-int						map_tile_to_color(t_data *data, int map_x, int map_y);
 int						pos_to_color(t_data *data, int x, int y);
-float					calculate_fade_factor(int x, int y);
 void					freer(t_args *args);
-void					render_pixel(t_data *data, int x, int y);
 void					helper_clean(t_data *data);
 void					free_texture(t_mlx *mlx, t_texture *texture);
 void					free_mlx(t_mlx *ptr);
+int						adjust_color_opacity2(int color, float fade_factor);
 
 #endif
