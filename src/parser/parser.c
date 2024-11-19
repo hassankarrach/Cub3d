@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 15:45:21 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/18 07:10:01 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/19 05:50:54 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,12 @@ static void	parse_top_bottom_lines(t_args *args, char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] != '1' && line[i] != ' ')
+		if (line[i] != '1' && line[i] != 'X')
+		{
+			printf("line[%d] = %c\n", i, line[i]);
 			ft_error(args, "Map is not closed/surrounded by walls.",
 				true, true);
+		}
 		i++;
 	}
 }
@@ -29,31 +32,29 @@ static void	parse_top_bottom_lines(t_args *args, char *line)
 static int	parse_middle_lines(t_args *args, char **lines,
 	int i, int j)
 {
-	char	*tmp;
 	char	*line;
 
-	line = lines[i];
+	line = ft_strtrim(lines[i], "X");
 	while (line[j])
 	{
-		tmp = ft_strtrim(line, " ");
-		if ((j == 0 && tmp[j] != '1') || (j == (int)ft_strlen(line) - 1
-				&& tmp[j] != '1'))
-			return (free(tmp),
+		if (((j == 0 && line[j] != '1') || (j == (int)ft_strlen(line) - 1)
+				&& line[j] != '1'))
+			return (free(line),
 				ft_error(args, "Map error.", true, true));
-		if (tmp[j] != 'D' && tmp[j] != '1' && tmp[j] != '0' && tmp[j] != 'N'
-			&& tmp[j] != 'S' && tmp[j] != 'E' && tmp[j] != 'W' && tmp[j] != ' ')
-			return (free(tmp), ft_error(args, "Invalid map character.",
+		if (line[j] != 'D' && line[j] != '1' && line[j] != '0' && line[j] != 'N'
+			&& line[j] != 'S' && line[j] != 'E' && line[j] != 'W' && line[j] != 'X')
+			return (free(line), ft_error(args, "Invalid map character.",
 					true, true));
-		if (tmp[j] == 'N' || tmp[j] == 'S' || tmp[j] == 'E' || tmp[j] == 'W')
+		if (line[j] == 'N' || line[j] == 'S' || line[j] == 'E' || line[j] == 'W')
 			args->player_count++;
-		if (tmp[j] == '0' || tmp[j] == 'N' || tmp[j] == 'S' || tmp[j] == 'E'
-			|| tmp[j] == 'W')
+		if (line[j] == '0' || line[j] == 'N' || line[j] == 'S' || line[j] == 'E'
+			|| line[j] == 'W')
 			if (check_surroundings(lines, i, j))
-				return (free(tmp),
+				return (free(line),
 					ft_error(args, "Map error.", true, true));
 		j++;
-		free(tmp);
 	}
+	free(line);
 	return (1);
 }
 
@@ -114,8 +115,8 @@ void	parser(int ac, char **av, t_args *cub3d_args)
 	ft_memset(cub3d_args, 0, sizeof(t_args));
 	cub3d_args->file_lines = file_to_arr(cub3d_args, av[1]);
 	parse_file_lines(cub3d_args, cub3d_args->file_lines);
-	parse_map2d(cub3d_args, cub3d_args->map2d);
 	remove_empty(cub3d_args->map2d);
+	parse_map2d(cub3d_args, cub3d_args->map2d);
 	set_map_metadata(cub3d_args);
 	add_doors(cub3d_args);
 	add_wall_frames(cub3d_args);

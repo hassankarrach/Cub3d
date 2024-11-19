@@ -3,28 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 18:06:45 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/18 07:11:45 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/19 05:51:23 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/parser.h"
 
-int	check_surroundings(char **map2d, int i, int j)
+int check_surroundings(char **map2d, int i, int j)
 {
-	int	line_len;
-	int	map_rows;
+    int rows = 0;
+    int cols = 0;
+    
+    while (map2d[rows] != NULL)
+        rows++;
+    
+    if (map2d[0] != NULL)
+    {
+        while (map2d[0][cols] != '\0')
+            cols++;
+    }
+    
+    if (i > 0 && map2d[i - 1][j] == ' ')
+        return 1;
 
-	map_rows = 0;
-	line_len = ft_strlen(map2d[i]);
-	while (map2d[map_rows])
-		map_rows++;
-	if (i >= map_rows || j >= line_len || i < 0 || j < 0 || !map2d[i][j])
-		return (0);
-	return (map2d[i - 1][j] == ' ' || map2d[i + 1][j] == ' ' ||
-			map2d[i][j - 1] == ' ' || map2d[i][j + 1] == ' ');
+    if (i < rows - 1 && map2d[i + 1][j] == ' ')
+        return 1;
+
+    if (j > 0 && map2d[i][j - 1] == ' ')
+        return 1;
+
+    if (j < cols - 1 && map2d[i][j + 1] == ' ')
+        return 1;
+    return 0;
 }
 
 int	is_file_path_valid(char *file_path)

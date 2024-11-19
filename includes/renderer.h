@@ -6,7 +6,7 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 20:52:18 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/08 21:13:53 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/19 03:33:28 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ double							calculate_normalized_distance(int x, int y,
 									t_sky_params *params);
 int								calculate_sky_color(double normalized_distance);
 void							drawer_floor(t_data *data, int x);
-int								adjust_color_opacity2(int color,
-									double fade_factor);
 t_texture						*get_wall_frame(t_data data,
 									t_direction direction,
 									t_texture *texture_wall);

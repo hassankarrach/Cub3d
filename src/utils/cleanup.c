@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 23:05:57 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/18 05:40:02 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/19 03:24:21 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/utils.h"
-
 
 void	helper_clean(t_data *data)
 {
@@ -31,7 +30,7 @@ void	helper_clean(t_data *data)
 	free_texture(data->mlx, data->textures.frame_doors.frame_red);
 	free_texture(data->mlx, data->textures.frame_doors.frame_green);
 	free_texture(data->mlx, data->textures.frame_doors.frame_blue);
-	free_texture(data->mlx, data->textures.frame_doors.frame_orange);	
+	free_texture(data->mlx, data->textures.frame_doors.frame_orange);
 	free(data->door);
 	free(data->ply);
 	free(data->ray);
@@ -39,7 +38,7 @@ void	helper_clean(t_data *data)
 	freer(data->args);
 }
 
-void free_door_list(t_data *data)
+void	free_door_list(t_data *data)
 {
 	int	i;
 
@@ -52,7 +51,7 @@ void free_door_list(t_data *data)
 	free(data->args->doors);
 }
 
-void free_wall_frames(t_data *data)
+void	free_wall_frames(t_data *data)
 {
 	int	i;
 
