@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 00:01:14 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/18 05:47:49 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/19 21:51:07 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	init_player(t_player *player, t_data *data)
 	data->ply->bobbing_amplitude = 1;
 	data->last_update_time = get_time_in_seconds();
 	get_angle(data);
-	init_player_texture(data, data->ply, data->textures.player);
+	init_player_texture(data->ply);
 }
 
 void	get_angle(t_data *m)

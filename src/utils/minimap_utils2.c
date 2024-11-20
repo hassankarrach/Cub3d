@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 23:24:37 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/19 03:50:13 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/20 19:55:14 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,14 @@ int	adjust_color_opacity2(int color, float fade_factor)
 	int	b;
 
 	r = (color >> 16) & 0xFF;
-	r = (int)(r * fade_factor);
 	g = (color >> 8) & 0xFF;
-	g = (int)(g * fade_factor);
 	b = color & 0xFF;
+	r = (int)(r * fade_factor);
+	r = clamp(r, 0, 255);
+	g = (int)(g * fade_factor);
+	g = clamp(g, 0, 255);
 	b = (int)(b * fade_factor);
+	b = clamp(b, 0, 255);
 	return ((r << 16) | (g << 8) | b);
 }
 

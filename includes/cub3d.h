@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 23:22:35 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/18 06:13:10 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/19 21:55:28 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,8 +205,7 @@ typedef struct s_mlx
 // GAME
 void						init_game(t_data *data, t_args *args);
 void						load_player_textures(t_data *data);
-void						init_player_texture(t_data *data, t_player *ply,
-								t_texture **ply_textures);
+void						init_player_texture(t_player *ply);
 void						load_door_textures(t_data *data);
 void						load_all_textures(t_data *data);
 void						load_frame_textures(t_data *data);
@@ -223,7 +222,7 @@ int							is_ray_facing_right(float rayAngle);
 int							is_ray_facing_left(float rayAngle);
 void						load_door_textures(t_data *data);
 void						rendring_door(t_data *data, t_door door, int x);
-void						update_door_animation(t_data *data, t_door *door,
+void						update_door_animation(t_door *door,
 								double current_time, t_wall_door *c_door);
 void						update_ply_animation(t_data *data, t_player *ply,
 								double current_time);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   renderer.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 20:52:18 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/19 03:33:28 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/19 21:59:35 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int								get_start_drawing_texture_x(t_ray ray);
 t_wall_params					calculate_wall_params(t_data *data);
 void							render_wall(t_data *data, int x, double angle);
 void							drawing_3d_game(t_data *data);
-void							draw_player(t_data *data, double current_time);
+void							draw_player(t_data *data);
 t_texture						*selected_texture(t_data *data, t_ray ray,
 									float ray_angle);
 int								get_pixel(t_texture *texture,
@@ -60,4 +60,5 @@ void							drawer_floor(t_data *data, int x);
 t_texture						*get_wall_frame(t_data data,
 									t_direction direction,
 									t_texture *texture_wall);
+int								apply_brightness(int color, double brightness_factor);
 #endif

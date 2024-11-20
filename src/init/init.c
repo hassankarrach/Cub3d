@@ -6,14 +6,13 @@
 /*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 00:16:52 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/18 06:39:58 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/19 21:48:35 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-void	init_player_texture(t_data *data, t_player *ply,
-		t_texture **ply_textures)
+void	init_player_texture(t_player *ply)
 {
 	ply->current_frame = 0;
 	ply->total_frames = 24;
@@ -55,7 +54,7 @@ void	load_player_textures(t_data *data)
 	}
 }
 
-void	init_doors(t_data *data, t_door *door, t_texture **door_textures)
+void	init_doors(t_data *data, t_door *door)
 {
 	int	i;
 
@@ -98,6 +97,6 @@ void	init_game(t_data *data, t_args *args)
 	data->state = LOBBY;
 	init_player(data->ply, data);
 	init_ray(data->ray);
-	init_doors(data, data->door, data->textures.door);
+	init_doors(data, data->door);
 	load_all_textures(data);
 }

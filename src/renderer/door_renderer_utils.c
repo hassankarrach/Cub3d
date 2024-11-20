@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 05:08:12 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/12 03:18:25 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/20 21:08:19 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 t_wall_door	*get_corret_door(int i, int j, t_wall_door **list_door)
 {
 	int		n;
-	float	corr;
 
-	corr = 0.001;
 	n = 0;
 	while (n < 3 && list_door[n])
 	{
