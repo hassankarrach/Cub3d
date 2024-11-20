@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 03:16:33 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/19 21:52:46 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/20 21:15:06 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_inter	get_h_inter(t_data *data, float angl)
 		y_stp *= -1;
 	x_stp = y_stp / tan(angl);
 	if ((is_ray_facing_left(angl) && x_stp > 0) || (is_ray_facing_right(angl)
-		&& x_stp < 0))
+			&& x_stp < 0))
 		x_stp *= -1;
 	if (is_ray_facing_up(angl))
 		intr_h.yintercept -= 0.0001;

@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 05:23:23 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/20 21:11:39 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/20 21:15:56 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	valid_move(t_data *data, double x, double y)
 	j = (int)(y / (double)TILE_SIZE);
 	if (i >= data->w_map || j >= data->h_map || i < 0 || j < 0)
 		return (1);
-	else if (data->map2d[j][i] == 'O') // I want stop when door opening
+	else if (data->map2d[j][i] == 'O')
 	{
 		data->ply->move_speed = 1;
 		data->ply->bobbing_speed = 1;
