@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 05:03:55 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/19 21:55:11 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/20 21:15:25 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	update_door_animation(t_door *door, double current_time,
 		t_wall_door *c_door)
 {
-
 	if (current_time - c_door->last_update_time >= DOOR_ANIMATION_FRAME_TIME)
 	{
 		if (c_door->is_open && c_door->current_frame < door->total_frames - 1)
