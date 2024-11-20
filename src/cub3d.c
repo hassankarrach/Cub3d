@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 22:56:01 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/12 03:11:19 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/20 20:38:16 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	game_logic(t_data *data, double time_between_frames)
 	update_door_status(data, current_time);
 	update_ply_animation(data, data->ply, current_time);
 	update_player(data->ply, data);
-	draw_player(data, current_time);
+	draw_player(data);
 	drawing_3d_game(data);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 15:45:21 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/19 05:50:54 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/19 21:45:03 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ static int	parse_middle_lines(t_args *args, char **lines,
 	line = ft_strtrim(lines[i], "X");
 	while (line[j])
 	{
-		if (((j == 0 && line[j] != '1') || (j == (int)ft_strlen(line) - 1)
-				&& line[j] != '1'))
+		if (((j == 0 && line[j] != '1') || (j == (int)ft_strlen(line) - 1))
+				&& line[j] != '1')
 			return (free(line),
 				ft_error(args, "Map error.", true, true));
 		if (line[j] != 'D' && line[j] != '1' && line[j] != '0' && line[j] != 'N'

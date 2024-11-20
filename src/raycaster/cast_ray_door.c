@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 03:15:00 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/18 06:13:10 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/19 21:55:34 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	update_door_status(t_data *data, double currtime)
 			data->door->doors[n]->is_open = 0;
 			data->map2d[data->door->doors[n]->j][data->door->doors[n]->i] = 'D';
 		}
-		update_door_animation(data, data->door, currtime, data->door->doors[n]);
+		update_door_animation(data->door, currtime, data->door->doors[n]);
 		n++;
 	}
 }
@@ -55,11 +55,9 @@ bool	is_door(double x, double y, t_data *data)
 {
 	int		i;
 	int		j;
-	float	dist_door;
 
 	i = (int)floor(x / (double)TILE_SIZE);
 	j = (int)floor(y / (double)TILE_SIZE);
-	dist_door = ft_distance(data, x, y);
 	if (!is_within_map(x, y, data))
 		return (false);
 	return (data->map2d[j][i] == 'D' || data->map2d[j][i] == 'O');

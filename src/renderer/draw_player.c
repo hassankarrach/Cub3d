@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 04:32:08 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/18 07:15:08 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/19 21:59:13 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	update_ply_animation(t_data *data, t_player *ply, double current_time)
 	}
 }
 
-void	draw_player(t_data *data, double current_time)
+void	draw_player(t_data *data)
 {
 	int	start_y;
 	int	x;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 23:29:08 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/19 03:34:51 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/19 21:14:06 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static void	render_mini_map_row(t_data *data, int x)
 					+ pow(y - S_H_MINI_MAP / 2, 2))
 				/ sqrt(pow(S_W_MINI_MAP / 2, 2) + pow(S_H_MINI_MAP / 2, 2));
 			fade_factor = 1.0 - (distance_ratio * 0.5);
-			faded_color = adjust_color_opacity2(color, fade_factor);
+			faded_color = apply_brightness(color, fade_factor);
 			ft_pixel_put(data, x, y, faded_color);
 		}
 		y++;

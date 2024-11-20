@@ -6,16 +6,15 @@
 /*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 05:03:55 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/18 07:14:55 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/19 21:55:11 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/renderer.h"
 
-void	update_door_animation(t_data *data, t_door *door, double current_time,
+void	update_door_animation(t_door *door, double current_time,
 		t_wall_door *c_door)
 {
-	float	dist_door;
 
 	if (current_time - c_door->last_update_time >= DOOR_ANIMATION_FRAME_TIME)
 	{

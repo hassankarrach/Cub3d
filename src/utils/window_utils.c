@@ -6,7 +6,7 @@
 /*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 05:19:14 by kait-baa          #+#    #+#             */
-/*   Updated: 2024/11/18 02:48:52 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/20 20:42:27 by kait-baa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	mouse_move(int x, int y, t_data *data)
 	if (data->flag != 0)
 		data->ply->angle += mouse_delta_x * (ROTATION_SPEED * 0.03);
 	data->ply->angle = normalize_angle(data->ply->angle);
-	data->ply->look_offset -= mouse_delta_y * 1.5;
+	data->ply->look_offset -= mouse_delta_y * 2;
 	data->flag = 1;
 	return (0);
 }
