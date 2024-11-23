@@ -6,38 +6,35 @@
 /*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 18:06:45 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/19 05:51:23 by hkarrach         ###   ########.fr       */
+/*   Updated: 2024/11/23 11:14:38 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/parser.h"
 
-int check_surroundings(char **map2d, int i, int j)
+int	check_surroundings(char **map2d, int i, int j)
 {
-    int rows = 0;
-    int cols = 0;
-    
-    while (map2d[rows] != NULL)
-        rows++;
-    
-    if (map2d[0] != NULL)
-    {
-        while (map2d[0][cols] != '\0')
-            cols++;
-    }
-    
-    if (i > 0 && map2d[i - 1][j] == ' ')
-        return 1;
+	int	rows;
+	int	cols;
 
-    if (i < rows - 1 && map2d[i + 1][j] == ' ')
-        return 1;
-
-    if (j > 0 && map2d[i][j - 1] == ' ')
-        return 1;
-
-    if (j < cols - 1 && map2d[i][j + 1] == ' ')
-        return 1;
-    return 0;
+	rows = 0;
+	cols = 0;
+	while (map2d[rows] != NULL)
+		rows++;
+	if (map2d[0] != NULL)
+	{
+		while (map2d[0][cols] != '\0')
+			cols++;
+	}
+	if (i > 0 && map2d[i - 1][j] == ' ')
+		return (1);
+	if (i < rows - 1 && map2d[i + 1][j] == ' ')
+		return (1);
+	if (j > 0 && map2d[i][j - 1] == ' ')
+		return (1);
+	if (j < cols - 1 && map2d[i][j + 1] == ' ')
+		return (1);
+	return (0);
 }
 
 int	is_file_path_valid(char *file_path)
