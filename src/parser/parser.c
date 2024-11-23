@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kait-baa <kait-baa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkarrach <hkarrach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 15:45:21 by hkarrach          #+#    #+#             */
-/*   Updated: 2024/11/19 21:45:03 by kait-baa         ###   ########.fr       */
+/*   Updated: 2024/11/23 11:12:33 by hkarrach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,29 +32,30 @@ static void	parse_top_bottom_lines(t_args *args, char *line)
 static int	parse_middle_lines(t_args *args, char **lines,
 	int i, int j)
 {
-	char	*line;
+	char	*row;
 
-	line = ft_strtrim(lines[i], "X");
-	while (line[j])
+	row = ft_strtrim(lines[i], "X");
+	while (row[j])
 	{
-		if (((j == 0 && line[j] != '1') || (j == (int)ft_strlen(line) - 1))
-				&& line[j] != '1')
-			return (free(line),
+		if (((j == 0 && row[j] != '1') || (j == (int)ft_strlen(row) - 1))
+			&& row[j] != '1')
+			return (free(row),
 				ft_error(args, "Map error.", true, true));
-		if (line[j] != 'D' && line[j] != '1' && line[j] != '0' && line[j] != 'N'
-			&& line[j] != 'S' && line[j] != 'E' && line[j] != 'W' && line[j] != 'X')
-			return (free(line), ft_error(args, "Invalid map character.",
+		if (row[j] != 'D' && row[j] != '1' && row[j] != '0' && row[j] != 'N'
+			&& row[j] != 'S' && row[j] != 'E' && row[j] != 'W'
+			&& row[j] != 'X')
+			return (free(row), ft_error(args, "Invalid map character.",
 					true, true));
-		if (line[j] == 'N' || line[j] == 'S' || line[j] == 'E' || line[j] == 'W')
+		if (row[j] == 'N' || row[j] == 'S' || row[j] == 'E' || row[j] == 'W')
 			args->player_count++;
-		if (line[j] == '0' || line[j] == 'N' || line[j] == 'S' || line[j] == 'E'
-			|| line[j] == 'W')
+		if (row[j] == '0' || row[j] == 'N' || row[j] == 'S' || row[j] == 'E'
+			|| row[j] == 'W')
 			if (check_surroundings(lines, i, j))
-				return (free(line),
+				return (free(row),
 					ft_error(args, "Map error.", true, true));
 		j++;
 	}
-	free(line);
+	free(row);
 	return (1);
 }
 
