@@ -1,8 +1,9 @@
 # cub3D
 
-[![Video Demo(./video/cub3d.png)]](./video/cub3d.mp4)
+<a href="./video/cub3d.mp4">
+  <img src="./video/cub3d.png" width="400" height="440" alt="Video Demo">
+</a>
 
----
 
 ## Description
 
@@ -24,11 +25,3 @@
 ---
 
 ## Installation
-
-### Prerequisites
-
-- **Operating System**: macOS or Linux.
-- **Dependencies**:
-  - [MiniLibX](https://github.com/42Paris/minilibx-linux) (graphics library).
-  - [libft](https://github.com/42Paris/libft) (42's custom C library).
-  - [get_next_line](https://github.com/42Paris/get_next_line) (for file reading).
