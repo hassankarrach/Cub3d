@@ -1,6 +1,6 @@
 # cub3D
 
-![Video Demo](./video/cub3d.mp4)
+[![Video Demo(./video/cub3d.png)]](./video/cub3d.mp4)
 
 ---
 
